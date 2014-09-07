@@ -1,0 +1,33 @@
+input,
+textarea {
+	background-color: #fafafa;
+	border: 1px solid #e0e0e0;
+	border-radius: 4px;
+	padding: 4px 8px;
+}
+
+input::-moz-placeholder {
+	opacity: 0.3;
+}
+
+input::-webkit-input-placeholder {
+	opacity: 0.3;
+}
+
+label {
+	text-transform: uppercase;
+}
+
+.btn {
+	background-color: #55A4BF;
+	border: 0;
+	border-bottom: 1px solid #ffffff;
+	border-radius: 4px;
+	color: #ffffff;
+	padding: 4px 12px;
+}
+
+.btn:hover {
+	background-color: #3D7E94;
+	cursor: pointer;
+}

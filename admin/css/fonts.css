@@ -1,0 +1,58 @@
+/* OpenSans: Regular */
+
+@font-face {
+	font-family: "OpenSans Web";
+	src: url( "../fonts/open-sans/OpenSans-Regular.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Web";
+	font-weight: bold;
+	src: url( "../fonts/open-sans/OpenSans-Bold.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Web";
+	font-style: italic;
+	src: url( "open-sans/OpenSans-Italic.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Web";
+	font-style: italic;
+	font-weight: bold;
+	src: url( "open-sans/OpenSans-BoldItalic.ttf" );
+}
+
+@font-face {
+	font-family: "IconicFill";
+	src: url( "iconic/iconic_fill.otf" ) format( "opentype" );
+}
+
+
+/* OpenSans: Light */
+
+@font-face {
+	font-family: "OpenSans Light Web";
+	src: url( "open-sans/OpenSans-Light.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Light Web";
+	font-style: italic;
+	src: url( "open-sans/OpenSans-LightItalic.ttf" );
+}
+
+
+/* OpenSans: Semibold */
+
+@font-face {
+	font-family: "OpenSans Semibold Web";
+	src: url( "open-sans/OpenSans-Semibold.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Semibold Web";
+	font-style: italic;
+	src: url( "open-sans/OpenSans-SemiboldItalic.ttf" );
+}
