@@ -14,14 +14,14 @@
 @font-face {
 	font-family: "OpenSans Web";
 	font-style: italic;
-	src: url( "open-sans/OpenSans-Italic.ttf" );
+	src: url( "../fonts/open-sans/OpenSans-Italic.ttf" );
 }
 
 @font-face {
 	font-family: "OpenSans Web";
 	font-style: italic;
 	font-weight: bold;
-	src: url( "open-sans/OpenSans-BoldItalic.ttf" );
+	src: url( "../fonts/open-sans/OpenSans-BoldItalic.ttf" );
 }
 
 @font-face {
@@ -34,13 +34,13 @@
 
 @font-face {
 	font-family: "OpenSans Light Web";
-	src: url( "open-sans/OpenSans-Light.ttf" );
+	src: url( "../fonts/open-sans/OpenSans-Light.ttf" );
 }
 
 @font-face {
 	font-family: "OpenSans Light Web";
 	font-style: italic;
-	src: url( "open-sans/OpenSans-LightItalic.ttf" );
+	src: url( "../fonts/open-sans/OpenSans-LightItalic.ttf" );
 }
 
 
@@ -48,11 +48,35 @@
 
 @font-face {
 	font-family: "OpenSans Semibold Web";
-	src: url( "open-sans/OpenSans-Semibold.ttf" );
+	src: url( "../fonts/open-sans/OpenSans-Semibold.ttf" );
 }
 
 @font-face {
 	font-family: "OpenSans Semibold Web";
 	font-style: italic;
-	src: url( "open-sans/OpenSans-SemiboldItalic.ttf" );
+	src: url( "../fonts/open-sans/OpenSans-SemiboldItalic.ttf" );
 }
+
+
+/* Iconic */
+
+@font-face {
+	font-family: "OpenIconic";
+	src: url( "../fonts/iconic/open-iconic.otf" ) format( "opentype" );
+}
+
+
+.icon-add-before:before {
+	display: inline-block;
+	font-family: "OpenIconic";
+	font-size: 16px;
+	margin-right: 10px;
+	position: relative;
+}
+
+.icon-before-book:before { content: "\e021"; }
+.icon-before-cog:before { content: "\e041"; }
+.icon-before-grid3x3:before { content: "\e073"; }
+.icon-before-pen:before { content: "\e0a3"; }
+.icon-before-tag:before { content: "\e0c5"; }
+.icon-before-wrench:before { content: "\e0da"; }

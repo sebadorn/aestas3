@@ -9,30 +9,19 @@ if( !ae_Security::isLoggedIn() ) {
 	exit;
 }
 
-$nav = array(
-	'Dashboard' => 'dashboard',
-	'Manage' => 'manage',
-	'Create' => 'create'
-);
+$sb = new ae_SiteBuilder();
+include_once( 'sb_params.php' );
+
 ?>
 <!DOCTYPE html>
 
 <html>
-<head>
-	<meta charset="utf-8" />
-	<title>aestas › admin area</title>
-	<link rel="stylesheet" href="css/style.css" />
-</head>
+<?php $sb->render( 'templates/head.php', $paramsHead ); ?>
 <body>
 
-<nav class="nav-main">
+<?php $sb->render( 'templates/nav.php', $paramsNav ); ?>
 
-<?php foreach( $nav as $title => $link ): ?>
-	<a href="admin.php?page=<?php echo $link ?>"><?php echo $title ?></a>
-<?php endforeach ?>
-
-</nav>
-
+<?php $sb->render( 'templates/footer.php', $paramsFooter ); ?>
 
 <?php ae_Log::printAll(); ?>
 

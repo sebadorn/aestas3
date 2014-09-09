@@ -32,6 +32,13 @@ class ae_Security {
 			session_name( 'aestas3' );
 			session_start();
 		}
+
+		if( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			ae_Log::warning( '[' . get_class() . '] <code>$_SERVER["HTTP_USER_AGENT"] has no value.</code>' );
+		}
+		if( empty( $_SERVER['REMOTE_ADDR'] ) ) {
+			ae_Log::warning( '[' . get_class() . '] <code>$_SERVER["REMOTE_ADDR"] has no value.</code>' );
+		}
 	}
 
 
