@@ -6,6 +6,7 @@
 }
 
 h1,h2,h3,h4,h5,h6 {
+	font-family: "OpenSans Semibold Web";
 	font-weight: normal;
 }
 
@@ -28,6 +29,15 @@ a:hover {
 	border-bottom-color: transparent;
 }
 
+code {
+	font-family: monospace;
+}
+
+h1 {
+	font-size: 320%;
+	margin-bottom: 40px;
+}
+
 
 /* ----------------- */
 /* header navigation */
@@ -39,6 +49,7 @@ a:hover {
 	display: block;
 	font-size: 16px;
 	height: 40px;
+	margin-bottom: 60px;
 	padding: 0;
 	text-align: center;
 }
@@ -131,6 +142,73 @@ a:hover {
 					padding: 10px 20px;
 				}
 
+				.sub-nav a:hover {
+					background-color: #4CB226;
+				}
+
+				.sub-nav a.active {
+					font-weight: bold;
+				}
+
 				.sub-nav a:last-child {
 					border: 0;
 				}
+
+
+/* ------------ */
+/* main section */
+/* ------------ */
+
+section.main-body {
+	padding: 0 60px;
+}
+
+
+/* ------ */
+/* footer */
+/* ------ */
+
+.main-footer {
+	border-top: 1px solid #e0e0e0;
+	color: #a0a0a0;
+	clear: both;
+	margin: 60px 60px 0;
+	padding: 10px;
+	text-align: center;
+}
+
+	.main-footer .stat {
+		border-right: 1px solid #e0e0e0;
+		display: inline-block;
+		padding: 0 10px;
+	}
+
+	.main-footer .stat:last-of-type {
+		border-right: 0;
+	}
+
+
+/* --- */
+/* log */
+/* --- */
+
+.log {
+	margin: 10px auto 0;
+	text-align: left;
+	max-width: 600px;
+}
+
+	.log-entry {
+		border-radius: 2px;
+		color: #ffffff;
+		margin-bottom: 10px;
+		padding: 8px 12px;
+	}
+
+	.log-entry-errors {
+		background-color: #D45353;
+	}
+
+	.log-entry-warnings {
+		background-color: #E59B26;
+	}

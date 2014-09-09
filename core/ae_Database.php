@@ -3,6 +3,7 @@
 class ae_Database {
 
 
+	static protected $numQueries = 0;
 	static protected $pdo = NULL;
 
 
@@ -36,6 +37,15 @@ class ae_Database {
 
 
 	/**
+	 * Get the number of executed queries.
+	 * @return {int} Number of queries.
+	 */
+	static public function getNumQueries() {
+		return self::$numQueries;
+	}
+
+
+	/**
 	 * Prepare and execute an SQL statement.
 	 * @param  {string}        $statement The statement to prepare and execute.
 	 * @param  {array}         $params    Parameters for the statement. (Optional.)
@@ -50,6 +60,8 @@ class ae_Database {
 
 			return FALSE;
 		}
+
+		self::$numQueries++;
 
 		return $pdoStatement->fetchAll( PDO::FETCH_ASSOC );
 	}

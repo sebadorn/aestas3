@@ -74,9 +74,37 @@
 	position: relative;
 }
 
+.icon-before-aperture:before { content: "\e007"; }
+.icon-before-audio:before { content: "\e0d5"; }
+.icon-before-ban:before { content: "\e017"; }
 .icon-before-book:before { content: "\e021"; }
+.icon-before-box:before { content: "\e023"; }
+.icon-before-check:before { content: "\e033"; }
+.icon-before-code:before { content: "\e040"; }
 .icon-before-cog:before { content: "\e041"; }
+.icon-before-comment:before { content: "\e047"; }
+.icon-before-clock:before { content: "\e03b"; }
+.icon-before-document:before { content: "\e052"; }
+.icon-before-delete:before { content: "\e050"; }
+.icon-before-download:before { content: "\e04e"; }
+.icon-before-eye:before { content: "\e065"; }
+.icon-before-file:before { content: "\e067"; }
+.icon-before-folder:before { content: "\e06b"; }
 .icon-before-grid3x3:before { content: "\e073"; }
+.icon-before-image:before { content: "\e079"; }
+.icon-before-inbox:before { content: "\e07a"; }
+.icon-before-minus:before { content: "\e09d"; }
 .icon-before-pen:before { content: "\e0a3"; }
+.icon-before-person:before { content: "\e0a5"; }
+.icon-before-plus:before { content: "\e0aa"; }
+.icon-before-rss:before { content: "\e0b7"; }
+.icon-before-script:before { content: "\e0b9"; }
+.icon-before-search:before { content: "\e08f"; }
+.icon-before-star:before { content: "\e0c2"; }
 .icon-before-tag:before { content: "\e0c5"; }
+.icon-before-tags:before { content: "\e0c6"; }
+.icon-before-trash:before { content: "\e0cf"; }
+.icon-before-upload:before { content: "\e04f"; }
+.icon-before-video:before { content: "\e0d4"; }
+.icon-before-x:before { content: "\e0db"; }
 .icon-before-wrench:before { content: "\e0da"; }

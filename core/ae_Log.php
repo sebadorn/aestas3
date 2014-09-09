@@ -58,8 +58,18 @@ class ae_Log {
 	 */
 	static public function error( $msg ) {
 		if( self::$cfg['enabled'] ) {
-			self::$logged['errors'][] = $msg;
+			self::$logged['errors'][] = self::format( $msg );
 		}
+	}
+
+
+	/**
+	 * Format the message with some HTML.
+	 * @param  {string} $msg The message.
+	 * @return {string}      Formatted message.
+	 */
+	static public function format( $msg ) {
+		return preg_replace( '/^(\[[^\[\]]*\])/', '<strong>$1</strong>', $msg );
 	}
 
 
@@ -142,7 +152,7 @@ class ae_Log {
 	 */
 	static public function warning( $msg ) {
 		if( self::$cfg['enabled'] ) {
-			self::$logged['warnings'][] = $msg;
+			self::$logged['warnings'][] = self::format( $msg );
 		}
 	}
 

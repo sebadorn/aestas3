@@ -10,7 +10,7 @@
 			}
 		?>
 
-		<a href="admin.php?page=<?php echo htmlentities( $subnav['link'] ) ?>" class="<?php echo $class ?>"><?php echo $category ?></a>
+		<a href="admin.php?area=<?php echo htmlentities( $subnav['link'] ) ?>" class="<?php echo $class ?>"><?php echo $category ?></a>
 
 	<?php else: ?>
 		<?php
@@ -27,8 +27,9 @@
 
 		<?php foreach( $subnav as $title => $subdata ): ?>
 			<?php if( is_array( $subdata ) ): ?>
+				<?php $class = $subdata['active'] ? ' class="active"' : ''; ?>
 
-				<a href="admin.php?page=<?php echo htmlentities( $subdata['link'] ) ?>"><?php echo $title ?></a>
+				<a href="admin.php?area=<?php echo htmlentities( $subdata['link'] ) ?>"<?php echo $class ?>><?php echo $title ?></a>
 
 			<?php endif ?>
 		<?php endforeach ?>

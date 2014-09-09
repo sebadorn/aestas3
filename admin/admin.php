@@ -9,6 +9,22 @@ if( !ae_Security::isLoggedIn() ) {
 	exit;
 }
 
+
+$validAreas = array( 'create', 'dashboard', 'manage', 'media', 'settings' );
+$area = 'dashboard';
+
+if( !isset( $_GET['area'] ) ) {
+	$area = 'dashboard';
+}
+else if( !in_array( $_GET['area'], $validAreas ) ) {
+	$msg = sprintf( 'Area "%s" is not a valid area.', htmlspecialchars( $_GET['area'] ) );
+	ae_Log::warning( $msg );
+}
+else {
+	$area = $_GET['area'];
+}
+
+
 $sb = new ae_SiteBuilder();
 include_once( 'sb_params.php' );
 
@@ -21,9 +37,13 @@ include_once( 'sb_params.php' );
 
 <?php $sb->render( 'templates/nav.php', $paramsNav ); ?>
 
-<?php $sb->render( 'templates/footer.php', $paramsFooter ); ?>
+<section class="main-body">
 
-<?php ae_Log::printAll(); ?>
+	<?php $sb->render( 'templates/' . $area . '.php' ); ?>
+
+</section>
+
+<?php $sb->render( 'templates/footer.php' ); ?>
 
 </body>
 </html>

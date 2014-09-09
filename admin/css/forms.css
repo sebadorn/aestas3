@@ -3,14 +3,17 @@ textarea {
 	background-color: #fafafa;
 	border: 1px solid #e0e0e0;
 	border-radius: 4px;
+	font-size: 100%;
 	padding: 4px 8px;
 }
 
-input::-moz-placeholder {
+input::-moz-placeholder,
+textarea::-moz-placeholder {
 	opacity: 0.3;
 }
 
-input::-webkit-input-placeholder {
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
 	opacity: 0.3;
 }
 

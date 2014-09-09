@@ -7,44 +7,65 @@
 
 $paramsHead = new stdClass;
 $paramsHead->title = 'admin area';
+$paramsHead->css = $area;
 
 
 $paramsNav = array(
 	'Dashboard' => array(
-		'active' => ( !isset( $_GET['page'] ) || $_GET['page'] == 'dashboard' ),
+		'active' => ( $area == 'dashboard' ),
 		'icon' => 'grid3x3',
 		'link' => 'dashboard'
 	),
+
 	'Manage' => array(
-		'active' => ( isset( $_GET['page'] ) && $_GET['page'] == 'manage' ),
+		'active' => ( $area == 'manage' ),
 		'icon' => 'book',
 
 		'Comments' => array(
-			'active' => ( isset( $_GET['page'], $_GET['comments'] ) && $_GET['page'] == 'manage' ),
+			'active' => ( isset( $_GET['comments'] ) && $area == 'manage' ),
 			'link' => 'manage&comments'
 		),
+		'Pages' => array(
+			'active' => ( isset( $_GET['pages'] ) && $area == 'manage' ),
+			'link' => 'manage&pages'
+		),
 		'Posts' => array(
-			'active' => ( isset( $_GET['page'], $_GET['posts'] ) && $_GET['page'] == 'manage' ),
+			'active' => ( isset( $_GET['posts'] ) && $area == 'manage' ),
 			'link' => 'manage&posts'
 		),
-		'Pages' => array(
-			'active' => ( isset( $_GET['page'], $_GET['pages'] ) && $_GET['page'] == 'manage' ),
-			'link' => 'manage&pages'
+		'Users' => array(
+			'active' => ( isset( $_GET['users'] ) && $area == 'manage' ),
+			'link' => 'manage&users'
 		)
 	),
+
 	'Create' => array(
-		'active' => ( isset( $_GET['page'] ) && $_GET['page'] == 'create' ),
+		'active' => ( $area == 'create' ),
 		'icon' => 'pen',
 
-		'Posts' => array(
-			'active' => ( isset( $_GET['page'], $_GET['comments'] ) && $_GET['page'] == 'create' ),
-			'link' => 'create&posts'
+		'Page' => array(
+			'active' => ( isset( $_GET['page'] ) && $area == 'create' ),
+			'link' => 'create&page'
 		),
-		'Pages' => array(
-			'link' => 'create&pages'
+		'Post' => array(
+			'active' => ( isset( $_GET['post'] ) && $area == 'create' ),
+			'link' => 'create&post'
+		),
+		'User' => array(
+			'active' => ( isset( $_GET['user'] ) && $area == 'create' ),
+			'link' => 'create&user'
 		)
+	),
+
+	'Media' => array(
+		'active' => ( $area == 'media' ),
+		'icon' => 'folder',
+		'link' => 'media'
+	),
+
+	'Settings' => array(
+		'active' => ( $area == 'settings' ),
+		'icon' => 'wrench',
+		'link' => 'settings'
 	)
 );
-
-
-$paramsFooter = array();
