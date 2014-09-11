@@ -1,4 +1,11 @@
+form {}
+
+	form .icon-add-before::before {
+		cursor: default;
+	}
+
 input,
+select,
 textarea {
 	background-color: #fafafa;
 	border: 1px solid #e0e0e0;
@@ -17,9 +24,17 @@ textarea::-webkit-input-placeholder {
 	opacity: 0.3;
 }
 
-label {
-	text-transform: uppercase;
+input[type="checkbox"] {
+	vertical-align: middle;
 }
+
+select {
+	padding:  4px;
+}
+
+	option {
+		padding: 0 0 0 8px;
+	}
 
 
 .btn {
@@ -34,4 +49,13 @@ label {
 .btn:hover {
 	background-color: #3D7E94;
 	cursor: pointer;
+}
+
+.btn-publish {
+	background-color: #CF2F2F;
+	font-weight: bold;
+}
+
+.btn-publish:hover {
+	background-color: #B52424;
 }

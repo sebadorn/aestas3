@@ -22,8 +22,26 @@ else if( isset( $_GET['user'] ) ) {
 <?php elseif( $createArea == 'Post' ): ?>
 
 	<aside>
-		<button type="submit" class="btn" name="submit" value="draft">save draft</button>
-		<button type="submit" class="btn" name="submit" value="publish">publish</button>
+		<div class="input-group input-group-datetime">
+			<span class="icon-add-before icon-before-clock" title="Datetime to publish this post"></span>
+			<?php echo ae_Forms::monthSelect( 'post-publish-month' ) ?>
+			<input type="text" name="post-publish-day" value="<?php echo date( 'd' ) ?>" />
+			<span class="comma">,</span>
+			<input type="text" name="post-publish-year" value="<?php echo date( 'Y' ) ?>" />
+			<span class="at">at</span>
+			<input type="text" name="post-publish-hour" value="<?php echo date( 'H' ) ?>" />
+			<span class="colon">:</span>
+			<input type="text" name="post-publish-minute" value="<?php echo date( 'i' ) ?>" />
+		</div>
+		<div class="input-group">
+			<input id="post-schedule" type="checkbox" name="post-schedule" value="1" />
+			<label for="post-schedule">Schedule post</label>
+		</div>
+
+		<div class="submit-buttons">
+			<button type="submit" class="btn btn-draft" name="submit" value="draft">save draft</button>
+			<button type="submit" class="btn btn-publish" name="submit" value="publish">publish</button>
+		</div>
 	</aside>
 
 	<div class="main-content">
@@ -32,6 +50,9 @@ else if( isset( $_GET['user'] ) ) {
 		</div>
 		<div class="input-group">
 			<textarea name="post-content" placeholder="Content"></textarea>
+		</div>
+		<div class="input-group">
+			<input type="text" name="post-tags" placeholder="Tags" />
 		</div>
 	</div>
 

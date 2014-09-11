@@ -23,7 +23,7 @@
 			margin-bottom: 0;
 		}
 
-	.form-create input[type="text"],
+	.form-create .main-content input[type="text"],
 	.form-create textarea {
 		width: 100%;
 	}
@@ -31,4 +31,49 @@
 	.form-create textarea {
 		height: 300px;
 		resize: vertical;
+	}
+
+	input[type="checkbox"] {
+		margin-right: 6px;
+		position: relative;
+		top: -2px;
+	}
+
+
+.input-group-datetime {}
+
+	.input-group-datetime .icon-add-before::before {
+		margin-right: 4px;
+		top: 3px;
+	}
+
+	.input-group-datetime input {
+		text-align: center;
+		width: 38px;
+	}
+
+	input[name="post-publish-year"] {
+		width: 54px;
+	}
+
+	.input-group-datetime .comma {
+		margin-left: -1px;
+		margin-right: 2px;
+	}
+
+	.input-group-datetime .colon {
+		margin: 0 -2px;
+	}
+
+
+.submit-buttons {
+	background-color: #ADBFCA;
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	margin: 0 -10px -10px -10px;
+	padding: 10px;
+}
+
+	.submit-buttons .btn-publish {
+		float: right;
 	}
