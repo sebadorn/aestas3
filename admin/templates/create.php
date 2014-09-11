@@ -2,7 +2,10 @@
 
 $createArea = 'Post';
 
-if( isset( $_GET['page'] ) ) {
+if( isset( $_GET['category'] ) ) {
+	$createArea = 'Category';
+}
+else if( isset( $_GET['page'] ) ) {
 	$createArea = 'Page';
 }
 else if( isset( $_GET['user'] ) ) {
@@ -15,27 +18,69 @@ else if( isset( $_GET['user'] ) ) {
 <form method="post" action="scripts/create.php" class="form-create">
 	<input type="hidden" name="area" value="<?php echo strtolower( $createArea ) ?>" />
 
-<?php if( $createArea == 'Page' ): ?>
+<?php if( $createArea == 'Category' ): ?>
+
+	<aside>
+		<div class="input-group">
+			<h3>Parent category</h3>
+
+			<ul class="choose-categories">
+				<?php ?>
+			<ul>
+		</div>
+
+		<div class="submit-buttons">
+			<button type="submit" class="btn btn-publish" name="submit" value="publish">save</button>
+			<span class="clear"></span>
+		</div>
+	</aside>
+
+	<div class="main-content">
+		<div class="input-group">
+			<input type="text" name="category-title" placeholder="Category title" />
+			<!-- <input type="text" name="category-permalink" placeholder="Permalink" /> -->
+		</div>
+	</div>
+
+<?php elseif( $createArea == 'Page' ): ?>
 
 
 
 <?php elseif( $createArea == 'Post' ): ?>
 
 	<aside>
-		<div class="input-group input-group-datetime">
-			<span class="icon-add-before icon-before-clock" title="Datetime to publish this post"></span>
-			<?php echo ae_Forms::monthSelect( 'post-publish-month' ) ?>
-			<input type="text" name="post-publish-day" value="<?php echo date( 'd' ) ?>" />
-			<span class="comma">,</span>
-			<input type="text" name="post-publish-year" value="<?php echo date( 'Y' ) ?>" />
-			<span class="at">at</span>
-			<input type="text" name="post-publish-hour" value="<?php echo date( 'H' ) ?>" />
-			<span class="colon">:</span>
-			<input type="text" name="post-publish-minute" value="<?php echo date( 'i' ) ?>" />
-		</div>
 		<div class="input-group">
+			<h3>Categories</h3>
+
+			<ul class="choose-categories">
+				<?php ?>
+			<ul>
+		</div>
+
+		<div class="input-group">
+			<h3>Schedule</h3>
+
+			<div class="input-group-datetime">
+				<span class="icon-add-before icon-before-clock" title="Datetime to publish this post"></span>
+				<?php echo ae_Forms::monthSelect( 'post-publish-month' ) ?>
+				<input type="text" name="post-publish-day" value="<?php echo date( 'd' ) ?>" />
+				<span class="comma">,</span>
+				<input type="text" name="post-publish-year" value="<?php echo date( 'Y' ) ?>" />
+				<span class="at">at</span>
+				<input type="text" name="post-publish-hour" value="<?php echo date( 'H' ) ?>" />
+				<span class="colon">:</span>
+				<input type="text" name="post-publish-minute" value="<?php echo date( 'i' ) ?>" />
+			</div>
+
 			<input id="post-schedule" type="checkbox" name="post-schedule" value="1" />
 			<label for="post-schedule">Schedule post</label>
+		</div>
+
+		<div class="input-group">
+			<h3>Comments</h3>
+
+			<input id="post-comments-disabled" type="checkbox" name="post-comments-disabled" value="1" />
+			<label for="post-comments-disabled">Disable comments</label>
 		</div>
 
 		<div class="submit-buttons">
@@ -47,6 +92,7 @@ else if( isset( $_GET['user'] ) ) {
 	<div class="main-content">
 		<div class="input-group">
 			<input type="text" name="post-title" placeholder="Title" />
+			<!-- <input type="text" name="post-permalink" placeholder="Permalink" /> -->
 		</div>
 		<div class="input-group">
 			<textarea name="post-content" placeholder="Content"></textarea>

@@ -1,5 +1,6 @@
 <?php
 
+define( 'AE_TABLE_CATEGORIES', $dbSettings['table_prefix'] . 'categories' );
 define( 'AE_TABLE_COMMENTS', $dbSettings['table_prefix'] . 'comments' );
 define( 'AE_TABLE_MEDIA', $dbSettings['table_prefix'] . 'media' );
 define( 'AE_TABLE_PAGES', $dbSettings['table_prefix'] . 'pages' );

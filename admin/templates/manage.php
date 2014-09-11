@@ -2,7 +2,10 @@
 
 $manageArea = 'Comments';
 
-if( isset( $_GET['pages'] ) ) {
+if( isset( $_GET['categories'] ) ) {
+	$manageArea = 'Categories';
+}
+else if( isset( $_GET['pages'] ) ) {
 	$manageArea = 'Pages';
 }
 else if( isset( $_GET['posts'] ) ) {

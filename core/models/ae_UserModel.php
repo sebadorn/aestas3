@@ -3,7 +3,7 @@
 class ae_UserModel {
 
 
-	protected $id = -1;
+	protected $id = FALSE;
 	protected $nameExternal = '';
 	protected $nameInternal = '';
 	protected $pwdHash = '';

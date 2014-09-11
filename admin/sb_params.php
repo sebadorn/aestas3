@@ -21,6 +21,10 @@ $paramsNav = array(
 		'active' => ( $area == 'manage' ),
 		'icon' => 'book',
 
+		'Categories' => array(
+			'active' => ( isset( $_GET['categories'] ) && $area == 'manage' ),
+			'link' => 'manage&categories'
+		),
 		'Comments' => array(
 			'active' => ( isset( $_GET['comments'] ) && $area == 'manage' ),
 			'link' => 'manage&comments'
@@ -43,6 +47,10 @@ $paramsNav = array(
 		'active' => ( $area == 'create' ),
 		'icon' => 'pen',
 
+		'Category' => array(
+			'active' => ( isset( $_GET['category'] ) && $area == 'create' ),
+			'link' => 'create&category'
+		),
 		'Page' => array(
 			'active' => ( isset( $_GET['page'] ) && $area == 'create' ),
 			'link' => 'create&page'
