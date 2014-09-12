@@ -3,17 +3,76 @@
 class ae_Forms {
 
 
+	const INPUT_CHECKBOX = 0;
+	const INPUT_RADIO = 1;
+
+
+	/**
+	 * TODO: Nested, to visualize parent-child relationships.
+	 * Get a list of all categories, selectable as input.
+	 * @param  {string} $name      HTML name attribute for the inputs.
+	 * @param  {int}    $inputType Input type: INPUT_CHECKBOX, INPUT_RADIO.
+	 * @param  {array}  $preselect Pre-select certain category IDs. (Optional.)
+	 * @return {string}            HTML list with inputs.
+	 */
+	static public function categories( $name, $inputType, $preselect = array() ) {
+		$caList = new ae_CategoryList();
+		$templateInput = "\t\t";
+		$templateLabel = "\t\t" . '<label for="ca-%s">%s</label>' . PHP_EOL;
+
+		if( $inputType == self::INPUT_CHECKBOX ) {
+			$templateInput .= '<input type="checkbox" name="%s[]" value="%s" id="ca-%s" />' . PHP_EOL;
+		}
+		else if( $inputType == self::INPUT_RADIO ) {
+			$templateInput .= '<input type="radio" name="%s" value="%s" id="ca-%s" />' . PHP_EOL;;
+		}
+
+		$out = '<ol class="choose-categories">' . PHP_EOL;
+
+		// Only for "radio": default "none" option
+		if( $inputType == self::INPUT_RADIO ) {
+			$out .= "\t" . '<li>' . PHP_EOL;
+			$out .= sprintf( $templateInput, $name, 0, 0 );
+
+			if( count( $preselect ) == 0 ) {
+				$out = str_replace( ' />', ' checked />', $out );
+			}
+
+			$out .= sprintf( $templateLabel, 0, '<em>none</em>' );
+			$out .= "\t" . '</li>' . PHP_EOL;
+		}
+
+		// All categories
+		while( $ca = $caList->next() ) {
+			$out .= "\t" . '<li>' . PHP_EOL;
+			$out .= sprintf( $templateInput, $name, $ca->getId(), $ca->getId() );
+
+			if( in_array( $ca->getId(), $preselect ) ) {
+				$out = str_replace( ' />', ' checked />', $out );
+			}
+
+			$out .= sprintf( $templateLabel, $ca->getId(), htmlspecialchars( $ca->getTitle() ) );
+			$out .= '</li>' . PHP_EOL;
+
+		}
+
+		$out .= '</ol>' . PHP_EOL;
+
+		return $out;
+	}
+
+
 	/**
 	 * Get an HTML select for the months.
-	 * @param  {string}  $selectName Value for the HTML name attribute.
+	 * @param  {string}  $name       Value for the HTML name attribute.
 	 * @param  {int}     $preselect  Month to preselect. Defaults to the current month.
 	 * @return {string}              HTML select.
 	 */
-	static public function monthSelect( $selectName, $preselect = FALSE ) {
+	static public function monthSelect( $name, $preselect = FALSE ) {
 		$preselect = ( $preselect === FALSE ) ? date( 'm' ) : $preselect;
 		$months = array( 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec' );
 
-		$out = '<select name="' . htmlspecialchars( $selectName ) . '">' . PHP_EOL;
+		$out = '<select name="' . htmlspecialchars( $name ) . '">' . PHP_EOL;
 
 		for( $i = 1; $i <= 12; $i++ ) {
 			$sel = ( $i == $preselect ) ? ' selected' : '';

@@ -1,1 +1,5 @@
+# directories
+media/*
+
+# files
 *.sublime-*

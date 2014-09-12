@@ -24,6 +24,11 @@ switch( $_POST['area'] ) {
 		$id = $category->getId();
 		break;
 
+	case 'post':
+		$post = new ae_PostModel();
+		$post->
+		break;
+
 }
 
 

@@ -1,6 +1,6 @@
 <?php
 
-class ae_CategoryModel {
+class ae_CategoryModel extends ae_Model {
 
 
 	protected $id = FALSE;
@@ -14,34 +14,18 @@ class ae_CategoryModel {
 	 * @param {array} $data Category data to initialize the model with. (Optional.)
 	 */
 	public function __construct( $data = array() ) {
-		if( isset( $data['id'] ) ) {
-			$this->setId( $data['id'] );
+		if( isset( $data['ca_id'] ) ) {
+			$this->setId( $data['ca_id'] );
 		}
-		if( isset( $data['parent'] ) ) {
-			$this->setParent( $data['parent'] );
+		if( isset( $data['ca_parent'] ) ) {
+			$this->setParent( $data['ca_parent'] );
 		}
-		if( isset( $data['permalink'] ) ) {
-			$this->setPermalink( $data['permalink'] );
+		if( isset( $data['ca_permalink'] ) ) {
+			$this->setPermalink( $data['ca_permalink'] );
 		}
-		if( isset( $data['title'] ) ) {
-			$this->setTitle( $data['title'] );
+		if( isset( $data['ca_title'] ) ) {
+			$this->setTitle( $data['ca_title'] );
 		}
-	}
-
-
-	/**
-	 * Generate a permalink from the title.
-	 * @param  {string} $title Title to convert into a permalink.
-	 * @return {string}        The permalink.
-	 */
-	static public function generatePermalink( $title ) {
-		$permalink = strtolower( $title );
-		$permalink = str_replace( ' ', '-', $permalink );
-		$permalink = str_replace( '/', '-', $permalink );
-		$permalink = preg_replace( '/[-]+/', '-', $permalink );
-		$permalink = preg_replace( '/[?&#\\\\]/', '', $permalink );
-
-		return $permalink;
 	}
 
 
@@ -78,6 +62,36 @@ class ae_CategoryModel {
 	 */
 	public function getTitle() {
 		return $this->title;
+	}
+
+
+	/**
+	 * Load a category with the given ID.
+	 * @param  {int}     $id ID of the category to load.
+	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
+	 */
+	public function load( $id ) {
+		$this->setId( $id );
+
+		if( $this->id === FALSE ) {
+			return FALSE;
+		}
+
+		$stmt = 'SELECT * FROM ' . AE_TABLE_CATEGORIES . ' WHERE ca_id = :id';
+		$params = array(
+			':id' => $id
+		);
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		$this->setTitle( $result[0]['ca_title'] );
+		$this->setPermalink( $result[0]['ca_permalink'] );
+		$this->setParent( $result[0]['ca_parent'] );
+
+		return TRUE;
 	}
 
 
@@ -151,24 +165,27 @@ class ae_CategoryModel {
 
 	/**
 	 * Set the category parent ID.
-	 * @param  {int}       $id New category parent ID.
-	 * @throws {Exception}     If $id is not valid.
+	 * @param  {int}       $parent New category parent ID.
+	 * @throws {Exception}         If $parent is not valid.
 	 */
-	public function setParent( $id ) {
-		if( !ae_Validate::id( $id ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid ID: ' . htmlspecialchars( $id ) );
+	public function setParent( $parent ) {
+		if( !ae_Validate::id( $parent ) ) {
+			throw new Exception( '[' . get_class() . '] Not a valid ID: ' . htmlspecialchars( $parent ) );
 		}
 
-		$this->id = $id;
+		$this->parent = $parent;
 	}
 
 
 	/**
 	 * Set the category permalink.
-	 * @param {string} $permalink The new permalink.
+	 * @param  {string} $permalink The new permalink.
+	 * @return {string}            The actually used permalink.
 	 */
 	public function setPermalink( $permalink ) {
-		$this->permalink = $permalink;
+		$this->permalink = self::generatePermalink( $permalink );
+
+		return $this->permalink;
 	}
 
 

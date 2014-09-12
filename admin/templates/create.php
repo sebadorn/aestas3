@@ -24,9 +24,7 @@ else if( isset( $_GET['user'] ) ) {
 		<div class="input-group">
 			<h3>Parent category</h3>
 
-			<ul class="choose-categories">
-				<?php ?>
-			<ul>
+			<?php echo ae_Forms::categories( 'category-parent', ae_Forms::INPUT_RADIO ) ?>
 		</div>
 
 		<div class="submit-buttons">
@@ -52,9 +50,7 @@ else if( isset( $_GET['user'] ) ) {
 		<div class="input-group">
 			<h3>Categories</h3>
 
-			<ul class="choose-categories">
-				<?php ?>
-			<ul>
+			<?php echo ae_Forms::categories( 'post-categories', ae_Forms::INPUT_CHECKBOX ) ?>
 		</div>
 
 		<div class="input-group">
