@@ -6,6 +6,16 @@ class ae_Security {
 	static protected $cfg = array(
 		'hash_iterations' => '04'
 	);
+	static protected $validAreas = array(
+		'create', 'dashboard', 'manage', 'media', 'settings'
+	);
+	static protected $validSubAreas = array(
+		'create' => array( 'category', 'page', 'post', 'user' ),
+		'dashboard' => array(),
+		'manage' => array( 'category', 'comment', 'page', 'post', 'user' ),
+		'media' => array(),
+		'settings' => array()
+	);
 
 
 	/**
@@ -76,6 +86,32 @@ class ae_Security {
 			$_SESSION['ae_user'] >= 0 &&
 			$_SESSION['ae_verify'] == self::getSessionVerify()
 		);
+	}
+
+
+	/**
+	 * Check if an area by the given name exists.
+	 * @param  {string} $area Name of the area.
+	 * @return {boolean}      TRUE, if it exists, FALSE otherwise.
+	 */
+	static public function isValidArea( $area ) {
+		return in_array( $area, self::$validAreas );
+	}
+
+
+	/**
+	 * Check if a sub area by the given name exists.
+	 * @param  {string}  $area    The area to check if it has a sub area by this name.
+	 * @param  {string}  $subArea Name of the sub area.
+	 * @return {boolean}          TRUE, if $area has the given $subArea, FALSE otherwise.
+	 * @throws {Exception}        If $area does not exist.
+	 */
+	static public function isValidSubArea( $area, $subArea ) {
+		if( !self::isValidArea( $area ) ) {
+			throw new Exception( '[' . get_class() . '] Unknown area "' . htmlspecialchars( $area ) . '".' );
+		}
+
+		return in_array( $subArea, self::$validSubAreas[$area] );
 	}
 
 

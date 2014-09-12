@@ -22,24 +22,24 @@ $paramsNav = array(
 		'icon' => 'book',
 
 		'Categories' => array(
-			'active' => ( isset( $_GET['categories'] ) && $area == 'manage' ),
-			'link' => 'manage&categories'
+			'active' => ( isset( $_GET['category'] ) && $area == 'manage' ),
+			'link' => 'manage&category'
 		),
 		'Comments' => array(
-			'active' => ( isset( $_GET['comments'] ) && $area == 'manage' ),
-			'link' => 'manage&comments'
+			'active' => ( isset( $_GET['comment'] ) && $area == 'manage' ),
+			'link' => 'manage&comment'
 		),
 		'Pages' => array(
-			'active' => ( isset( $_GET['pages'] ) && $area == 'manage' ),
-			'link' => 'manage&pages'
+			'active' => ( isset( $_GET['page'] ) && $area == 'manage' ),
+			'link' => 'manage&page'
 		),
 		'Posts' => array(
-			'active' => ( isset( $_GET['posts'] ) && $area == 'manage' ),
-			'link' => 'manage&posts'
+			'active' => ( isset( $_GET['post'] ) && $area == 'manage' ),
+			'link' => 'manage&post'
 		),
 		'Users' => array(
-			'active' => ( isset( $_GET['users'] ) && $area == 'manage' ),
-			'link' => 'manage&users'
+			'active' => ( isset( $_GET['user'] ) && $area == 'manage' ),
+			'link' => 'manage&user'
 		)
 	),
 

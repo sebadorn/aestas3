@@ -3,20 +3,18 @@
 require_once( '../core/autoload.php' );
 require_once( '../config.php' );
 
-
 if( !ae_Security::isLoggedIn() ) {
 	header( 'Location: index.php?error=not_logged_in' );
 	exit;
 }
 
 
-$validAreas = array( 'create', 'dashboard', 'manage', 'media', 'settings' );
 $area = 'dashboard';
 
 if( !isset( $_GET['area'] ) ) {
 	$area = 'dashboard';
 }
-else if( !in_array( $_GET['area'], $validAreas ) ) {
+else if( !ae_Security::isValidArea( $_GET['area'] ) ) {
 	$msg = sprintf( 'Area "%s" is not a valid area.', htmlspecialchars( $_GET['area'] ) );
 	ae_Log::warning( $msg );
 }
