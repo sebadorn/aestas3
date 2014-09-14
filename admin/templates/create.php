@@ -36,13 +36,54 @@ else if( isset( $_GET['user'] ) ) {
 	<div class="main-content">
 		<div class="input-group">
 			<input type="text" name="category-title" placeholder="Category title" />
-			<!-- <input type="text" name="category-permalink" placeholder="Permalink" /> -->
+			<input type="hidden" name="category-permalink" placeholder="Permalink" />
 		</div>
 	</div>
 
 <?php elseif( $createArea == 'Page' ): ?>
 
+	<aside>
+		<div class="input-group">
+			<h3>Schedule</h3>
 
+			<div class="input-group-datetime">
+				<span class="icon-add-before icon-before-clock" title="Datetime to publish this page"></span>
+				<?php echo ae_Forms::monthSelect( 'page-publish-month' ) ?>
+				<input type="text" name="page-publish-day" value="<?php echo date( 'd' ) ?>" />
+				<span class="comma">,</span>
+				<input type="text" name="page-publish-year" value="<?php echo date( 'Y' ) ?>" />
+				<span class="at">at</span>
+				<input type="text" name="page-publish-hour" value="<?php echo date( 'H' ) ?>" />
+				<span class="colon">:</span>
+				<input type="text" name="page-publish-minute" value="<?php echo date( 'i' ) ?>" />
+			</div>
+
+			<input id="page-schedule" type="checkbox" name="page-schedule" value="1" />
+			<label for="page-schedule">Schedule page</label>
+		</div>
+
+		<div class="input-group">
+			<h3>Comments</h3>
+
+			<input id="page-comments-disabled" type="checkbox" name="page-comments-disabled" value="1" />
+			<label for="page-comments-disabled">Disable comments</label>
+		</div>
+
+		<div class="submit-buttons">
+			<button type="submit" class="btn btn-draft" name="submit" value="draft">save draft</button>
+			<button type="submit" class="btn btn-publish" name="submit" value="publish">publish</button>
+		</div>
+	</aside>
+
+	<div class="main-content">
+		<div class="input-group">
+			<input type="text" name="page-title" placeholder="Title" />
+			<input type="hidden" name="page-permalink" placeholder="Permalink" />
+		</div>
+		<div class="input-group">
+			<textarea name="page-content" placeholder="Content"></textarea>
+		</div>
+	</div>
 
 <?php elseif( $createArea == 'Post' ): ?>
 
@@ -88,7 +129,7 @@ else if( isset( $_GET['user'] ) ) {
 	<div class="main-content">
 		<div class="input-group">
 			<input type="text" name="post-title" placeholder="Title" />
-			<!-- <input type="text" name="post-permalink" placeholder="Permalink" /> -->
+			<input type="hidden" name="post-permalink" placeholder="Permalink" />
 		</div>
 		<div class="input-group">
 			<textarea name="post-content" placeholder="Content"></textarea>
@@ -100,7 +141,30 @@ else if( isset( $_GET['user'] ) ) {
 
 <?php elseif( $createArea == 'User' ): ?>
 
+	<aside>
+		<div class="input-group">
+			<input type="checkbox" id="user-status" name="user-status" value="disabled" />
+			<label for="user-status-suspended">Suspend account</label>
+		</div>
 
+		<div class="submit-buttons">
+			<button type="submit" class="btn btn-publish" name="submit" value="publish">save</button>
+			<span class="clear"></span>
+		</div>
+	</aside>
+
+	<div class="main-content">
+		<div class="input-group">
+			<input type="text" name="user-name-internal" placeholder="Internal name, used for login" />
+		</div>
+		<div class="input-group">
+			<input type="text" name="user-name-external" placeholder="External name, displayed under posts" />
+			<input type="hidden" name="user-permalink" placeholder="Permalink" />
+		</div>
+		<div class="input-group">
+			<input type="password" name="user-password" placeholder="Password" />
+		</div>
+	</div>
 
 <?php endif ?>
 

@@ -12,5 +12,5 @@ $scriptTime = ae_Timer::stop( 'total' );
 	<span class="stat memory-peak"><?php echo $memoryPeak ?> MB (peak)</span>
 	<span class="stat memory-final"><?php echo $memoryFinal ?> MB (final)</span>
 	<span class="stat db-queries"><?php echo ae_Database::getNumQueries() ?> DB queries</span>
-	<?php echo ae_Log::printAll() ?>
+	<?php ae_Log::printAll() ?>
 </footer>

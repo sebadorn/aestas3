@@ -58,7 +58,8 @@
 		width: 38px;
 	}
 
-	input[name="post-publish-year"] {
+	input[name="post-publish-year"],
+	input[name="page-publish-year"] {
 		width: 54px;
 	}
 

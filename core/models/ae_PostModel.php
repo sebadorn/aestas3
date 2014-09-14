@@ -1,28 +1,12 @@
 <?php
 
-class ae_PostModel extends ae_Model {
+class ae_PostModel extends ae_PageModel {
 
-
-	const COMMENTS_CLOSED = 'closed';
-	const COMMENTS_DISABLED = 'disabled';
-	const COMMENTS_OPEN = 'open';
-
-	const STATUS_DRAFT = 'draft';
-	const STATUS_PUBLISHED = 'published';
-	const STATUS_TRASH = 'trash';
 
 	const TAG_DELIMITER = ';';
 
-	protected $id = FALSE;
 	protected $categories = array();
-	protected $commentsStatus = self::COMMENTS_OPEN;
-	protected $content = '';
-	protected $datetime = '0000-00-00 00:00:00';
-	protected $permalink = '';
-	protected $status = self::STATUS_DRAFT;
 	protected $tags = '';
-	protected $title = '';
-	protected $userId = 0;
 
 
 	/**
@@ -30,6 +14,61 @@ class ae_PostModel extends ae_Model {
 	 * @param {array} $data Post data to initialize the model with. (Optional.)
 	 */
 	public function __construct( $data = array() ) {
+		$this->loadFromData( $data );
+	}
+
+
+	/**
+	 * Get post categories.
+	 * @return {array} Post categories.
+	 */
+	public function getCategories() {
+		return $this->categories;
+	}
+
+
+	/**
+	 * Get post tags.
+	 * @return {array} Post tags.
+	 */
+	public function getTags() {
+		return explode( self::TAG_DELIMITER, $this->tags );
+	}
+
+
+	/**
+	 * Load a post with the given ID.
+	 * @param  {int}     $id ID of the post to load.
+	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
+	 */
+	public function load( $id ) {
+		$this->setId( $id );
+
+		$stmt = '
+			SELECT *
+			FROM `' . AE_TABLE_POSTS . '`
+			WHERE po_id = :id
+		';
+		$params = array(
+			':id' => $id
+		);
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		$this->loadFromData( $result[0] );
+
+		return TRUE;
+	}
+
+
+	/**
+	 * Initialize model from the given data array.
+	 * @param {array} $data The model data.
+	 */
+	protected function loadFromData( $data ) {
 		if( isset( $data['po_id'] ) ) {
 			$this->setId( $data['po_id'] );
 		}
@@ -64,106 +103,91 @@ class ae_PostModel extends ae_Model {
 
 
 	/**
-	 * Get post ID.
-	 * @return {int} Post ID.
+	 * Save the post to DB. If an ID is set, it will updat
+	 * the post, otherwise it will create a new one.
+	 * @return {boolean} TRUE, if saving is successful, FALSE otherwise.
 	 */
-	public function getId() {
-		return $this->id;
-	}
-
-
-	/**
-	 * Get post categories.
-	 * @return {array} Post categories.
-	 */
-	public function getCategories() {
-		return $this->categories;
-	}
-
-
-	/**
-	 * Get post comments status.
-	 * @return {string} Post comments status.
-	 */
-	public function getCommentsStatus() {
-		return $this->commentsStatus;
-	}
-
-
-	/**
-	 * Get post content.
-	 * @return {string} Post content.
-	 */
-	public function getContent() {
-		return $this->content;
-	}
-
-
-	/**
-	 * Get post datetime (time it was published).
-	 * @return {string} Post datetime.
-	 */
-	public function getDatetime() {
-		return $this->datetime;
-	}
-
-
-	/**
-	 * Get post permalink.
-	 * @return {string} Post permalink.
-	 */
-	public function getPermalink() {
-		return $this->permalink;
-	}
-
-
-	/**
-	 * Get post status.
-	 * @return {string} Post status.
-	 */
-	public function getStatus() {
-		return $this->status;
-	}
-
-
-	/**
-	 * Get post tags.
-	 * @return {array} Post tags.
-	 */
-	public function getTags() {
-		return explode( self::TAG_DELIMITER, $this->tags );
-	}
-
-
-	/**
-	 * Get post title.
-	 * @return {string} Post title.
-	 */
-	public function getTitle() {
-		return $this->title;
-	}
-
-
-	/**
-	 * Get post user ID.
-	 * @return {int} Post user ID.
-	 */
-	public function getUserId() {
-		return $this->user;
-	}
-
-
-	/**
-	 * Set the post ID.
-	 * @param  {int}       $id Post ID.
-	 * @throws {Exception}     If $id is not valid.
-	 */
-	public function setId( $id ) {
-		if( !ae_Validate::id( $id ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid ID: ' . htmlspecialchars( $id ) );
+	public function save() {
+		if( $this->datetime == '0000-00-00 00:00:00' ) {
+			$this->setDatetime( date( 'Y-m-d H:i:s' ) );
+		}
+		if( !ae_Validate::id( $this->userId ) ) {
+			$this->setUserId( ae_Security::getCurrentUserId() );
+		}
+		if( $this->permalink == '' ) {
+			$this->setPermalink( $this->title );
 		}
 
-		$this->id = $id;
+		$params = array(
+			':title' => $this->title,
+			':permalink' => $this->permalink,
+			':content' => $this->content,
+			':datetime' => $this->datetime,
+			':tags' => $this->tags,
+			':user' => $this->userId,
+			':comments' => $this->commentsStatus,
+			':status' => $this->status
+		);
+
+		// Create new post
+		if( $this->id === FALSE ) {
+			$stmt = '
+				INSERT INTO `' . AE_TABLE_POSTS . '` (
+					po_title,
+					po_permalink,
+					po_content,
+					po_datetime,
+					po_tags,
+					po_user,
+					po_comments,
+					po_status
+				) VALUES (
+					:title,
+					:permalink,
+					:content,
+					:datetime,
+					:tags,
+					:user,
+					:comments,
+					:status
+				)
+			';
+		}
+		// Update existing one
+		else {
+			$stmt = '
+				UPDATE `' . AE_TABLE_POSTS . '` SET
+					po_title = :title,
+					po_permalink = :permalink,
+					po_content = :content,
+					po_datetime = :datetime,
+					po_tags = :tags,
+					po_user = :user,
+					po_comments = :comments,
+					po_status = :status
+				WHERE
+					po_id = :id
+			';
+			$params[':id'] = $this->id;
+		}
+
+		if( ae_Database::query( $stmt, $params ) === FALSE ) {
+			return FALSE;
+		}
+
+		// If a new post was created, get the new ID
+		if( $this->id === FALSE ) {
+			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as po_id FROM `' . AE_TABLE_POSTS . '`';
+			$result = ae_Database::query( $stmt );
+
+			if( $result === FALSE ) {
+				return FALSE;
+			}
+
+			$this->setId( $result[0]['po_id'] );
+		}
+
+		return TRUE;
 	}
 
 
@@ -191,110 +215,26 @@ class ae_PostModel extends ae_Model {
 
 
 	/**
-	 * Set post comments status.
-	 * @param  {string}    $commentsStatus Post comments status.
-	 * @throws {Exception}                 If $commentsStatus is not a valid post comments status.
-	 */
-	public function setCommentsStatus( $commentsStatus ) {
-		$validStatuses = array( self::COMMENTS_CLOSED, self::COMMENTS_DISABLED, self::COMMENTS_OPEN );
-
-		if( !in_array( $commentStatus, $validStatuses ) ) {
-			$msg = sprintf( '[%s] Not a valid comments status: %d', get_class(), $commentsStatus );
-			throw new Exception( $msg );
-		}
-
-		$this->commentsStatus = $commentsStatus;
-	}
-
-
-	/**
-	 * Set post content.
-	 * @param {string} $content Post content.
-	 */
-	public function setContent( $content ) {
-		$this->content = $content;
-	}
-
-
-	/**
-	 * Set post datetime (time it was published).
-	 * @param  {string}    $datetime The datetime.
-	 * @throws {Exception}           If $datetime is not a valid format.
-	 */
-	public function setDatetime( $datetime ) {
-		if( !ae_Validate::datetime( $datetime ) ) {
-			$msg = sprintf( '[%s] Not a valid datetime: %s', get_class(), $datetime );
-			throw new Exception( $msg );
-		}
-
-		$this->datetime = $datetime;
-	}
-
-
-	/**
-	 * Set post permalink.
-	 * @param  {string} $permalink Post permalink
-	 * @return {string}            The actually used permalink.
-	 */
-	public function setPermalink( $permalink ) {
-		$this->permalink = self::generatePermalink( $permalink );
-
-		return $this->permalink;
-	}
-
-
-	/**
-	 * Set post status.
-	 * @param  {string}    $status Post status.
-	 * @throws {Exception}         If $status is not a valid post status.
-	 */
-	public function setStatus( $status ) {
-		$validStatuses = array( self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_TRASH );
-
-		if( !in_array( $status, $validStatuses ) ) {
-			$msg = sprintf( '[%s] Not a valid post status: %s', get_class(), $status );
-			throw new Exception( $msg );
-		}
-
-		$this->status = $status;
-	}
-
-
-	/**
 	 * Set the post tags.
 	 * @param {string|array} $tags Tags of this post.
 	 */
 	public function setTags( $tags ) {
-		if( is_array( $tags ) ) {
-			$tags = implode( self::TAG_DELIMITER, $tags );
+		if( !is_array( $tags ) ) {
+			$tags = explode( self::TAG_DELIMITER, $tags );
 		}
 
-		$this->tags = $tags;
-	}
+		$tagsCleaned = array();
 
+		foreach( $tags as $tag ) {
+			$tag = trim( $tag );
 
-	/**
-	 * Set the post title.
-	 * @param {string} $title Post title.
-	 */
-	public function setTitle( $title ) {
-		$this->title = $title;
-	}
-
-
-	/**
-	 * Set the post user ID. Validates if the user ID is a valid format,
-	 * but not if the user exists.
-	 * @param  {int}       $userId User ID.
-	 * @throws {Exception}         If $userId is not a valid format.
-	 */
-	public function setUserId( $userId ) {
-		if( !ae_Validate::id( $userId ) ) {
-			$msg = sprintf( '[%s] Not a valid user ID: %s', get_class(), $userId );
-			throw new Exception( $msg );
+			if( $tag !== '' ) {
+				$tagsCleaned[] = $tag;
+			}
 		}
 
-		$this->userId = $userId;
+		$tagsCleaned = implode( self::TAG_DELIMITER, $tagsCleaned );
+		$this->tags = $tagsCleaned;
 	}
 
 

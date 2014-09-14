@@ -14,18 +14,7 @@ class ae_CategoryModel extends ae_Model {
 	 * @param {array} $data Category data to initialize the model with. (Optional.)
 	 */
 	public function __construct( $data = array() ) {
-		if( isset( $data['ca_id'] ) ) {
-			$this->setId( $data['ca_id'] );
-		}
-		if( isset( $data['ca_parent'] ) ) {
-			$this->setParent( $data['ca_parent'] );
-		}
-		if( isset( $data['ca_permalink'] ) ) {
-			$this->setPermalink( $data['ca_permalink'] );
-		}
-		if( isset( $data['ca_title'] ) ) {
-			$this->setTitle( $data['ca_title'] );
-		}
+		$this->loadFromData( $data );
 	}
 
 
@@ -73,11 +62,11 @@ class ae_CategoryModel extends ae_Model {
 	public function load( $id ) {
 		$this->setId( $id );
 
-		if( $this->id === FALSE ) {
-			return FALSE;
-		}
-
-		$stmt = 'SELECT * FROM ' . AE_TABLE_CATEGORIES . ' WHERE ca_id = :id';
+		$stmt = '
+			SELECT *
+			FROM `' . AE_TABLE_CATEGORIES . '`
+			WHERE ca_id = :id
+		';
 		$params = array(
 			':id' => $id
 		);
@@ -87,11 +76,29 @@ class ae_CategoryModel extends ae_Model {
 			return FALSE;
 		}
 
-		$this->setTitle( $result[0]['ca_title'] );
-		$this->setPermalink( $result[0]['ca_permalink'] );
-		$this->setParent( $result[0]['ca_parent'] );
+		$this->loadFromData( $result[0] );
 
 		return TRUE;
+	}
+
+
+	/**
+	 * Initialize model from the given data.
+	 * @param {array} $data The model data.
+	 */
+	protected function loadFromData( $data ) {
+		if( isset( $data['ca_id'] ) ) {
+			$this->setId( $data['ca_id'] );
+		}
+		if( isset( $data['ca_parent'] ) ) {
+			$this->setParent( $data['ca_parent'] );
+		}
+		if( isset( $data['ca_permalink'] ) ) {
+			$this->setPermalink( $data['ca_permalink'] );
+		}
+		if( isset( $data['ca_title'] ) ) {
+			$this->setTitle( $data['ca_title'] );
+		}
 	}
 
 
@@ -118,14 +125,29 @@ class ae_CategoryModel extends ae_Model {
 
 		// Create new category
 		if( $this->id === FALSE ) {
-			$stmt = 'INSERT INTO ' . AE_TABLE_CATEGORIES . ' ( ca_title, ca_permalink, ca_parent )';
-			$stmt .= ' VALUES ( :title, :permalink, :parent )';
+			$stmt = '
+				INSERT INTO `' . AE_TABLE_CATEGORIES . '` (
+					ca_title,
+					ca_permalink,
+					ca_parent
+				)
+				VALUES (
+					:title,
+					:permalink,
+					:parent
+				)
+			';
 		}
 		// Update existing one
 		else {
-			$stmt = 'UPDATE ' . AE_TABLE_CATEGORIES . ' SET';
-			$stmt .= ' ca_title = :title, ca_permalink = :permalink, ca_parent = :parent';
-			$stmt .= ' WHERE ca_id = :id';
+			$stmt = '
+				UPDATE `' . AE_TABLE_CATEGORIES . '` SET
+					ca_title = :title,
+					ca_permalink = :permalink,
+					ca_parent = :parent
+				WHERE
+					ca_id = :id
+			';
 			$params[':id'] = $this->id;
 		}
 
@@ -135,7 +157,7 @@ class ae_CategoryModel extends ae_Model {
 
 		// If a new category was created, get the new ID
 		if( $this->id === FALSE ) {
-			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as ca_id FROM ' . AE_TABLE_CATEGORIES;
+			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as ca_id FROM `' . AE_TABLE_CATEGORIES . '`';
 			$result = ae_Database::query( $stmt );
 
 			if( $result === FALSE ) {

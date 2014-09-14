@@ -53,6 +53,15 @@ class ae_Security {
 
 
 	/**
+	 * Get the user ID of the current user.
+	 * @return {int|boolean} The user ID, if a user is logged in, FALSE otherwise.
+	 */
+	static public function getCurrentUserId() {
+		return isset( $_SESSION['ae_user'] ) ? $_SESSION['ae_user'] : FALSE;
+	}
+
+
+	/**
 	 * Create a kind of user specific value to set in
 	 * the session for verifying purposes.
 	 * @return {string} Value for the session.
