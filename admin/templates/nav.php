@@ -42,4 +42,6 @@
 
 <?php endforeach ?>
 
+	<a href="scripts/logout.php" class="nav-logout icon-add-before icon-before-logout" title="logout"></a>
+
 </nav>

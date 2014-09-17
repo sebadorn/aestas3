@@ -1,0 +1,18 @@
+.manage-entry {
+	background-color: #f0f0f0;
+	margin-bottom: 10px;
+	padding: 10px;
+}
+
+	.manage-entry input[type="checkbox"] {
+		margin-right: 10px;
+	}
+
+	.entry-actions {
+		display: inline-block;
+		float: right;
+	}
+
+		.entry-actions a {
+			margin-left: 10px;
+		}

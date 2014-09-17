@@ -7,10 +7,10 @@ class ae_Security {
 		'hash_iterations' => '04'
 	);
 	static protected $validAreas = array(
-		'create', 'dashboard', 'manage', 'media', 'settings'
+		'create', 'dashboard', 'edit', 'manage', 'media', 'settings'
 	);
 	static protected $validSubAreas = array(
-		'create' => array( 'category', 'page', 'post', 'user' ),
+		'create' => array( 'category', 'comment', 'page', 'post', 'user' ),
 		'dashboard' => array(),
 		'manage' => array( 'category', 'comment', 'page', 'post', 'user' ),
 		'media' => array(),
@@ -143,6 +143,12 @@ class ae_Security {
 	static public function logout() {
 		$_SESSION = array();
 		session_destroy();
+	}
+
+
+	static public function sanitizeHTML( $input ) {
+		// TODO
+		throw new Exception( 'ae_Security::sanitizeHTML method not implemented' );
 	}
 
 

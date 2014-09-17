@@ -113,11 +113,11 @@ class ae_UserModel extends ae_Model {
 		if( isset( $data['u_id'] ) ) {
 			$this->setId( $data['u_id'] );
 		}
-		if( isset( $data['u_name_external'] ) ) {
-			$this->setNameExternal( $data['u_name_external'] );
+		if( isset( $data['u_name_extern'] ) ) {
+			$this->setNameExternal( $data['u_name_extern'] );
 		}
-		if( isset( $data['u_name_internal'] ) ) {
-			$this->setNameInternal( $data['u_name_internal'] );
+		if( isset( $data['u_name_intern'] ) ) {
+			$this->setNameInternal( $data['u_name_intern'] );
 		}
 		if( isset( $data['u_permalink'] ) ) {
 			$this->setPermalink( $data['u_permalink'] );
@@ -188,14 +188,14 @@ class ae_UserModel extends ae_Model {
 
 		// If a new user was created, get the new ID
 		if( $this->id === FALSE ) {
-			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as u_id FROM `' . AE_TABLE_USERS . '`';
+			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as id FROM `' . AE_TABLE_USERS . '`';
 			$result = ae_Database::query( $stmt );
 
 			if( $result === FALSE ) {
 				return FALSE;
 			}
 
-			$this->setId( $result[0]['u_id'] );
+			$this->setId( $result[0]['id'] );
 		}
 
 		return TRUE;

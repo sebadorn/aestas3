@@ -233,14 +233,14 @@ class ae_PageModel extends ae_Model {
 
 		// If a new page was created, get the new ID
 		if( $this->id === FALSE ) {
-			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as pa_id FROM `' . AE_TABLE_PAGES . '`';
+			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as id FROM `' . AE_TABLE_PAGES . '`';
 			$result = ae_Database::query( $stmt );
 
 			if( $result === FALSE ) {
 				return FALSE;
 			}
 
-			$this->setId( $result[0]['pa_id'] );
+			$this->setId( $result[0]['id'] );
 		}
 
 		return TRUE;
@@ -270,7 +270,7 @@ class ae_PageModel extends ae_Model {
 		$validStatuses = array( self::COMMENTS_CLOSED, self::COMMENTS_DISABLED, self::COMMENTS_OPEN );
 
 		if( !in_array( $commentsStatus, $validStatuses ) ) {
-			$msg = sprintf( '[%s] Not a valid comments status: %d', get_class(), $commentsStatus );
+			$msg = sprintf( '[%s] Not a valid comments status: %d', get_class(), htmlspecialchars( $commentsStatus ) );
 			throw new Exception( $msg );
 		}
 
@@ -323,7 +323,7 @@ class ae_PageModel extends ae_Model {
 		$validStatuses = array( self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_TRASH );
 
 		if( !in_array( $status, $validStatuses ) ) {
-			$msg = sprintf( '[%s] Not a valid status: %s', get_class(), $status );
+			$msg = sprintf( '[%s] Not a valid status: %s', get_class(), htmlspecialchars( $status ) );
 			throw new Exception( $msg );
 		}
 

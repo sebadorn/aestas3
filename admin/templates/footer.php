@@ -7,7 +7,6 @@ $scriptTime = ae_Timer::stop( 'total' );
 
 ?>
 <footer class="main-footer">
-	<span class="stat aestas-version">aestas <?php echo AE_VERSION ?></span>
 	<span class="stat script-time"><?php echo $scriptTime ?> seconds</span>
 	<span class="stat memory-peak"><?php echo $memoryPeak ?> MB (peak)</span>
 	<span class="stat memory-final"><?php echo $memoryFinal ?> MB (final)</span>

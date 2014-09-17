@@ -10,6 +10,16 @@ define( 'AE_TABLE_SETTINGS', $dbSettings['table_prefix'] . 'settings' );
 define( 'AE_TABLE_USERS', $dbSettings['table_prefix'] . 'users' );
 define( 'AE_VERSION', '3' );
 
+// Disable Magic Quotes (removed as of PHP 5.4)
+if( get_magic_quotes_runtime() ) {
+	set_magic_quotes_runtime( FALSE );
+}
+
+// Disable register_globals (removed as of PHP 5.4)
+if( ini_get( 'register_globals' ) ) {
+	ini_set( 'register_globals', 0 );
+}
+
 ae_Timer::start( 'total' );
 ae_Log::init( $logSettings );
 ae_Database::connect( $dbSettings );

@@ -14,13 +14,22 @@ if( !isset( $_POST['area'] ) || !ae_Security::isValidSubArea( 'create', $_POST['
 	exit;
 }
 
+if( isset( $_POST['edit-id'] ) && !ae_Validate::id( $_POST['edit-id'] ) ) {
+	header( 'Location: ../admin.php?area=manage&' . $_POST['area'] . '&error=invalid_edit_id' );
+	exit;
+}
+
 
 /**
  * Create the category.
  * @return {int} ID of the new category.
  */
 function createCategory() {
-	if( !isset( $_POST['category-title'], $_POST['category-permalink'] ) ) {
+	if( !isset(
+		$_POST['category-title'],
+		$_POST['category-parent'],
+		$_POST['category-permalink']
+	) ) {
 		header( 'Location: ../admin.php?error=missing_data_for_category' );
 		exit;
 	}
@@ -28,7 +37,13 @@ function createCategory() {
 	$permalink = trim( $_POST['category-permalink'] );
 
 	$category = new ae_CategoryModel();
+
+	if( isset( $_POST['edit-id'] ) ) {
+		$category->setId( $_POST['edit-id'] );
+	}
+
 	$category->setTitle( $_POST['category-title'] );
+	$category->setParent( $_POST['category-parent'] );
 
 	if( $permalink != '' ) {
 		$category->setPermalink( $permalink );
@@ -55,9 +70,6 @@ function createPage() {
 		exit;
 	}
 
-	$comments = isset( $_POST['page-comments-disabled'] )
-	            ? ae_PageModel::COMMENTS_DISABLED
-	            : ae_PageModel::COMMENTS_OPEN;
 	$datetime = sprintf(
 		'%04d-%02d-%02d %02d:%02d:00',
 		$_POST['page-publish-year'], $_POST['page-publish-month'], $_POST['page-publish-day'],
@@ -69,6 +81,11 @@ function createPage() {
 	          : ae_PageModel::STATUS_PUBLISHED;
 
 	$page = new ae_PageModel();
+
+	if( isset( $_POST['edit-id'] ) ) {
+		$page->setId( $_POST['edit-id'] );
+	}
+
 	$page->setTitle( $_POST['page-title'] );
 
 	if( $permalink != '' ) {
@@ -77,7 +94,7 @@ function createPage() {
 
 	$page->setContent( $_POST['page-content'] );
 	$page->setDatetime( isset( $_POST['page-schedule'] ) ? $datetime : date( 'Y-m-d H:i:s' ) );
-	$page->setCommentsStatus( $comments );
+	$page->setCommentsStatus( $_POST['page-comments-status'] );
 	$page->setStatus( $status );
 	$page->setUserId( ae_Security::getCurrentUserId() );
 	$page->save();
@@ -101,9 +118,6 @@ function createPost() {
 		exit;
 	}
 
-	$comments = isset( $_POST['post-comments-disabled'] )
-	            ? ae_PostModel::COMMENTS_DISABLED
-	            : ae_PostModel::COMMENTS_OPEN;
 	$datetime = sprintf(
 		'%04d-%02d-%02d %02d:%02d:00',
 		$_POST['post-publish-year'], $_POST['post-publish-month'], $_POST['post-publish-day'],
@@ -115,6 +129,11 @@ function createPost() {
 	          : ae_PostModel::STATUS_PUBLISHED;
 
 	$post = new ae_PostModel();
+
+	if( isset( $_POST['edit-id'] ) ) {
+		$post->setId( $_POST['edit-id'] );
+	}
+
 	$post->setTitle( $_POST['post-title'] );
 
 	if( $permalink != '' ) {
@@ -123,7 +142,7 @@ function createPost() {
 
 	$post->setContent( $_POST['post-content'] );
 	$post->setDatetime( isset( $_POST['post-schedule'] ) ? $datetime : date( 'Y-m-d H:i:s' ) );
-	$post->setCommentsStatus( $comments );
+	$post->setCommentsStatus( $_POST['post-comments-status'] );
 	$post->setStatus( $status );
 	$post->setTags( $_POST['post-tags'] );
 	$post->setUserId( ae_Security::getCurrentUserId() );
@@ -138,7 +157,7 @@ function createPost() {
  * @param  {int}     $postId Post ID.
  * @return {boolean}         TRUE, if successful added relations or no relations to add, FALSE otherwise.
  */
-function createPost2CategoryRelation( $postId ) {
+function createPost2CategoryRelations( $postId ) {
 	if(
 		!isset( $_POST['post-categories'] ) ||
 		!is_array( $_POST['post-categories'] ) ||
@@ -191,6 +210,11 @@ function createUser() {
 	          : ae_UserModel::STATUS_ACTIVE;
 
 	$user = new ae_UserModel();
+
+	if( isset( $_POST['edit-id'] ) ) {
+		$user->setId( $_POST['edit-id'] );
+	}
+
 	$user->setNameInternal( $_POST['user-name-internal'] );
 	$user->setNameExternal( $_POST['user-name-external'] );
 
@@ -204,6 +228,33 @@ function createUser() {
 
 	return $user->getId();
 }
+
+
+/**
+ * Delete all relations between the edited post and its categories.
+ * @param  {int}     $postId Post ID.
+ * @return {boolean}         TRUE, if successful deleted relations or no relations to delete, FALSE otherwise.
+ */
+function deletePost2CategoryRelations( $postId ) {
+	if( !isset( $_POST['edit-id'] ) ) {
+		return TRUE;
+	}
+
+	$stmt = '
+		DELETE FROM `' . AE_TABLE_POSTS2CATEGORIES. '`
+		WHERE pc_post = :id
+	';
+	$params = array(
+		':id' => $postId
+	);
+
+	if( ae_Database::query( $stmt, $params ) === FALSE ) {
+		return FALSE;
+	}
+
+	return TRUE;
+}
+
 
 
 $id = FALSE;
@@ -220,7 +271,8 @@ switch( $_POST['area'] ) {
 
 	case 'post':
 		$id = createPost();
-		createPost2CategoryRelation( $id );
+		deletePost2CategoryRelations( $id );
+		createPost2CategoryRelations( $id );
 		break;
 
 	case 'user':
@@ -231,7 +283,7 @@ switch( $_POST['area'] ) {
 
 
 if( $id !== FALSE ) {
-	header( 'Location: ../admin.php?area=manage&' . $_POST['area'] . '&id=' . $id );
+	header( 'Location: ../admin.php?area=edit&' . $_POST['area'] . '=' . $id . '&saved' );
 }
 else {
 	ae_Log::printAll();

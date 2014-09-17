@@ -20,8 +20,7 @@ class ae_Database {
 	 * @param {array} $dbInfo Database information.
 	 */
 	static public function connect( $dbInfo ) {
-		$pdoStr = sprintf( 'mysql:host=%s;dbname=%s',
-			$dbInfo['host'], $dbInfo['name'] );
+		$pdoStr = sprintf( 'mysql:host=%s;dbname=%s', $dbInfo['host'], $dbInfo['name'] );
 
 		try {
 			self::$pdo = new PDO(
@@ -42,6 +41,19 @@ class ae_Database {
 	 */
 	static public function getNumQueries() {
 		return self::$numQueries;
+	}
+
+
+	/**
+	 * Get the database server version.
+	 * @return {string} Database server version.
+	 */
+	static public function serverVersion() {
+		if( !self::$pdo ) {
+			throw new Exception( '[' . get_class() . '] No database connection.' );
+		}
+
+		return self::$pdo->getAttribute( PDO::ATTR_SERVER_VERSION );
 	}
 
 

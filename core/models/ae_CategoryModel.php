@@ -3,6 +3,7 @@
 class ae_CategoryModel extends ae_Model {
 
 
+	protected $children = array();
 	protected $id = FALSE;
 	protected $parent = 0;
 	protected $permalink = '';
@@ -15,6 +16,15 @@ class ae_CategoryModel extends ae_Model {
 	 */
 	public function __construct( $data = array() ) {
 		$this->loadFromData( $data );
+	}
+
+
+	/**
+	 * Get children (sub-categories).
+	 * @return {array} Category children.
+	 */
+	public function getChildren() {
+		return $this->children;
 	}
 
 
@@ -77,6 +87,39 @@ class ae_CategoryModel extends ae_Model {
 		}
 
 		$this->loadFromData( $result[0] );
+		$this->loadChildren( $id );
+
+		return TRUE;
+	}
+
+
+	/**
+	 * Load children (sub-categories) of a category.
+	 * @param  {int}     $id ID of the parent category.
+	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
+	 */
+	protected function loadChildren( $id ) {
+		$stmt = '
+			SELECT ca_id
+			FROM `' . AE_TABLE_CATEGORIES . '`
+			WHERE ca_parent = :id
+		';
+		$params = array(
+			':id' => $id
+		);
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		$children = array();
+
+		foreach( $result as $row ) {
+			$children[] = $row['ca_id'];
+		}
+
+		$this->setChildren( $children );
 
 		return TRUE;
 	}
@@ -105,6 +148,8 @@ class ae_CategoryModel extends ae_Model {
 	/**
 	 * Save the category to DB. If an ID is set, it will update
 	 * the category, otherwise it will create a new one.
+	 * Changes on the children attribute will not be saved!
+	 * To change parent-child relations, edit the child.
 	 * @throws {Exception} If title is not valid.
 	 * @return {boolean}   TRUE, if saving is successful, FALSE otherwise.
 	 */
@@ -157,17 +202,30 @@ class ae_CategoryModel extends ae_Model {
 
 		// If a new category was created, get the new ID
 		if( $this->id === FALSE ) {
-			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as ca_id FROM `' . AE_TABLE_CATEGORIES . '`';
+			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as id FROM `' . AE_TABLE_CATEGORIES . '`';
 			$result = ae_Database::query( $stmt );
 
 			if( $result === FALSE ) {
 				return FALSE;
 			}
 
-			$this->setId( $result[0]['ca_id'] );
+			$this->setId( $result[0]['id'] );
 		}
 
 		return TRUE;
+	}
+
+
+	/**
+	 * Set children of category.
+	 * @param {array} $children IDs of child categories.
+	 */
+	public function setChildren( $children ) {
+		if( !is_array( $children ) ) {
+			throw new Exception( '[' . get_class() . '] Child categories must be passed as array.' );
+		}
+
+		$this->children = $children;
 	}
 
 

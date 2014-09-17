@@ -37,6 +37,15 @@ class ae_PostModel extends ae_PageModel {
 
 
 	/**
+	 * Get post tags.
+	 * @return {string} Post tags.
+	 */
+	public function getTagsString() {
+		return $this->tags;
+	}
+
+
+	/**
 	 * Load a post with the given ID.
 	 * @param  {int}     $id ID of the post to load.
 	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
@@ -59,6 +68,45 @@ class ae_PostModel extends ae_PageModel {
 		}
 
 		$this->loadFromData( $result[0] );
+
+		if( !$this->loadCategories() ) {
+			return FALSE;
+		}
+
+		return TRUE;
+	}
+
+
+	/**
+	 * Load post categories.
+	 * @return {boolean} TRUE, if loading succeeded, FALSE otherwise.
+	 */
+	protected function loadCategories() {
+		if( !ae_Validate::id( $this->id ) ) {
+			throw new Exception( '[' . get_class() . '] Cannot load post categories. No valid post ID.' );
+		}
+
+		$stmt = '
+			SELECT pc_category
+			FROM `' . AE_TABLE_POSTS2CATEGORIES . '`
+			WHERE pc_post = :id
+		';
+		$params = array(
+			':id' => $this->id
+		);
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		$categories = array();
+
+		foreach( $result as $row ) {
+			$categories[] = $row['pc_category'];
+		}
+
+		$this->setCategories( $categories );
 
 		return TRUE;
 	}
@@ -177,14 +225,14 @@ class ae_PostModel extends ae_PageModel {
 
 		// If a new post was created, get the new ID
 		if( $this->id === FALSE ) {
-			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as po_id FROM `' . AE_TABLE_POSTS . '`';
+			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as id FROM `' . AE_TABLE_POSTS . '`';
 			$result = ae_Database::query( $stmt );
 
 			if( $result === FALSE ) {
 				return FALSE;
 			}
 
-			$this->setId( $result[0]['po_id'] );
+			$this->setId( $result[0]['id'] );
 		}
 
 		return TRUE;

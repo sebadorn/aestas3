@@ -1,0 +1,29 @@
+table {}
+
+	tr {
+		text-align: left;
+	}
+
+	tr:nth-child( 2n + 1 ) {
+		background-color: #fafafa;
+	}
+
+	th {
+		font-weight: bold;
+	}
+
+	th, td {
+		padding: 10px;
+	}
+
+.cell-danger {
+	background-color: #FF908A;
+}
+
+.cell-okay {
+	background-color: #ABEE84;
+}
+
+.cell-warning {
+	background-color: #FFF7B0;
+}

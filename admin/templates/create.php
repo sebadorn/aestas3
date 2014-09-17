@@ -65,8 +65,7 @@ else if( isset( $_GET['user'] ) ) {
 		<div class="input-group">
 			<h3>Comments</h3>
 
-			<input id="page-comments-disabled" type="checkbox" name="page-comments-disabled" value="1" />
-			<label for="page-comments-disabled">Disable comments</label>
+			<?php echo ae_Forms::postCommentsStatus( 'page-comments-status', ae_PageModel::COMMENTS_OPEN ) ?>
 		</div>
 
 		<div class="submit-buttons">
@@ -116,8 +115,7 @@ else if( isset( $_GET['user'] ) ) {
 		<div class="input-group">
 			<h3>Comments</h3>
 
-			<input id="post-comments-disabled" type="checkbox" name="post-comments-disabled" value="1" />
-			<label for="post-comments-disabled">Disable comments</label>
+			<?php echo ae_Forms::postCommentsStatus( 'post-comments-status', ae_PageModel::COMMENTS_OPEN ) ?>
 		</div>
 
 		<div class="submit-buttons">

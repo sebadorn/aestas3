@@ -1,6 +1,6 @@
 <?php
 
-class ae_CategoryList extends ae_List {
+class ae_PageList extends ae_List {
 
 
 	protected $items = array();
@@ -8,18 +8,18 @@ class ae_CategoryList extends ae_List {
 
 	/**
 	 * Constructor.
-	 * Fetches all categories from the DB.
+	 * Fetches all pages from the DB.
 	 */
 	public function __construct() {
 		$stmt = '
-			SELECT * FROM `' . AE_TABLE_CATEGORIES . '`
-			ORDER BY ca_id ASC
+			SELECT * FROM `' . AE_TABLE_PAGES . '`
+			ORDER BY pa_datetime DESC
 		';
 		$result = ae_Database::query( $stmt );
 
 		if( $result !== FALSE ) {
 			foreach( $result as $item ) {
-				$this->items[] = new ae_CategoryModel( $item );
+				$this->items[] = new ae_PageModel( $item );
 			}
 		}
 

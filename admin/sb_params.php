@@ -7,7 +7,7 @@
 
 $paramsHead = new stdClass;
 $paramsHead->title = 'admin area';
-$paramsHead->css = $area;
+$paramsHead->css = ( $area == 'edit' ) ? 'create' : $area;
 
 
 $paramsNav = array(
@@ -18,27 +18,27 @@ $paramsNav = array(
 	),
 
 	'Manage' => array(
-		'active' => ( $area == 'manage' ),
+		'active' => ( $area == 'manage' || $area == 'edit' ),
 		'icon' => 'book',
 
 		'Categories' => array(
-			'active' => ( isset( $_GET['category'] ) && $area == 'manage' ),
+			'active' => ( isset( $_GET['category'] ) && ( $area == 'manage' || $area == 'edit' ) ),
 			'link' => 'manage&category'
 		),
 		'Comments' => array(
-			'active' => ( isset( $_GET['comment'] ) && $area == 'manage' ),
+			'active' => ( isset( $_GET['comment'] ) && ( $area == 'manage' || $area == 'edit' ) ),
 			'link' => 'manage&comment'
 		),
 		'Pages' => array(
-			'active' => ( isset( $_GET['page'] ) && $area == 'manage' ),
+			'active' => ( isset( $_GET['page'] ) && ( $area == 'manage' || $area == 'edit' ) ),
 			'link' => 'manage&page'
 		),
 		'Posts' => array(
-			'active' => ( isset( $_GET['post'] ) && $area == 'manage' ),
+			'active' => ( isset( $_GET['post'] ) && ( $area == 'manage' || $area == 'edit' ) ),
 			'link' => 'manage&post'
 		),
 		'Users' => array(
-			'active' => ( isset( $_GET['user'] ) && $area == 'manage' ),
+			'active' => ( isset( $_GET['user'] ) && ( $area == 'manage' || $area == 'edit' ) ),
 			'link' => 'manage&user'
 		)
 	),
