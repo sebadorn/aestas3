@@ -63,7 +63,7 @@ else if( isset( $_GET['user'] ) ) {
 	<?php while( $entry = $paList->next() ): ?>
 		<div class="manage-entry page-entry">
 			<input type="checkbox" name="pages[]" value="<?php echo $entry->getId() ?>" />
-			<span class="entry-title"><?php echo $entry->getTitle() ?></span>
+			<span class="entry-title"><?php echo htmlspecialchars( $entry->getTitle() ) ?></span>
 
 			<div class="entry-actions">
 				<a class="entry-edit" href="admin.php?area=edit&amp;page=<?php echo $entry->getId() ?>">edit</a>
@@ -81,7 +81,7 @@ else if( isset( $_GET['user'] ) ) {
 	<?php while( $entry = $poList->next() ): ?>
 		<div class="manage-entry post-entry">
 			<input type="checkbox" name="posts[]" value="<?php echo $entry->getId() ?>" />
-			<span class="entry-title"><?php echo $entry->getTitle() ?></span>
+			<span class="entry-title"><?php echo htmlspecialchars( $entry->getTitle() ) ?></span>
 
 			<div class="entry-actions">
 				<a class="entry-edit" href="admin.php?area=edit&amp;post=<?php echo $entry->getId() ?>">edit</a>
@@ -99,7 +99,7 @@ else if( isset( $_GET['user'] ) ) {
 	<?php while( $entry = $uList->next() ): ?>
 		<div class="manage-entry user-entry">
 			<input type="checkbox" name="users[]" value="<?php echo $entry->getId() ?>" />
-			<span class="entry-title"><?php echo $entry->getNameInternal() ?></span>
+			<span class="entry-title"><?php echo htmlspecialchars( $entry->getNameInternal() ) ?></span>
 
 			<div class="entry-actions">
 				<a class="entry-edit" href="admin.php?area=edit&amp;user=<?php echo $entry->getId() ?>">edit</a>

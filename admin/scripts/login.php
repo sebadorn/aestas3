@@ -13,16 +13,19 @@ $hash = ae_Security::hash( $_POST['userpwd'], $_POST['username'] );
 $query = '
 	SELECT COUNT( u_id ) as hits, u_id, u_status
 	FROM `' . AE_TABLE_USERS . '`
-	WHERE u_pwd = :hash
+	WHERE
+		u_pwd = :hash AND
+		u_name_intern = :name
 ';
 $params = array(
-	':hash' => $hash
+	':hash' => $hash,
+	':name' => $_POST['username']
 );
 $result = ae_Database::query( $query, $params );
 
 
 // Reject: Account is suspended
-if( $result[0]['u_status'] != ae_UserModel::STATUS_ACTIVE ) {
+if( $result[0]['hits'] == '1' && $result[0]['u_status'] != ae_UserModel::STATUS_ACTIVE ) {
 	header( 'Location: ../index.php?error=account_suspended&username=' . urlencode( $_POST['username'] ) );
 	exit;
 }

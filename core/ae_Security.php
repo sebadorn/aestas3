@@ -20,9 +20,9 @@ class ae_Security {
 
 	/**
 	 * Initialize.
-	 * @param {array} $settings The settings.
+	 * @param {array} $settings The settings. (Optional.)
 	 */
-	static public function init( $settings ) {
+	static public function init( $settings = array() ) {
 		foreach( self::$cfg as $key => $value ) {
 			if( isset( $settings[$key] ) ) {
 				self::$cfg[$key] = $settings[$key];
@@ -66,22 +66,36 @@ class ae_Security {
 	 * the session for verifying purposes.
 	 * @return {string} Value for the session.
 	 */
-	static protected function getSessionVerify() {
+	static public function getSessionVerify() {
 		return hash( 'sha256', $_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR'] );
 	}
 
 
 	/**
 	 * Generate a hash. (Blowfish.)
-	 * @param  {string} $input Input to hash.
-	 * @param  {string} $salt  Salt to use.
-	 * @return {string}        Generated hash.
+	 * @param  {string}    $input Input to hash.
+	 * @param  {string}    $salt  Salt to use.
+	 * @return {string}           Generated hash.
+	 * @throws {Exception}        If $salt is empty or the hashing failed.
 	 */
 	static public function hash( $input, $salt ) {
-		$salt = preg_replace( '/[^a-zA-Z0-9.]/', '', $salt );
-		$salt = '$2a$' . self::$cfg['hash_iterations'] . '$' . $salt;
+		if( $salt == '' ) {
+			throw new Exception( '[' . get_class() . '] Salt cannot be empty.' );
+		}
 
-		return crypt( $input, $salt );
+		$salt = md5( $salt );
+		$salt = substr( $salt, 0, 22 );
+		$salt = preg_replace( '/[^a-zA-Z0-9.\/]/', '', $salt );
+		$salt = str_pad( $salt, 22, $salt );
+		$salt = '$2a$' . self::$cfg['hash_iterations'] . '$' . $salt . '$';
+
+		$hash = crypt( $input, $salt );
+
+		if( $hash == '*0' || $hash == '*1' ) {
+			throw new Exception( '[' . get_class() . '] Hashing failed.');
+		}
+
+		return $hash;
 	}
 
 
