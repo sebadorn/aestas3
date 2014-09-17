@@ -1,7 +1,7 @@
 <?php
 
 require_once( '../core/autoload.php' );
-require_once( '../config.php' );
+require_once( '../core/config.php' );
 
 if( !ae_Security::isLoggedIn() ) {
 	header( 'Location: index.php?error=not_logged_in' );

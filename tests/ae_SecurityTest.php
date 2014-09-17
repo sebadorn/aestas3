@@ -11,10 +11,7 @@ class ae_SecurityTest extends PHPUnit_Framework_TestCase {
 	}
 
 
-	public function testSecurity() {
-		$this->assertFalse( ae_Security::getCurrentUserId() );
-		$this->assertNotEquals( trim( ae_Security::getSessionVerify() ), '' );
-
+	public function testHashing() {
 		$this->assertNotEquals( trim( ae_Security::hash( 'lorem ipsum', 'lorem' ) ), '' );
 		$this->assertEquals(
 			ae_Security::hash( 'input 1', 'the salt' ),
@@ -31,8 +28,24 @@ class ae_SecurityTest extends PHPUnit_Framework_TestCase {
 			trim( ae_Security::hash( 'lorem', 'aaaaaaaaaaaaaaaaaaaaaaaa' ) ) // > 22 characters
 		);
 
+		$this->assertTrue( ae_Security::verify(
+			'this is my test input',
+			ae_Security::hash( 'this is my test input', 'some salt' )
+		) );
+		$this->assertFalse( ae_Security::verify(
+			'this is my test input',
+			ae_Security::hash( 'this is wrong', 'more salt' )
+		) );
+
 		$this->setExpectedException( 'Exception' );
 		ae_Security::hash( 'empty salt exception', '' );
+	}
+
+
+	public function testMisc() {
+		$this->assertFalse( ae_Security::getCurrentUserId() );
+		$this->assertNotEquals( trim( ae_Security::getSessionVerify() ), '' );
+		$this->assertFalse( ae_Security::isLoggedIn() );
 	}
 
 

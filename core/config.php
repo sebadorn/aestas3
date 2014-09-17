@@ -33,7 +33,7 @@ $securitySettings = array(
 
 // Initialise
 
-include_once( 'core/setup.php' );
+include_once( 'setup.php' );
 
 
 // Delete data

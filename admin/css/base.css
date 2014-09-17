@@ -158,8 +158,15 @@ h1 {
 					font-weight: bold;
 				}
 
+				.sub-nav a:first-child {
+					border-top-left-radius: 2px;
+					border-top-right-radius: 2px;
+				}
+
 				.sub-nav a:last-child {
 					border: 0;
+					border-bottom-left-radius: 2px;
+					border-bottom-right-radius: 2px;
 				}
 
 	.nav-logout {

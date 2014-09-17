@@ -91,7 +91,7 @@ class ae_Security {
 
 		$hash = crypt( $input, $salt );
 
-		if( $hash == '*0' || $hash == '*1' ) {
+		if( $hash == '*0' || $hash == '*1' || $hash == $salt ) {
 			throw new Exception( '[' . get_class() . '] Hashing failed.');
 		}
 
