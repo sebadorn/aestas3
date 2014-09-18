@@ -3,10 +3,16 @@
 class ae_CategoryModel extends ae_Model {
 
 
+	const STATUS_AVAILABLE = 'available';
+	const STATUS_TRASH = 'trash';
+
+	const TABLE = AE_TABLE_CATEGORIES;
+	const TABLE_ID_FIELD = 'ca_id';
+
 	protected $children = array();
-	protected $id = FALSE;
 	protected $parent = 0;
 	protected $permalink = '';
+	protected $status = self::STATUS_AVAILABLE;
 	protected $title = '';
 
 
@@ -29,15 +35,6 @@ class ae_CategoryModel extends ae_Model {
 
 
 	/**
-	 * Get category ID.
-	 * @return {int} Category ID.
-	 */
-	public function getId() {
-		return $this->id;
-	}
-
-
-	/**
 	 * Get category parent ID.
 	 * @return {int|boolean} Category parent ID or FALSE, if no parent exists.
 	 */
@@ -56,6 +53,15 @@ class ae_CategoryModel extends ae_Model {
 
 
 	/**
+	 * Get category status.
+	 * @return {string} Category status.
+	 */
+	public function getStatus() {
+		return $this->status;
+	}
+
+
+	/**
 	 * Get category title.
 	 * @return {string} Category title.
 	 */
@@ -70,23 +76,13 @@ class ae_CategoryModel extends ae_Model {
 	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
 	 */
 	public function load( $id ) {
-		$this->setId( $id );
+		$modelData = $this->loadModelData( $id );
 
-		$stmt = '
-			SELECT *
-			FROM `' . AE_TABLE_CATEGORIES . '`
-			WHERE ca_id = :id
-		';
-		$params = array(
-			':id' => $id
-		);
-		$result = ae_Database::query( $stmt, $params );
-
-		if( $result === FALSE ) {
+		if( $modelData === FALSE ) {
 			return FALSE;
 		}
 
-		$this->loadFromData( $result[0] );
+		$this->loadFromData( $modelData );
 		$this->loadChildren( $id );
 
 		return TRUE;
@@ -102,10 +98,13 @@ class ae_CategoryModel extends ae_Model {
 		$stmt = '
 			SELECT ca_id
 			FROM `' . AE_TABLE_CATEGORIES . '`
-			WHERE ca_parent = :id
+			WHERE
+				ca_parent = :id AND
+				ca_status = :status
 		';
 		$params = array(
-			':id' => $id
+			':id' => $id,
+			':status' => self::STATUS_AVAILABLE
 		);
 		$result = ae_Database::query( $stmt, $params );
 
@@ -138,6 +137,9 @@ class ae_CategoryModel extends ae_Model {
 		}
 		if( isset( $data['ca_permalink'] ) ) {
 			$this->setPermalink( $data['ca_permalink'] );
+		}
+		if( isset( $data['ca_status'] ) ) {
+			$this->setStatus( $data['ca_status'] );
 		}
 		if( isset( $data['ca_title'] ) ) {
 			$this->setTitle( $data['ca_title'] );
@@ -230,20 +232,6 @@ class ae_CategoryModel extends ae_Model {
 
 
 	/**
-	 * Set the category ID.
-	 * @param  {int}       $id New category ID.
-	 * @throws {Exception}     If $id is not valid.
-	 */
-	public function setId( $id ) {
-		if( !ae_Validate::id( $id ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid ID: ' . htmlspecialchars( $id ) );
-		}
-
-		$this->id = $id;
-	}
-
-
-	/**
 	 * Set the category parent ID.
 	 * @param  {int}       $parent New category parent ID.
 	 * @throws {Exception}         If $parent is not valid.
@@ -266,6 +254,23 @@ class ae_CategoryModel extends ae_Model {
 		$this->permalink = self::generatePermalink( $permalink );
 
 		return $this->permalink;
+	}
+
+
+	/**
+	 * Set category status.
+	 * @param  {string}    $status Category status.
+	 * @throws {Exception}         If $status is not a valid category status.
+	 */
+	public function setStatus( $status ) {
+		$validStatuses = array( self::STATUS_AVAILABLE, self::STATUS_TRASH );
+
+		if( !in_array( $status, $validStatuses ) ) {
+			$msg = sprintf( '[%s] Not a valid status: %s', get_class(), htmlspecialchars( $status ) );
+			throw new Exception( $msg );
+		}
+
+		$this->status = $status;
 	}
 
 

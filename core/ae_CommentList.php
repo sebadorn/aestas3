@@ -12,7 +12,7 @@ class ae_CommentList extends ae_List {
 	 */
 	public function __construct() {
 		$stmt = '
-			SELECT * FROM `' . AE_TABLE_COMMENTS . '`
+			SELECT * FROM `' . ae_CommentModel::TABLE . '`
 			ORDER BY co_datetime DESC
 		';
 		$result = ae_Database::query( $stmt );

@@ -12,7 +12,7 @@ class ae_CategoryList extends ae_List {
 	 */
 	public function __construct() {
 		$stmt = '
-			SELECT * FROM `' . AE_TABLE_CATEGORIES . '`
+			SELECT * FROM `' . ae_CategoryModel::TABLE . '`
 			ORDER BY ca_id ASC
 		';
 		$result = ae_Database::query( $stmt );

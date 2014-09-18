@@ -11,7 +11,9 @@ class ae_PageModel extends ae_Model {
 	const STATUS_PUBLISHED = 'published';
 	const STATUS_TRASH = 'trash';
 
-	protected $id = FALSE;
+	const TABLE = AE_TABLE_PAGES;
+	const TABLE_ID_FIELD = 'pa_id';
+
 	protected $commentsStatus = self::COMMENTS_OPEN;
 	protected $content = '';
 	protected $datetime = '0000-00-00 00:00:00';
@@ -27,15 +29,6 @@ class ae_PageModel extends ae_Model {
 	 */
 	public function __construct( $data = array() ) {
 		$this->loadFromData( $data );
-	}
-
-
-	/**
-	 * Get page ID.
-	 * @return {int} Page ID.
-	 */
-	public function getId() {
-		return $this->id;
 	}
 
 
@@ -99,34 +92,6 @@ class ae_PageModel extends ae_Model {
 	 */
 	public function getUserId() {
 		return $this->userId;
-	}
-
-
-	/**
-	 * Load a page with the given ID.
-	 * @param  {int}     $id ID of the page to load.
-	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
-	 */
-	public function load( $id ) {
-		$this->setId( $id );
-
-		$stmt = '
-			SELECT *
-			FROM `' . AE_TABLE_PAGES . '`
-			WHERE pa_id = :id
-		';
-		$params = array(
-			':id' => $id
-		);
-		$result = ae_Database::query( $stmt, $params );
-
-		if( $result === FALSE ) {
-			return FALSE;
-		}
-
-		$this->loadFromData( $result[0] );
-
-		return TRUE;
 	}
 
 
@@ -244,20 +209,6 @@ class ae_PageModel extends ae_Model {
 		}
 
 		return TRUE;
-	}
-
-
-	/**
-	 * Set the page ID.
-	 * @param  {int}       $id Page ID.
-	 * @throws {Exception}     If $id is not valid.
-	 */
-	public function setId( $id ) {
-		if( !ae_Validate::id( $id ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid ID: ' . htmlspecialchars( $id ) );
-		}
-
-		$this->id = $id;
 	}
 
 

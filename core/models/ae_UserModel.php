@@ -6,7 +6,9 @@ class ae_UserModel extends ae_Model {
 	const STATUS_ACTIVE = 'active';
 	const STATUS_SUSPENDED = 'suspended';
 
-	protected $id = FALSE;
+	const TABLE = AE_TABLE_USERS;
+	const TABLE_ID_FIELD = 'u_id';
+
 	protected $nameExternal = '';
 	protected $nameInternal = '';
 	protected $permalink = '';
@@ -20,15 +22,6 @@ class ae_UserModel extends ae_Model {
 	 */
 	public function __construct( $data = array() ) {
 		$this->loadFromData( $data );
-	}
-
-
-	/**
-	 * Get user ID.
-	 * @return {int} User ID.
-	 */
-	public function getId() {
-		return $this->id;
 	}
 
 
@@ -74,34 +67,6 @@ class ae_UserModel extends ae_Model {
 	 */
 	public function getStatus() {
 		return $this->status;
-	}
-
-
-	/**
-	 * Load a user with the given ID.
-	 * @param  {int}     $id ID of the user to load.
-	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
-	 */
-	public function load( $id ) {
-		$this->setId( $id );
-
-		$stmt = '
-			SELECT *
-			FROM `' . AE_TABLE_USERS . '`
-			WHERE u_id = :id
-		';
-		$params = array(
-			':id' => $id
-		);
-		$result = ae_Database::query( $stmt, $params );
-
-		if( $result === FALSE ) {
-			return FALSE;
-		}
-
-		$this->loadFromData( $result[0] );
-
-		return TRUE;
 	}
 
 
@@ -199,20 +164,6 @@ class ae_UserModel extends ae_Model {
 		}
 
 		return TRUE;
-	}
-
-
-	/**
-	 * Set the user ID.
-	 * @param  {int}       $id New user ID.
-	 * @throws {Exception}     If $id is not valid.
-	 */
-	public function setId( $id ) {
-		if( !ae_Validate::id( $id ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid ID: ' . htmlspecialchars( $id ) );
-		}
-
-		$this->id = $id;
 	}
 
 

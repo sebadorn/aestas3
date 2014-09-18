@@ -3,6 +3,9 @@
 class ae_PostModel extends ae_PageModel {
 
 
+	const TABLE = AE_TABLE_POSTS;
+	const TABLE_ID_FIELD = 'po_id';
+
 	const TAG_DELIMITER = ';';
 
 	protected $categories = array();
@@ -51,23 +54,13 @@ class ae_PostModel extends ae_PageModel {
 	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
 	 */
 	public function load( $id ) {
-		$this->setId( $id );
+		$modelData = $this->loadModelData( $id );
 
-		$stmt = '
-			SELECT *
-			FROM `' . AE_TABLE_POSTS . '`
-			WHERE po_id = :id
-		';
-		$params = array(
-			':id' => $id
-		);
-		$result = ae_Database::query( $stmt, $params );
-
-		if( $result === FALSE ) {
+		if( $modelData === FALSE ) {
 			return FALSE;
 		}
 
-		$this->loadFromData( $result[0] );
+		$this->loadFromData( $modelData );
 
 		if( !$this->loadCategories() ) {
 			return FALSE;
@@ -151,7 +144,7 @@ class ae_PostModel extends ae_PageModel {
 
 
 	/**
-	 * Save the post to DB. If an ID is set, it will updat
+	 * Save the post to DB. If an ID is set, it will update
 	 * the post, otherwise it will create a new one.
 	 * @return {boolean} TRUE, if saving is successful, FALSE otherwise.
 	 */

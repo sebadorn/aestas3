@@ -12,7 +12,7 @@ class ae_PostList extends ae_List {
 	 */
 	public function __construct() {
 		$stmt = '
-			SELECT * FROM `' . AE_TABLE_POSTS . '`
+			SELECT * FROM `' . ae_PostModel::TABLE . '`
 			ORDER BY po_datetime DESC
 		';
 		$result = ae_Database::query( $stmt );

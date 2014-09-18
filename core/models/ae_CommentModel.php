@@ -8,12 +8,14 @@ class ae_CommentModel extends ae_Model {
 	const STATUS_TRASH = 'trash';
 	const STATUS_UNAPPROVED = 'unapproved';
 
+	const TABLE = AE_TABLE_COMMENTS;
+	const TABLE_ID_FIELD = 'co_id';
+
 	protected $authorEmail = '';
 	protected $authorName = 'Anonymous';
 	protected $authorUrl = '';
 	protected $content = '';
 	protected $datetime = '0000-00-00 00:00:00';
-	protected $id = FALSE;
 	protected $postId = FALSE;
 	protected $status = self::STATUS_UNAPPROVED;
 
@@ -73,15 +75,6 @@ class ae_CommentModel extends ae_Model {
 
 
 	/**
-	 * Get comment ID.
-	 * @return {int} Comment ID.
-	 */
-	public function getId() {
-		return $this->id;
-	}
-
-
-	/**
 	 * Get comment post ID.
 	 * @return {int} Comment post ID.
 	 */
@@ -96,34 +89,6 @@ class ae_CommentModel extends ae_Model {
 	 */
 	public function getStatus() {
 		return $this->status;
-	}
-
-
-	/**
-	 * Load a comment with the given ID.
-	 * @param  {int}     $id ID of the comment to load.
-	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
-	 */
-	public function load( $id ) {
-		$this->setId( $id );
-
-		$stmt = '
-			SELECT *
-			FROM `' . AE_TABLE_COMMENTS . '`
-			WHERE co_id = :id
-		';
-		$params = array(
-			':id' => $id
-		);
-		$result = ae_Database::query( $stmt, $params );
-
-		if( $result === FALSE ) {
-			return FALSE;
-		}
-
-		$this->loadFromData( $result[0] );
-
-		return TRUE;
 	}
 
 
@@ -308,20 +273,6 @@ class ae_CommentModel extends ae_Model {
 		}
 
 		$this->datetime = $datetime;
-	}
-
-
-	/**
-	 * Set the comment ID.
-	 * @param  {int}       $id New comment ID.
-	 * @throws {Exception}     If $id is not valid.
-	 */
-	public function setId( $id ) {
-		if( !ae_Validate::id( $id ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid ID: ' . htmlspecialchars( $id ) );
-		}
-
-		$this->id = $id;
 	}
 
 

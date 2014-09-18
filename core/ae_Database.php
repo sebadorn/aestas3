@@ -66,7 +66,7 @@ class ae_Database {
 	static public function query( $statement, $params = array() ) {
 		$pdoStatement = self::$pdo->prepare( $statement );
 
-		if( !$pdoStatement || !$pdoStatement->execute( $params ) ) {
+		if( !$pdoStatement || $pdoStatement->execute( $params ) === FALSE ) {
 			$msg = '[' . get_class() . '] Statement <code>' . $statement . '</code> failed.';
 			ae_Log::error( $msg );
 

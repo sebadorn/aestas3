@@ -12,7 +12,7 @@ class ae_UserList extends ae_List {
 	 */
 	public function __construct() {
 		$stmt = '
-			SELECT * FROM `' . AE_TABLE_USERS . '`
+			SELECT * FROM `' . ae_UserModel::TABLE . '`
 			ORDER BY u_id ASC
 		';
 		$result = ae_Database::query( $stmt );

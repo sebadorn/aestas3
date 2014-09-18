@@ -12,7 +12,7 @@ class ae_PageList extends ae_List {
 	 */
 	public function __construct() {
 		$stmt = '
-			SELECT * FROM `' . AE_TABLE_PAGES . '`
+			SELECT * FROM `' . ae_PageModel::TABLE . '`
 			ORDER BY pa_datetime DESC
 		';
 		$result = ae_Database::query( $stmt );
