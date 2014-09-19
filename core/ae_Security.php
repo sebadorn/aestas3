@@ -41,6 +41,8 @@ class ae_Security {
 			);
 			session_name( 'aestas3' );
 			session_start();
+
+			$_SESSION['last_action'] = time();
 		}
 
 		if( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {

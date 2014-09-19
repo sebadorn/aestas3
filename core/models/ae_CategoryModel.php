@@ -167,7 +167,8 @@ class ae_CategoryModel extends ae_Model {
 		$params = array(
 			':title' => $this->title,
 			':permalink' => $this->permalink,
-			':parent' => $this->parent
+			':parent' => $this->parent,
+			':status' => $this->status
 		);
 
 		// Create new category
@@ -176,12 +177,14 @@ class ae_CategoryModel extends ae_Model {
 				INSERT INTO `' . AE_TABLE_CATEGORIES . '` (
 					ca_title,
 					ca_permalink,
-					ca_parent
+					ca_parent,
+					ca_status
 				)
 				VALUES (
 					:title,
 					:permalink,
-					:parent
+					:parent,
+					:status
 				)
 			';
 		}
@@ -191,7 +194,8 @@ class ae_CategoryModel extends ae_Model {
 				UPDATE `' . AE_TABLE_CATEGORIES . '` SET
 					ca_title = :title,
 					ca_permalink = :permalink,
-					ca_parent = :parent
+					ca_parent = :parent,
+					ca_status = :status
 				WHERE
 					ca_id = :id
 			';

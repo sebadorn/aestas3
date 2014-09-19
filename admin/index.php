@@ -35,5 +35,9 @@ $username = htmlspecialchars( $username );
 
 <?php ae_Log::printAll(); ?>
 
+<script>
+	document.getElementById( "username" ).focus();
+</script>
+
 </body>
 </html>
