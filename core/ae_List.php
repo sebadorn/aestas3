@@ -8,6 +8,45 @@ abstract class ae_List {
 
 
 	/**
+	 * Constructor.
+	 * @param {string} $itemClass     Name of the class to use for the items.
+	 * @param {array}  $filter        Given filter.
+	 * @param {array}  $defaultFilter Default filter.
+	 */
+	public function __construct( $itemClass, $filter, $defaultFilter ) {
+		$filter = self::buildFilter( $filter, $defaultFilter );
+		$table = constant( $itemClass . '::TABLE' );
+
+		// SQL statement for number of items
+		$numStmt = '
+			SELECT COUNT( * ) FROM `' . $table . '`
+		';
+		$numStmt = self::buildStatement( $numStmt, $filter );
+
+		// Combined statement
+		$base = '
+			SELECT *, ( ' . $numStmt . ' ) AS num_entries
+			FROM `' . $table . '`
+		';
+		$stmt = self::buildStatement( $base, $filter );
+
+		$result = ae_Database::query( $stmt );
+
+		if( $result === FALSE || empty( $result ) ) {
+			return;
+		}
+
+		// Initialize items
+		foreach( $result as $item ) {
+			$this->items[] = new $itemClass( $item );
+		}
+
+		reset( $this->items );
+		$this->totalItems = $result[0]['num_entries'];
+	}
+
+
+	/**
 	 * Build the filter array by filling it with missing default values.
 	 * @param  {array} $filter        Received filter array.
 	 * @param  {array} $defaultFilter Default filter values.

@@ -27,7 +27,7 @@ $pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_
 <h1>Manage: <?php echo $manageArea ?></h1>
 
 <?php while( $entry = $list->next() ): ?>
-
+	<?php $status = $entry->getStatus() ?>
 
 	<?php if( $manageArea == 'Categories' ): ?>
 
@@ -44,8 +44,12 @@ $pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_
 
 			<div class="entry-actions">
 				<a class="entry-edit" href="<?php echo $linkEdit ?>">edit</a>
+			<?php if( $status != ae_CategoryModel::STATUS_AVAILABLE ): ?>
 				<a class="entry-available" href="<?php echo $linkAvailable ?>">available</a>
+			<?php endif ?>
+			<?php if( $status != ae_CategoryModel::STATUS_TRASH ): ?>
 				<a class="entry-trash" href="<?php echo $linkTrash ?>">trash</a>
+			<?php endif ?>
 			</div>
 		</div>
 
@@ -67,10 +71,18 @@ $pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_
 
 			<div class="entry-actions">
 				<a class="entry-edit" href="<?php echo $linkEdit ?>">edit</a>
+			<?php if( $status != ae_CommentModel::STATUS_APPROVED ): ?>
 				<a class="entry-approve" href="<?php echo $linkApproved ?>">approve</a>
+			<?php endif ?>
+			<?php if( $status != ae_CommentModel::STATUS_UNAPPROVED ): ?>
 				<a class="entry-unapprove" href="<?php echo $linkUnapproved ?>">unapprove</a>
+			<?php endif ?>
+			<?php if( $status != ae_CommentModel::STATUS_SPAM ): ?>
 				<a class="entry-spam" href="<?php echo $linkSpam ?>">spam</a>
+			<?php endif ?>
+			<?php if( $status != ae_CommentModel::STATUS_TRASH ): ?>
 				<a class="entry-trash" href="<?php echo $linkTrash ?>">trash</a>
+			<?php endif ?>
 			</div>
 		</div>
 
@@ -91,9 +103,15 @@ $pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_
 
 			<div class="entry-actions">
 				<a class="entry-edit" href="<?php echo $linkEdit ?>">edit</a>
+			<?php if( $status != ae_PageModel::STATUS_PUBLISHED ): ?>
 				<a class="entry-publish" href="<?php echo $linkPublished ?>">publish</a>
+			<?php endif ?>
+			<?php if( $status != ae_PageModel::STATUS_DRAFT ): ?>
 				<a class="entry-draft" href="<?php echo $linkDraft ?>">draft</a>
+			<?php endif ?>
+			<?php if( $status != ae_PageModel::STATUS_TRASH ): ?>
 				<a class="entry-trash" href="<?php echo $linkTrash ?>">trash</a>
+			<?php endif ?>
 			</div>
 		</div>
 
@@ -114,9 +132,15 @@ $pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_
 
 			<div class="entry-actions">
 				<a class="entry-edit" href="<?php echo $linkEdit ?>">edit</a>
+			<?php if( $status != ae_PostModel::STATUS_PUBLISHED ): ?>
 				<a class="entry-publish" href="<?php echo $linkPublished ?>">publish</a>
+			<?php endif ?>
+			<?php if( $status != ae_PostModel::STATUS_DRAFT ): ?>
 				<a class="entry-draft" href="<?php echo $linkDraft ?>">draft</a>
+			<?php endif ?>
+			<?php if( $status != ae_PostModel::STATUS_TRASH ): ?>
 				<a class="entry-trash" href="<?php echo $linkTrash ?>">trash</a>
+			<?php endif ?>
 			</div>
 		</div>
 
@@ -136,8 +160,12 @@ $pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_
 
 			<div class="entry-actions">
 				<a class="entry-edit" href="<?php echo $linkEdit ?>">edit</a>
+			<?php if( $status != ae_UserModel::STATUS_ACTIVE ): ?>
 				<a class="entry-active" href="<?php echo $linkActive ?>">active</a>
+			<?php endif ?>
+			<?php if( $status != ae_UserModel::STATUS_SUSPENDED ): ?>
 				<a class="entry-suspend" href="<?php echo $linkSuspended ?>">suspend</a>
+			<?php endif ?>
 			</div>
 		</div>
 
