@@ -1,21 +1,78 @@
+.filter-status-nav {
+	margin-bottom: 20px;
+}
+
+.filter-status-nav::before {
+	content: 'Filter:';
+	display: inline-block;
+}
+
+	.filter-status-nav a {
+		display: inline-block;
+		margin-left: 6px;
+	}
+
+	.filter-status-nav a:hover {
+
+	}
+
+
 .manage-entry {
 	background-color: #f0f0f0;
+	height: 40px;
 	margin-bottom: 10px;
 	padding: 10px;
 }
 
 	.manage-entry input[type="checkbox"] {
 		margin-right: 10px;
+		vertical-align: middle;
+	}
+
+	.entry-title {
+		display: inline-block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		vertical-align: middle;
+		white-space: nowrap;
+		width: calc( 100% - 240px );
 	}
 
 	.entry-actions {
 		display: inline-block;
 		float: right;
+		text-align: right;
+		vertical-align: middle;
+		width: 200px;
 	}
 
 		.entry-actions a {
-			margin-left: 10px;
+			border-bottom: 0;
+			border-left: 1px solid rgba( 0, 0, 0, 0.2 );
+			padding: 0 10px;
+			margin-right: -4px;
 		}
+
+		.entry-actions a:hover {
+			color: #000000;
+		}
+
+		.entry-actions a:first-child {
+			border-left: 0;
+			margin-left: 0;
+		}
+
+		.entry-actions .icon-add-before {
+			border-bottom: 0;
+		}
+
+		.entry-actions .icon-add-before::before {
+			margin-right: 0;
+		}
+
+			.entry-delete {
+				color: #C21010;
+			}
 
 .status-active,
 .status-available,

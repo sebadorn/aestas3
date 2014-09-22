@@ -71,6 +71,18 @@ class ae_UserModel extends ae_Model {
 
 
 	/**
+	 * Check, if given status is a valid user status.
+	 * @param  {string}  $status User status.
+	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
+	 */
+	static public function isValidStatus( $status ) {
+		$validStatuses = array( self::STATUS_ACTIVE, self::STATUS_SUSPENDED );
+
+		return in_array( $status, $validStatuses );
+	}
+
+
+	/**
 	 * Initialize model from the given data array.
 	 * @param {array} $data The model data.
 	 */
@@ -250,9 +262,7 @@ class ae_UserModel extends ae_Model {
 	 * @throws {Exception}         If $status is not a valid user status.
 	 */
 	public function setStatus( $status ) {
-		$validStatuses = array( self::STATUS_ACTIVE, self::STATUS_SUSPENDED );
-
-		if( !in_array( $status, $validStatuses ) ) {
+		if( !self::isValidStatus( $status ) ) {
 			$msg = sprintf( '[%s] Not a valid status: %s', get_class(), $status );
 			throw new Exception( $msg );
 		}

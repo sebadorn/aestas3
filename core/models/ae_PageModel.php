@@ -96,6 +96,18 @@ class ae_PageModel extends ae_Model {
 
 
 	/**
+	 * Check, if given status is a valid page/post status.
+	 * @param  {string}  $status Page/post status.
+	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
+	 */
+	static public function isValidStatus( $status ) {
+		$validStatuses = array( self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_TRASH );
+
+		return in_array( $status, $validStatuses );
+	}
+
+
+	/**
 	 * Initialize model from the given data array.
 	 * @param {array} $data The model data.
 	 */
@@ -303,9 +315,7 @@ class ae_PageModel extends ae_Model {
 	 * @throws {Exception}         If $status is not a valid page status.
 	 */
 	public function setStatus( $status ) {
-		$validStatuses = array( self::STATUS_DRAFT, self::STATUS_PUBLISHED, self::STATUS_TRASH );
-
-		if( !in_array( $status, $validStatuses ) ) {
+		if( !self::isValidStatus( $status ) ) {
 			$msg = sprintf( '[%s] Not a valid status: %s', get_class(), htmlspecialchars( $status ) );
 			throw new Exception( $msg );
 		}

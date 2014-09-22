@@ -43,17 +43,25 @@ else {
 
 $model->load( $_GET[$area] );
 
-try {
-	$model->setStatus( $_GET['status'] );
+if( $_GET['status'] == 'delete' ) {
+	if( $model->delete() ) {
+		header( 'Location: ../admin.php?area=manage&' . $area . '&success=delete' );
+		exit;
+	}
 }
-catch( Exception $e ) {
-	header( 'Location: ../admin.php?area=manage&' . $area . '&error=invalid_status' );
-	exit;
-}
+else {
+	try {
+		$model->setStatus( $_GET['status'] );
+	}
+	catch( Exception $e ) {
+		header( 'Location: ../admin.php?area=manage&' . $area . '&error=invalid_status' );
+		exit;
+	}
 
-if( !$model->save() ) {
-	header( 'Location: ../admin.php?area=manage&' . $area . '&error=saving_failed' );
-	exit;
+	if( !$model->save() ) {
+		header( 'Location: ../admin.php?area=manage&' . $area . '&error=saving_failed' );
+		exit;
+	}
 }
 
 header( 'Location: ../admin.php?area=manage&' . $area . '&success=status_change' );

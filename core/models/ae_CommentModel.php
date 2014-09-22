@@ -113,6 +113,21 @@ class ae_CommentModel extends ae_Model {
 
 
 	/**
+	 * Check, if given status is a valid comment status.
+	 * @param  {string}  $status Comment status.
+	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
+	 */
+	static public function isValidStatus( $status ) {
+		$validStatuses = array(
+			self::STATUS_APPROVED, self::STATUS_SPAM,
+			self::STATUS_TRASH, self::STATUS_UNAPPROVED
+		);
+
+		return in_array( $status, $validStatuses );
+	}
+
+
+	/**
 	 * Initialize model from the given data.
 	 * @param {array} $data The model data.
 	 */
@@ -121,7 +136,7 @@ class ae_CommentModel extends ae_Model {
 			$this->setId( $data['co_id'] );
 		}
 		if( isset( $data['co_ip'] ) ) {
-			$this->setIp( $data['co_ip'] );
+			$this->setAuthorIp( $data['co_ip'] );
 		}
 		if( isset( $data['co_post'] ) ) {
 			$this->setPostId( $data['co_post'] );
@@ -298,7 +313,7 @@ class ae_CommentModel extends ae_Model {
 	 */
 	public function setAuthorIp( $ip ) {
 		if( !ae_Validate::ip( $ip ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid IP.');
+			throw new Exception( '[' . get_class() . '] Not a valid IP: ' . htmlspecialchars( $ip ) );
 		}
 
 		$this->authorIp = $ip;
@@ -361,14 +376,6 @@ class ae_CommentModel extends ae_Model {
 	}
 
 
-	public function setIp( $ip ) {
-		if( !ae_Validate::ip( $ip ) ) {
-			$msg = sprintf( '[%s] Not a valid IP: %s', get_class(), htmlspecialchars( $ip ) );
-			throw new Exception( $msg );
-		}
-	}
-
-
 	/**
 	 * Set the comment post ID.
 	 * @param  {int}       $postId New comment post ID.
@@ -389,12 +396,7 @@ class ae_CommentModel extends ae_Model {
 	 * @throws {Exception}         If $status is not a valid comment status.
 	 */
 	public function setStatus( $status ) {
-		$validStatuses = array(
-			self::STATUS_APPROVED, self::STATUS_SPAM,
-			self::STATUS_TRASH, self::STATUS_UNAPPROVED
-		);
-
-		if( !in_array( $status, $validStatuses ) ) {
+		if( !self::isValidStatus( $status ) ) {
 			$msg = sprintf( '[%s] Not a valid status: %s', get_class(), htmlspecialchars( $status ) );
 			throw new Exception( $msg );
 		}

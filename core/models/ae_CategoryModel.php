@@ -71,6 +71,18 @@ class ae_CategoryModel extends ae_Model {
 
 
 	/**
+	 * Check, if given status is a valid category status.
+	 * @param  {string}  $status Category status.
+	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
+	 */
+	static public function isValidStatus( $status ) {
+		$validStatuses = array( self::STATUS_AVAILABLE, self::STATUS_TRASH );
+
+		return in_array( $status, $validStatuses );
+	}
+
+
+	/**
 	 * Load a category with the given ID.
 	 * @param  {int}     $id ID of the category to load.
 	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
@@ -294,9 +306,7 @@ class ae_CategoryModel extends ae_Model {
 	 * @throws {Exception}         If $status is not a valid category status.
 	 */
 	public function setStatus( $status ) {
-		$validStatuses = array( self::STATUS_AVAILABLE, self::STATUS_TRASH );
-
-		if( !in_array( $status, $validStatuses ) ) {
+		if( !self::isValidStatus( $status ) ) {
 			$msg = sprintf( '[%s] Not a valid status: %s', get_class(), htmlspecialchars( $status ) );
 			throw new Exception( $msg );
 		}

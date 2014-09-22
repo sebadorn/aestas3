@@ -26,6 +26,7 @@ class ae_SiteBuilder {
 		$start = max( $currentPage - $offset, 0 );
 		$end = min( $start + $numLinksAtOnce, $numPages );
 		$start -= $numLinksAtOnce - ( $end - $start );
+		$start = max( $start, 0 );
 
 		for( $i = $start; $i < $end; $i++ ) {
 			$status = ( $i == $currentPage ) ? ' current-offset' : '';
