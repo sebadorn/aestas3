@@ -179,17 +179,12 @@ $pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_
 <?php
 	$loadedItems = $list->getNumItems();
 	$loadedItems = ( $loadedItems == 0 ) ? 1 : $loadedItems;
-	$pages = ceil( $list->getTotalNumItems() / $loadedItems );
-	$pageLink = 'admin.php?' . htmlspecialchars( $_SERVER['QUERY_STRING'] ) . '&amp;offset=';
+	$numPages = ceil( $list->getTotalNumItems() / $loadedItems );
+	$queryStr = preg_replace( '/[?&]offset=?[0-9]*/i', '', $_SERVER['QUERY_STRING'] );
+	$linkBase = 'admin.php?' . htmlspecialchars( $queryStr ) . '&amp;offset=';
+	$currentPage = isset( $_GET['offset'] ) ? $_GET['offset'] : 0;
 ?>
 
 <nav class="manage-page-navigation">
-
-<?php for( $i = 0; $i < $pages; $i++ ): ?>
-	<?php $status = ( $i == $pageOffset ) ? ' current-offset' : '' ?>
-
-	<a class="page-offset<?php echo $status ?>" href="<?php echo $pageLink . $i ?>"><?php echo ( $i + 1 ) ?></a>
-
-<?php endfor ?>
-
+	<?php echo ae_SiteBuilder::pagination( $numPages, $currentPage, $linkBase ) ?>
 </nav>

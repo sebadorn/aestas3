@@ -11,6 +11,8 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 html {
+	background-color: #ffffff;
+	color: #000000;
 	font-size: 14px;
 	height: 100%;
 }

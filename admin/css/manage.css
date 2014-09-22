@@ -33,3 +33,28 @@
 .status-trash {
 	border-bottom-color: #878787;
 }
+
+
+.manage-page-navigation {
+	text-align: center;
+}
+
+	.page-offset {
+		border: 0;
+		border-right: 1px solid #f0f0f0;
+		display: inline-block;
+		padding: 0 8px;
+		text-align: center;
+	}
+
+	.page-offset:hover {
+		background-color: #f0f0f0;
+	}
+
+	.current-offset {
+		color: #000000;
+	}
+
+	.jump-last-page {
+		border-right: 0;
+	}
