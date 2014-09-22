@@ -15,13 +15,16 @@ abstract class ae_List {
 	 */
 	public function __construct( $itemClass, $filter, $defaultFilter ) {
 		$filter = self::buildFilter( $filter, $defaultFilter );
+		$numFilter = $filter;
+		unset( $numFilter['LIMIT'] );
+
 		$table = constant( $itemClass . '::TABLE' );
 
 		// SQL statement for number of items
 		$numStmt = '
 			SELECT COUNT( * ) FROM `' . $table . '`
 		';
-		$numStmt = self::buildStatement( $numStmt, $filter );
+		$numStmt = self::buildStatement( $numStmt, $numFilter );
 
 		// Combined statement
 		$base = '

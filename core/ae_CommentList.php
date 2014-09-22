@@ -6,7 +6,7 @@ class ae_CommentList extends ae_List {
 	const ITEM_CLASS = 'ae_CommentModel';
 
 	static protected $defaultFilter = array(
-		'LIMIT' => '0, 50',
+		'LIMIT' => '0, 20',
 		'ORDER BY' => 'co_datetime DESC'
 	);
 

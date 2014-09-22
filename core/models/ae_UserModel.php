@@ -99,9 +99,12 @@ class ae_UserModel extends ae_Model {
 	/**
 	 * Save the user to DB. If an ID is set, it will update
 	 * the user, otherwise it will create a new one.
-	 * @return {boolean} TRUE, if saving is successful, FALSE otherwise.
+	 * @param  {boolean}   $forceInsert If set to TRUE and an ID has been set, the model will be saved
+	 *                                  as new entry instead of updating. (Optional, default is FALSE.)
+	 * @return {boolean}                TRUE, if saving is successful, FALSE otherwise.
+	 * @throws {Exception}              If $forceInsert is TRUE, but no valid ID is set.
 	 */
-	public function save() {
+	public function save( $forceInsert = FALSE ) {
 		if( $this->permalink == '' ) {
 			$this->setPermalink( $this->nameExternal );
 		}
@@ -114,8 +117,8 @@ class ae_UserModel extends ae_Model {
 			':status' => $this->status
 		);
 
-		// Create new page
-		if( $this->id === FALSE ) {
+		// Create new user
+		if( $this->id === FALSE && !$forceInsert ) {
 			$stmt = '
 				INSERT INTO `' . AE_TABLE_USERS . '` (
 					u_pwd,
@@ -132,8 +135,29 @@ class ae_UserModel extends ae_Model {
 				)
 			';
 		}
+		// Create new user with set ID
+		else if( $this->id !== FALSE && $forceInsert ) {
+			$stmt = '
+				INSERT INTO `' . AE_TABLE_USERS . '` (
+					u_id,
+					u_pwd,
+					u_name_intern,
+					u_name_extern,
+					u_permalink,
+					u_status
+				) VALUES (
+					:id,
+					:password,
+					:nameInternal,
+					:nameExternal,
+					:permalink,
+					:status
+				)
+			';
+			$params[':id'] = $this->id;
+		}
 		// Update existing one
-		else {
+		else if( $this->id !== FALSE ) {
 			$stmt = '
 				UPDATE `' . AE_TABLE_USERS . '` SET
 					u_pwd = :password,
@@ -145,6 +169,10 @@ class ae_UserModel extends ae_Model {
 					u_id = :id
 			';
 			$params[':id'] = $this->id;
+		}
+		else {
+			$msg = sprintf( '[%s] Supposed to insert new user with set ID, but no ID has been set.', get_class() );
+			throw new Exception( $msg );
 		}
 
 		if( ae_Database::query( $stmt, $params ) === FALSE ) {

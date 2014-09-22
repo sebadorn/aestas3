@@ -12,12 +12,14 @@ class ae_CommentModel extends ae_Model {
 	const TABLE_ID_FIELD = 'co_id';
 
 	protected $authorEmail = '';
+	protected $authorIp = '';
 	protected $authorName = 'Anonymous';
 	protected $authorUrl = '';
 	protected $content = '';
 	protected $datetime = '0000-00-00 00:00:00';
 	protected $postId = FALSE;
 	protected $status = self::STATUS_UNAPPROVED;
+	protected $userId = 0;
 
 
 	/**
@@ -35,6 +37,15 @@ class ae_CommentModel extends ae_Model {
 	 */
 	public function getAuthorEmail() {
 		return $this->authorEmail;
+	}
+
+
+	/**
+	 * Get comment author IP.
+	 * @return {string} Comment author IP.
+	 */
+	public function getAuthorIp() {
+		return $this->authorIp;
 	}
 
 
@@ -93,6 +104,15 @@ class ae_CommentModel extends ae_Model {
 
 
 	/**
+	 * Get comment user ID.
+	 * @return {int} User ID, if written by a logged-in user, 0 otherwise.
+	 */
+	public function getUserId() {
+		return $this->userId;
+	}
+
+
+	/**
 	 * Initialize model from the given data.
 	 * @param {array} $data The model data.
 	 */
@@ -100,8 +120,14 @@ class ae_CommentModel extends ae_Model {
 		if( isset( $data['co_id'] ) ) {
 			$this->setId( $data['co_id'] );
 		}
+		if( isset( $data['co_ip'] ) ) {
+			$this->setIp( $data['co_ip'] );
+		}
 		if( isset( $data['co_post'] ) ) {
 			$this->setPostId( $data['co_post'] );
+		}
+		if( isset( $data['co_user'] ) ) {
+			$this->setUserId( $data['co_user'] );
 		}
 		if( isset( $data['co_name'] ) ) {
 			$this->setAuthorName( $data['co_name'] );
@@ -127,10 +153,13 @@ class ae_CommentModel extends ae_Model {
 	/**
 	 * Save the comment to DB. If an ID is set, it will update
 	 * the comment, otherwise it will create a new one.
-	 * @throws {Exception} If no post ID is given.
-	 * @return {boolean}   TRUE, if saving is successful, FALSE otherwise.
+	 * @param  {boolean}   $forceInsert If set to TRUE and an ID has been set, the model will be saved
+	 *                                  as new entry instead of updating. (Optional, default is FALSE.)
+	 * @return {boolean}                TRUE, if saving is successful, FALSE otherwise.
+	 * @throws {Exception}              If no post ID is given.
+	 * @throws {Exception}              If $forceInsert is TRUE, but no valid ID is set.
 	 */
-	public function save() {
+	public function save( $forceInsert = FALSE ) {
 		if( $this->postId === FALSE ) {
 			throw new Exception( '[' . get_class() . '] Cannot save comment. No post ID.' );
 		}
@@ -140,17 +169,21 @@ class ae_CommentModel extends ae_Model {
 			':postId' => $this->postId,
 			':authorName' => $this->authorName,
 			':authorEmail' => $this->authorEmail,
+			':authorIp' => $this->authorIp,
 			':authorUrl' => $this->authorUrl,
 			':datetime' => $this->datetime,
 			':content' => $this->content,
-			':status' => $this->status
+			':status' => $this->status,
+			':userId' => $this->userId
 		);
 
 		// Create new comment
-		if( $this->id === FALSE ) {
+		if( $this->id === FALSE && !$forceInsert ) {
 			$stmt = '
 				INSERT INTO `' . AE_TABLE_COMMENTS . '` (
+					co_ip,
 					co_post,
+					co_user,
 					co_name,
 					co_email,
 					co_url,
@@ -159,7 +192,9 @@ class ae_CommentModel extends ae_Model {
 					co_status
 				)
 				VALUES (
+					:authorIp,
 					:postId,
+					:userId,
 					:authorName,
 					:authorEmail,
 					:authorUrl,
@@ -169,11 +204,43 @@ class ae_CommentModel extends ae_Model {
 				)
 			';
 		}
+		// Create new comment with set ID
+		else if( $this->id !== FALSE && $forceInsert ) {
+			$stmt = '
+				INSERT INTO `' . AE_TABLE_COMMENTS . '` (
+					co_id,
+					co_ip,
+					co_post,
+					co_user,
+					co_name,
+					co_email,
+					co_url,
+					co_datetime,
+					co_content,
+					co_status
+				)
+				VALUES (
+					:id,
+					:authorIp,
+					:postId,
+					:userId,
+					:authorName,
+					:authorEmail,
+					:authorUrl,
+					:datetime,
+					:content,
+					:status
+				)
+			';
+			$params[':id'] = $this->id;
+		}
 		// Update existing one
-		else {
+		else if( $this->id !== FALSE ) {
 			$stmt = '
 				UPDATE `' . AE_TABLE_COMMENTS . '` SET
+					co_ip = :authorIp,
 					co_post = :postId,
+					co_user = :userId,
 					co_name = :authorName,
 					co_email = :authorEmail,
 					co_url = :authorUrl,
@@ -184,6 +251,10 @@ class ae_CommentModel extends ae_Model {
 					co_id = :id
 			';
 			$params[':id'] = $this->id;
+		}
+		else {
+			$msg = sprintf( '[%s] Supposed to insert new comment with set ID, but no ID has been set.', get_class() );
+			throw new Exception( $msg );
 		}
 
 		if( ae_Database::query( $stmt, $params ) === FALSE ) {
@@ -212,11 +283,25 @@ class ae_CommentModel extends ae_Model {
 	 * @throws {Exception}        If neither empty nor valid.
 	 */
 	public function setAuthorEmail( $email ) {
-		if( $email !== '' && !ae_Validate::email( $email ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid email.' );
+		if( $email !== '' && !ae_Validate::emailSloppy( $email ) ) {
+			throw new Exception( '[' . get_class() . '] Not a valid email: ' . htmlspecialchars( $email ) );
 		}
 
 		$this->authorEmail = $email;
+	}
+
+
+	/**
+	 * Set the author IP.
+	 * @param  {string}    $ip The author IP.
+	 * @throws {Exception}     If $ip is not a valid IP.
+	 */
+	public function setAuthorIp( $ip ) {
+		if( !ae_Validate::ip( $ip ) ) {
+			throw new Exception( '[' . get_class() . '] Not a valid IP.');
+		}
+
+		$this->authorIp = $ip;
 	}
 
 
@@ -243,7 +328,7 @@ class ae_CommentModel extends ae_Model {
 	public function setAuthorUrl( $url ) {
 		$url = trim( $url );
 
-		if( !ae_Validate::url( $url ) ) {
+		if( $url !== '' && !ae_Validate::urlSloppy( $url ) ) {
 			$msg = sprintf( '[%s] Not a valid URL: %s', get_class(), htmlspecialchars( $url ) );
 			throw new Exception( $msg );
 		}
@@ -268,11 +353,19 @@ class ae_CommentModel extends ae_Model {
 	 */
 	public function setDatetime( $datetime ) {
 		if( !ae_Validate::datetime( $datetime ) ) {
-			$msg = sprintf( '[%s] Not a valid datetime: %s', get_class(), $datetime );
+			$msg = sprintf( '[%s] Not a valid datetime: %s', get_class(), htmlspecialchars( $datetime ) );
 			throw new Exception( $msg );
 		}
 
 		$this->datetime = $datetime;
+	}
+
+
+	public function setIp( $ip ) {
+		if( !ae_Validate::ip( $ip ) ) {
+			$msg = sprintf( '[%s] Not a valid IP: %s', get_class(), htmlspecialchars( $ip ) );
+			throw new Exception( $msg );
+		}
 	}
 
 
@@ -307,6 +400,20 @@ class ae_CommentModel extends ae_Model {
 		}
 
 		$this->status = $status;
+	}
+
+
+	/**
+	 * Set comment user ID.
+	 * @param  {int}       $userId ID of the user or 0 if not of a registered user.
+	 * @throws {Exception}         If $userId is not a number of < 0.
+	 */
+	public function setUserId( $userId ) {
+		if( !ae_Validate::integer( $userId ) || $userId < 0 ) {
+			throw new Exception( '[' . get_class() . '] User ID must be >= 0.' );
+		}
+
+		$this->userId = $userId;
 	}
 
 

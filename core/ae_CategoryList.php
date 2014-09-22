@@ -6,7 +6,7 @@ class ae_CategoryList extends ae_List {
 	const ITEM_CLASS = 'ae_CategoryModel';
 
 	static protected $defaultFilter = array(
-		'LIMIT' => '0, 25',
+		'LIMIT' => '0, 20',
 		'ORDER BY' => 'ca_id ASC'
 	);
 

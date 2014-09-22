@@ -6,7 +6,7 @@ class ae_PageList extends ae_List {
 	const ITEM_CLASS = 'ae_PageModel';
 
 	static protected $defaultFilter = array(
-		'LIMIT' => '0, 25',
+		'LIMIT' => '0, 20',
 		'ORDER BY' => 'pa_datetime DESC'
 	);
 

@@ -3,3 +3,4 @@ media/*
 
 # files
 *.sublime-*
+db_move.php

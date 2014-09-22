@@ -6,7 +6,7 @@ class ae_PostList extends ae_List {
 	const ITEM_CLASS = 'ae_PostModel';
 
 	static protected $defaultFilter = array(
-		'LIMIT' => '0, 25',
+		'LIMIT' => '0, 20',
 		'ORDER BY' => 'po_datetime DESC'
 	);
 

@@ -130,9 +130,12 @@ class ae_PageModel extends ae_Model {
 	/**
 	 * Save the page to DB. If an ID is set, it will update
 	 * the page, otherwise it will create a new one.
-	 * @return {boolean} TRUE, if saving is successful, FALSE otherwise.
+	 * @param  {boolean}   $forceInsert If set to TRUE and an ID has been set, the model will be saved
+	 *                                  as new entry instead of updating. (Optional, default is FALSE.)
+	 * @return {boolean}                TRUE, if saving is successful, FALSE otherwise.
+	 * @throws {Exception}              If $forceInsert is TRUE, but no valid ID is set.
 	 */
-	public function save() {
+	public function save( $forceInsert = FALSE ) {
 		if( $this->datetime == '0000-00-00 00:00:00' ) {
 			$this->setDatetime( date( 'Y-m-d H:i:s' ) );
 		}
@@ -154,7 +157,7 @@ class ae_PageModel extends ae_Model {
 		);
 
 		// Create new page
-		if( $this->id === FALSE ) {
+		if( $this->id === FALSE && !$forceInsert ) {
 			$stmt = '
 				INSERT INTO `' . AE_TABLE_PAGES . '` (
 					pa_title,
@@ -175,8 +178,33 @@ class ae_PageModel extends ae_Model {
 				)
 			';
 		}
+		// Create new page with set ID
+		else if( $this->id !== FALSE && $forceInsert ) {
+			$stmt = '
+				INSERT INTO `' . AE_TABLE_PAGES . '` (
+					pa_id,
+					pa_title,
+					pa_permalink,
+					pa_content,
+					pa_datetime,
+					pa_user,
+					pa_comments,
+					pa_status
+				) VALUES (
+					:id,
+					:title,
+					:permalink,
+					:content,
+					:datetime,
+					:user,
+					:comments,
+					:status
+				)
+			';
+			$params[':id'] = $this->id;
+		}
 		// Update existing one
-		else {
+		else if( $this->id !== FALSE ) {
 			$stmt = '
 				UPDATE `' . AE_TABLE_PAGES . '` SET
 					pa_title = :title,
@@ -190,6 +218,10 @@ class ae_PageModel extends ae_Model {
 					pa_id = :id
 			';
 			$params[':id'] = $this->id;
+		}
+		else {
+			$msg = sprintf( '[%s] Supposed to insert new page with set ID, but no ID has been set.', get_class() );
+			throw new Exception( $msg );
 		}
 
 		if( ae_Database::query( $stmt, $params ) === FALSE ) {

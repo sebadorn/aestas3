@@ -152,10 +152,13 @@ class ae_CategoryModel extends ae_Model {
 	 * the category, otherwise it will create a new one.
 	 * Changes on the children attribute will not be saved!
 	 * To change parent-child relations, edit the child.
-	 * @throws {Exception} If title is not valid.
-	 * @return {boolean}   TRUE, if saving is successful, FALSE otherwise.
+	 * @param  {boolean}   $forceInsert If set to TRUE and an ID has been set, the model will be saved
+	 *                                  as new entry instead of updating. (Optional, default is FALSE.)
+	 * @return {boolean}                TRUE, if saving is successful, FALSE otherwise.
+	 * @throws {Exception}              If title is not valid.
+	 * @throws {Exception}              If $forceInsert is TRUE, but no valid ID is set.
 	 */
-	public function save() {
+	public function save( $forceInsert = FALSE ) {
 		if( $this->title == '' ) {
 			throw new Exception( '[' . get_class() . '] Cannot save category. Invalid title.' );
 		}
@@ -172,7 +175,7 @@ class ae_CategoryModel extends ae_Model {
 		);
 
 		// Create new category
-		if( $this->id === FALSE ) {
+		if( $this->id === FALSE && !$forceInsert ) {
 			$stmt = '
 				INSERT INTO `' . AE_TABLE_CATEGORIES . '` (
 					ca_title,
@@ -188,8 +191,28 @@ class ae_CategoryModel extends ae_Model {
 				)
 			';
 		}
+		// Create new category with set ID
+		else if( $this->id !== FALSE && $forceInsert ) {
+			$stmt = '
+				INSERT INTO `' . AE_TABLE_CATEGORIES . '` (
+					ca_id,
+					ca_title,
+					ca_permalink,
+					ca_parent,
+					ca_status
+				)
+				VALUES (
+					:id,
+					:title,
+					:permalink,
+					:parent,
+					:status
+				)
+			';
+			$params[':id'] = $this->id;
+		}
 		// Update existing one
-		else {
+		else if( $this->id !== FALSE ) {
 			$stmt = '
 				UPDATE `' . AE_TABLE_CATEGORIES . '` SET
 					ca_title = :title,
@@ -200,6 +223,10 @@ class ae_CategoryModel extends ae_Model {
 					ca_id = :id
 			';
 			$params[':id'] = $this->id;
+		}
+		else {
+			$msg = sprintf( '[%s] Supposed to insert new category with set ID, but no ID has been set.', get_class() );
+			throw new Exception( $msg );
 		}
 
 		if( ae_Database::query( $stmt, $params ) === FALSE ) {

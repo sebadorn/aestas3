@@ -20,7 +20,7 @@ class ae_Database {
 	 * @param {array} $dbInfo Database information.
 	 */
 	static public function connect( $dbInfo ) {
-		$pdoStr = sprintf( 'mysql:host=%s;dbname=%s', $dbInfo['host'], $dbInfo['name'] );
+		$pdoStr = sprintf( 'mysql:host=%s;dbname=%s;charset=utf8', $dbInfo['host'], $dbInfo['name'] );
 
 		try {
 			self::$pdo = new PDO(

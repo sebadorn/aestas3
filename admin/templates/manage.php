@@ -1,27 +1,34 @@
 <?php
 
+$pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_GET['offset'] : 0;
+$itemsPerPage = 20;
+
+$filter = array();
+$filter['LIMIT'] = sprintf( '%d, %d', $pageOffset * $itemsPerPage, $itemsPerPage );
+
 if( isset( $_GET['category'] ) ) {
 	$manageArea = 'Categories';
-	$list = new ae_CategoryList();
+	$list = new ae_CategoryList( $filter );
 }
 else if( isset( $_GET['page'] ) ) {
 	$manageArea = 'Pages';
-	$list = new ae_PageList();
+	$filter['WHERE'] = 'pa_status != "trash"';
+	$list = new ae_PageList( $filter );
 }
 else if( isset( $_GET['post'] ) ) {
 	$manageArea = 'Posts';
-	$list = new ae_PostList();
+	$filter['WHERE'] = 'po_status != "trash"';
+	$list = new ae_PostList( $filter );
 }
 else if( isset( $_GET['user'] ) ) {
 	$manageArea = 'Users';
-	$list = new ae_UserList();
+	$list = new ae_UserList( $filter );
 }
 else {
 	$manageArea = 'Comments';
-	$list = new ae_CommentList();
+	$filter['WHERE'] = 'co_status != "trash" AND co_status != "spam"';
+	$list = new ae_CommentList( $filter );
 }
-
-$pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_GET['offset'] : 0;
 
 ?>
 <h1>Manage: <?php echo $manageArea ?></h1>
@@ -67,7 +74,7 @@ $pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_
 		?>
 		<div class="manage-entry comment-entry status-<?php echo $entry->getStatus() ?>">
 			<input type="checkbox" name="comments[]" value="<?php echo $entry->getId() ?>" />
-			<span class="entry-title"><?php echo $entry->getAuthor() ?></span>
+			<span class="entry-title"><?php echo $entry->getAuthorName() ?></span>
 
 			<div class="entry-actions">
 				<a class="entry-edit" href="<?php echo $linkEdit ?>">edit</a>
@@ -177,14 +184,11 @@ $pageOffset = ( isset( $_GET['offset'] ) && is_numeric( $_GET['offset'] ) ) ? $_
 
 
 <?php
-	$loadedItems = $list->getNumItems();
-	$loadedItems = ( $loadedItems == 0 ) ? 1 : $loadedItems;
-	$numPages = ceil( $list->getTotalNumItems() / $loadedItems );
+	$numPages = ceil( $list->getTotalNumItems() / $itemsPerPage );
 	$queryStr = preg_replace( '/[?&]offset=?[0-9]*/i', '', $_SERVER['QUERY_STRING'] );
 	$linkBase = 'admin.php?' . htmlspecialchars( $queryStr ) . '&amp;offset=';
-	$currentPage = isset( $_GET['offset'] ) ? $_GET['offset'] : 0;
 ?>
 
 <nav class="manage-page-navigation">
-	<?php echo ae_SiteBuilder::pagination( $numPages, $currentPage, $linkBase ) ?>
+	<?php echo ae_SiteBuilder::pagination( $numPages, $pageOffset, $linkBase ) ?>
 </nav>

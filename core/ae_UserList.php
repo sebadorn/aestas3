@@ -6,7 +6,7 @@ class ae_UserList extends ae_List {
 	const ITEM_CLASS = 'ae_UserModel';
 
 	static protected $defaultFilter = array(
-		'LIMIT' => '0, 25',
+		'LIMIT' => '0, 20',
 		'ORDER BY' => 'u_id ASC'
 	);
 

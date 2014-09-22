@@ -1,5 +1,8 @@
 <?php
 
+ini_set( 'default_charset', 'UTF-8' );
+mb_internal_encoding( 'UTF-8' );
+
 define( 'AE_TABLE_CATEGORIES', $dbSettings['table_prefix'] . 'categories' );
 define( 'AE_TABLE_COMMENTS', $dbSettings['table_prefix'] . 'comments' );
 define( 'AE_TABLE_MEDIA', $dbSettings['table_prefix'] . 'media' );

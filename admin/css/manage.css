@@ -1,6 +1,5 @@
 .manage-entry {
 	background-color: #f0f0f0;
-	border-bottom: 3px solid #ffffff;
 	margin-bottom: 10px;
 	padding: 10px;
 }
@@ -20,18 +19,19 @@
 
 .status-active,
 .status-available,
-.status-published {
-	border-bottom: 0;
-}
+.status-published {}
+
 .status-draft {
-	border-bottom-color: #52A3D7;
+	background-color: #C9E2EE;
 }
+
 .status-spam,
 .status-suspended {
-	border-bottom-color: #FF6464;
+	background-color: #F8C2C2;
 }
+
 .status-trash {
-	border-bottom-color: #878787;
+	background-color: #DCD6D1;
 }
 
 
