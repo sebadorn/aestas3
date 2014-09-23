@@ -29,6 +29,7 @@ a {
 
 a:hover {
 	border-bottom-color: transparent;
+	color: #000000;
 }
 
 code {
@@ -209,6 +210,10 @@ section.main-body {
 
 	.main-footer .stat:last-of-type {
 		border-right: 0;
+	}
+
+	.main-footer a {
+		border-bottom: 0;
 	}
 
 

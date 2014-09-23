@@ -22,6 +22,28 @@ class ae_PostModel extends ae_PageModel {
 
 
 	/**
+	 * Delete the loaded post and its relations with categories.
+	 * @return {boolean} FALSE, if deletion failed,
+	 *                   TRUE otherwise (including the case that the model doesn't exist).
+	 */
+	public function delete() {
+		if( !parent::delete() ) {
+			return FALSE;
+		}
+
+		$stmt = '
+			DELETE FROM `' . AE_TABLE_POSTS2CATEGORIES . '`
+			WHERE pc_post = :id
+		';
+		$params = array(
+			':id' => $model->getId()
+		);
+
+		return ( ae_Database::query( $stmt, $params ) !== FALSE );
+	}
+
+
+	/**
 	 * Get post categories.
 	 * @return {array} Post categories.
 	 */

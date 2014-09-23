@@ -26,6 +26,38 @@ class ae_CategoryModel extends ae_Model {
 
 
 	/**
+	 * Delete the loaded category, remove all its parent-child and post relations.
+	 * @return {boolean} FALSE, if deletion failed,
+	 *                   TRUE otherwise (including the case that the model doesn't exist).
+	 */
+	public function delete() {
+		if( !parent::delete() ) {
+			return FALSE;
+		}
+
+		$stmt = '
+			UPDATE `' . self::TABLE . '`
+			SET ca_parent = 0
+			WHERE ca_parent = :id
+		';
+		$params = array(
+			':id' => $this->id
+		);
+
+		if( ae_Database::query( $stmt, $params ) === FALSE ) {
+			return FALSE;
+		}
+
+		$stmt = '
+			DELETE FROM `' . AE_TABLE_POSTS2CATEGORIES . '`
+			WHERE pc_category = :id
+		';
+
+		return ( ae_Database::query( $stmt, $params ) !== FALSE );
+	}
+
+
+	/**
 	 * Get children (sub-categories).
 	 * @return {array} Category children.
 	 */
@@ -76,9 +108,16 @@ class ae_CategoryModel extends ae_Model {
 	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
 	 */
 	static public function isValidStatus( $status ) {
-		$validStatuses = array( self::STATUS_AVAILABLE, self::STATUS_TRASH );
+		return in_array( $status, self::listStatuses() );
+	}
 
-		return in_array( $status, $validStatuses );
+
+	/**
+	 * Get a list of valid statuses.
+	 * @return {array} List of valid statuses.
+	 */
+	static public function listStatuses() {
+		return array( self::STATUS_AVAILABLE, self::STATUS_TRASH );
 	}
 
 

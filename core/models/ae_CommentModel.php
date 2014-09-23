@@ -118,12 +118,19 @@ class ae_CommentModel extends ae_Model {
 	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
 	 */
 	static public function isValidStatus( $status ) {
-		$validStatuses = array(
-			self::STATUS_APPROVED, self::STATUS_SPAM,
-			self::STATUS_TRASH, self::STATUS_UNAPPROVED
-		);
+		return in_array( $status, self::listStatuses() );
+	}
 
-		return in_array( $status, $validStatuses );
+
+	/**
+	 * Get a list of valid statuses.
+	 * @return {array} List of valid statuses.
+	 */
+	static public function listStatuses() {
+		return array(
+			self::STATUS_APPROVED, self::STATUS_UNAPPROVED,
+			self::STATUS_SPAM, self::STATUS_TRASH
+		);
 	}
 
 

@@ -17,7 +17,8 @@ class ae_Forms {
 	 * @return {string}            HTML list with inputs.
 	 */
 	static public function categories( $name, $inputType, $preselect = array(), $omit = array() ) {
-		$caList = new ae_CategoryList();
+		$filter = array( 'WHERE' => 'ca_status = "' . ae_CategoryModel::STATUS_AVAILABLE . '"' );
+		$caList = new ae_CategoryList( $filter );
 		$templateInput = "\t\t";
 		$templateLabel = "\t\t" . '<label for="ca-%s">%s</label>' . PHP_EOL;
 
@@ -50,12 +51,13 @@ class ae_Forms {
 			}
 
 			$out .= "\t" . '<li>' . PHP_EOL;
-			$out .= sprintf( $templateInput, $name, $ca->getId(), $ca->getId() );
+			$input = sprintf( $templateInput, $name, $ca->getId(), $ca->getId() );
 
 			if( in_array( $ca->getId(), $preselect ) ) {
-				$out = str_replace( ' />', ' checked />', $out );
+				$input = str_replace( ' />', ' checked />', $input );
 			}
 
+			$out .= $input;
 			$out .= sprintf( $templateLabel, $ca->getId(), htmlspecialchars( $ca->getTitle() ) );
 			$out .= '</li>' . PHP_EOL;
 
@@ -116,6 +118,25 @@ class ae_Forms {
 				htmlspecialchars( $status )
 			);
 			$out .= PHP_EOL;
+		}
+
+		$out .= '</select>' . PHP_EOL;
+
+		return $out;
+	}
+
+
+	/**
+	 * Get an HTML select for statuses.
+	 * @param  {string} $name     Value for the HTML name attribute.
+	 * @param  {array}  $statuses List of statuses.
+	 * @return {string}           HTML select.
+	 */
+	static public function selectStatus( $name, $statuses ) {
+		$out = '<select name="' . $name . '" class="select-status">' . PHP_EOL;
+
+		foreach( $statuses as $status ) {
+			$out .= '<option value="' . $status . '">' . $status . '</option>' . PHP_EOL;
 		}
 
 		$out .= '</select>' . PHP_EOL;

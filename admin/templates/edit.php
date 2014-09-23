@@ -34,8 +34,16 @@ else if( isset( $_GET['user'] ) && ae_Validate::id( $_GET['user'] ) ) {
 	<input type="hidden" name="edit-id" value="<?php echo $model->getId() ?>" />
 
 <?php if( $editArea == 'Comment' ): ?>
+	<?php
+		$content = str_replace( '<br />', '', $model->getContent() );
+		$content = htmlspecialchars( $content );
+	?>
 
 	<aside>
+		<div class="input-group">
+			<input type="text" value="<?php echo htmlspecialchars( $model->getAuthorIp() ) ?>" placeholder="Author IP" readonly />
+		</div>
+
 		<div class="submit-buttons">
 			<button type="submit" class="btn btn-publish" name="submit" value="publish">save</button>
 			<span class="clear"></span>
@@ -44,7 +52,17 @@ else if( isset( $_GET['user'] ) && ae_Validate::id( $_GET['user'] ) ) {
 
 	<div class="main-content">
 		<div class="input-group">
+			<input type="text" name="comment-author-name" value="<?php echo htmlspecialchars( $model->getAuthorName() ) ?>" placeholder="Author name" />
+		</div>
+		<div class="input-group">
+			<input type="text" name="comment-author-email" value="<?php echo htmlspecialchars( $model->getAuthorEmail() ) ?>" placeholder="Author eMail" />
+		</div>
+		<div class="input-group">
+			<input type="text" name="comment-author-url" value="<?php echo htmlspecialchars( $model->getAuthorUrl() ) ?>" placeholder="Author URL" />
+		</div>
 
+		<div class="input-group">
+			<textarea name="comment-content" placeholder="Content"><?php echo $content ?></textarea>
 		</div>
 	</div>
 

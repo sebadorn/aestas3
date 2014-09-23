@@ -10,7 +10,7 @@ if( !ae_Security::isLoggedIn() ) {
 
 
 if( !isset( $_GET['status'] ) ) {
-	header( 'Location: ../index.php?error=no_status_given' );
+	header( 'Location: ../admin.php?error=no_status_given' );
 	exit;
 }
 
@@ -44,10 +44,13 @@ else {
 $model->load( $_GET[$area] );
 
 if( $_GET['status'] == 'delete' ) {
-	if( $model->delete() ) {
-		header( 'Location: ../admin.php?area=manage&' . $area . '&success=delete' );
+	if( !$model->delete() ) {
+		header( 'Location: ../admin.php?area=manage&' . $area . '&error=delete' );
 		exit;
 	}
+
+	header( 'Location: ../admin.php?area=manage&' . $area . '&success=delete' );
+	exit;
 }
 else {
 	try {

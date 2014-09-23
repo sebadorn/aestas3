@@ -76,9 +76,16 @@ class ae_UserModel extends ae_Model {
 	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
 	 */
 	static public function isValidStatus( $status ) {
-		$validStatuses = array( self::STATUS_ACTIVE, self::STATUS_SUSPENDED );
+		return in_array( $status, self::listStatuses() );
+	}
 
-		return in_array( $status, $validStatuses );
+
+	/**
+	 * Get a list of valid statuses.
+	 * @return {array} List of valid statuses.
+	 */
+	static public function listStatuses() {
+		return array( self::STATUS_ACTIVE, self::STATUS_SUSPENDED );
 	}
 
 

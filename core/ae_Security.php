@@ -7,10 +7,11 @@ class ae_Security {
 		'hash_iterations' => '04'
 	);
 	static protected $validAreas = array(
-		'create', 'dashboard', 'edit', 'manage', 'media', 'settings'
+		'create', 'credits', 'dashboard', 'edit', 'manage', 'media', 'settings'
 	);
 	static protected $validSubAreas = array(
 		'create' => array( 'category', 'comment', 'page', 'post', 'user' ),
+		'credits' => array(),
 		'dashboard' => array(),
 		'manage' => array( 'category', 'comment', 'page', 'post', 'user' ),
 		'media' => array(),

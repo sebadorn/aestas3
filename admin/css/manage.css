@@ -1,4 +1,5 @@
 .filter-status-nav {
+	display: inline-block;
 	margin-bottom: 20px;
 }
 
@@ -12,13 +13,27 @@
 		margin-left: 6px;
 	}
 
-	.filter-status-nav a:hover {
 
+.bulk-action {
+	display: inline-block;
+	float: right;
+	margin-top: -6px;
+	vertical-align: top;
+}
+
+.bulk-action::before {
+	content: 'Status change:';
+	margin-right: 4px;
+}
+
+	.bulk-action button {
+		margin-left: 4px;
 	}
 
 
 .manage-entry {
 	background-color: #f0f0f0;
+	clear: both;
 	height: 40px;
 	margin-bottom: 10px;
 	padding: 10px;
@@ -53,8 +68,8 @@
 			margin-right: -4px;
 		}
 
-		.entry-actions a:hover {
-			color: #000000;
+		.entry-actions a::before {
+			cursor: pointer;
 		}
 
 		.entry-actions a:first-child {
