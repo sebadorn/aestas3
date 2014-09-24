@@ -148,7 +148,7 @@ class ae_CategoryModel extends ae_Model {
 	protected function loadChildren( $id ) {
 		$stmt = '
 			SELECT ca_id
-			FROM `' . AE_TABLE_CATEGORIES . '`
+			FROM `' . self::TABLE . '`
 			WHERE
 				ca_parent = :id AND
 				ca_status = :status
@@ -228,7 +228,7 @@ class ae_CategoryModel extends ae_Model {
 		// Create new category
 		if( $this->id === FALSE && !$forceInsert ) {
 			$stmt = '
-				INSERT INTO `' . AE_TABLE_CATEGORIES . '` (
+				INSERT INTO `' . self::TABLE . '` (
 					ca_title,
 					ca_permalink,
 					ca_parent,
@@ -245,7 +245,7 @@ class ae_CategoryModel extends ae_Model {
 		// Create new category with set ID
 		else if( $this->id !== FALSE && $forceInsert ) {
 			$stmt = '
-				INSERT INTO `' . AE_TABLE_CATEGORIES . '` (
+				INSERT INTO `' . self::TABLE . '` (
 					ca_id,
 					ca_title,
 					ca_permalink,
@@ -265,7 +265,7 @@ class ae_CategoryModel extends ae_Model {
 		// Update existing one
 		else if( $this->id !== FALSE ) {
 			$stmt = '
-				UPDATE `' . AE_TABLE_CATEGORIES . '` SET
+				UPDATE `' . self::TABLE . '` SET
 					ca_title = :title,
 					ca_permalink = :permalink,
 					ca_parent = :parent,
@@ -286,14 +286,7 @@ class ae_CategoryModel extends ae_Model {
 
 		// If a new category was created, get the new ID
 		if( $this->id === FALSE ) {
-			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as id FROM `' . AE_TABLE_CATEGORIES . '`';
-			$result = ae_Database::query( $stmt );
-
-			if( $result === FALSE ) {
-				return FALSE;
-			}
-
-			$this->setId( $result[0]['id'] );
+			$this->setId( $this->getLastInsertedId() );
 		}
 
 		return TRUE;

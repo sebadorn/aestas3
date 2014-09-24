@@ -50,14 +50,18 @@
 		text-overflow: ellipsis;
 		vertical-align: middle;
 		white-space: nowrap;
-		width: calc( 100% - 240px );
+		width: calc( 100% - 260px );
+	}
+
+	.flags {
+		color: #404040;
+		display: inline-block;
 	}
 
 	.entry-actions {
 		display: inline-block;
 		float: right;
 		text-align: right;
-		vertical-align: middle;
 		width: 200px;
 	}
 

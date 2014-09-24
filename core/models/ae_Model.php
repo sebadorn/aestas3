@@ -59,6 +59,26 @@ abstract class ae_Model {
 
 
 	/**
+	 * Get the last inserted ID of the DB table for this model.
+	 * @return {int|boolean} The ID on success, FALSE on failure.
+	 */
+	public function getLastInsertedId() {
+		$class = get_class( $this );
+		$stmt = '
+			SELECT DISTINCT LAST_INSERT_ID() as id
+			FROM `' . constant( $class . '::TABLE' ) . '`
+		';
+		$result = ae_Database::query( $stmt );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		return $result[0]['id'];
+	}
+
+
+	/**
 	 * Get the ID.
 	 * @return {int} ID.
 	 */

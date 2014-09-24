@@ -37,11 +37,29 @@ else if( isset( $_GET['user'] ) && ae_Validate::id( $_GET['user'] ) ) {
 	<?php
 		$content = str_replace( '<br />', '', $model->getContent() );
 		$content = htmlspecialchars( $content );
+
+		$userList = new ae_UserList();
 	?>
 
 	<aside>
 		<div class="input-group">
+			<h3>IP</h3>
+
 			<input type="text" value="<?php echo htmlspecialchars( $model->getAuthorIp() ) ?>" placeholder="Author IP" readonly />
+		</div>
+
+		<div class="input-group">
+			<h3>User</h3>
+
+			<select name="comment-user">
+				<option value="0">none</option>
+			<?php while( $u = $userList->next() ): ?>
+				<?php $select = ( $u->getId() == $model->getUserId() ) ? ' selected' : '' ?>
+				<option value="<?php echo $u->getId() ?>"<?php echo $select ?>>
+					<?php echo $u->getId() . ': ' . htmlspecialchars( $u->getNameExternal() ) ?>
+				</option>
+			<?php endwhile ?>
+			</select>
 		</div>
 
 		<div class="submit-buttons">

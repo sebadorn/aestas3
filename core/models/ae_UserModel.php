@@ -200,14 +200,7 @@ class ae_UserModel extends ae_Model {
 
 		// If a new user was created, get the new ID
 		if( $this->id === FALSE ) {
-			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as id FROM `' . AE_TABLE_USERS . '`';
-			$result = ae_Database::query( $stmt );
-
-			if( $result === FALSE ) {
-				return FALSE;
-			}
-
-			$this->setId( $result[0]['id'] );
+			$this->setId( $this->getLastInsertedId() );
 		}
 
 		return TRUE;

@@ -27,6 +27,12 @@ $securitySettings = array(
 );
 
 
+// Timezone
+// @see http://php.net/manual/en/timezones.php
+
+date_default_timezone_set( 'Europe/Berlin' );
+
+
 
 // ----- NO MORE EDITS BELOW THIS LINE -----
 

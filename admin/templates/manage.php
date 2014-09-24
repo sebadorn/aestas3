@@ -136,6 +136,12 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
 			<span class="entry-title"><?php echo $entry->getAuthorName() ?></span>
 
+			<div class="flags">
+			<?php if( $entry->getUserId() > 0 ): ?>
+				<span class="flag icon-add-before icon-before-person"></span>
+			<?php endif ?>
+			</div>
+
 			<div class="entry-actions">
 				<a title="edit" class="entry-edit icon-add-before icon-before-pen" href="<?php echo $linkEdit ?>"></a>
 			<?php if( $status != ae_CommentModel::STATUS_APPROVED ): ?>

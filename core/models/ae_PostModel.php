@@ -274,14 +274,7 @@ class ae_PostModel extends ae_PageModel {
 
 		// If a new post was created, get the new ID
 		if( $this->id === FALSE ) {
-			$stmt = 'SELECT DISTINCT LAST_INSERT_ID() as id FROM `' . AE_TABLE_POSTS . '`';
-			$result = ae_Database::query( $stmt );
-
-			if( $result === FALSE ) {
-				return FALSE;
-			}
-
-			$this->setId( $result[0]['id'] );
+			$this->setId( $this->getLastInsertedId() );
 		}
 
 		return TRUE;

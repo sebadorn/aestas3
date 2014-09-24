@@ -267,7 +267,8 @@ function updateComment() {
 			$_POST['comment-author-name'],
 			$_POST['comment-author-email'],
 			$_POST['comment-author-url'],
-			$_POST['comment-content']
+			$_POST['comment-content'],
+			$_POST['comment-user']
 		) ||
 		$_POST['comment-content'] === ''
 	) {
@@ -283,6 +284,7 @@ function updateComment() {
 	$comment->setAuthorEmail( $_POST['comment-author-email'] );
 	$comment->setAuthorUrl( $_POST['comment-author-url'] );
 	$comment->setContent( $content );
+	$comment->setUserId( $_POST['comment-user'] );
 
 	if( !$comment->save() ) {
 		return FALSE;
