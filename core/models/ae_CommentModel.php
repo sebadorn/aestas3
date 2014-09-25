@@ -327,7 +327,7 @@ class ae_CommentModel extends ae_Model {
 	public function setAuthorName( $name ) {
 		$name = trim( $name );
 
-		if( strlen( $name ) == 0 ) {
+		if( mb_strlen( $name ) == 0 ) {
 			$name = 'Anonymous';
 		}
 

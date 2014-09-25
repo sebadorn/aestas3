@@ -183,7 +183,7 @@ function createPost2CategoryRelations( $postId ) {
 		}
 	}
 
-	$stmt = substr( $stmt, 0, -2 );
+	$stmt = mb_substr( $stmt, 0, -2 );
 
 	if( ae_Database::query( $stmt, $params ) === FALSE ) {
 		return FALSE;

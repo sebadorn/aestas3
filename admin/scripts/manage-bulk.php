@@ -94,7 +94,7 @@ if( $status == 'delete' ) {
 		$params[':entry' . $id] = $id;
 	}
 
-	$stmt = substr( $stmt, 0, -4 );
+	$stmt = mb_substr( $stmt, 0, -4 );
 	$stmt .= ' )';
 }
 // Change statuses
@@ -117,7 +117,7 @@ else {
 		$params[':entry' . $id] = $id;
 	}
 
-	$stmt = substr( $stmt, 0, -4 );
+	$stmt = mb_substr( $stmt, 0, -4 );
 }
 
 
@@ -142,7 +142,7 @@ if( $status == 'delete' && $_POST['area'] == 'post' ) {
 		$params[':entry' . $id] = $id;
 	}
 
-	$stmt = substr( $stmt, 0, -4 );
+	$stmt = mb_substr( $stmt, 0, -4 );
 
 	if( ae_Database::query( $stmt, $params ) === FALSE ) {
 		header( 'Location: ../admin.php?area=manage&' . $_POST['area'] . '&error=query_delete_post_relations_failed' );

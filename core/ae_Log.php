@@ -4,12 +4,33 @@ class ae_Log {
 
 
 	static protected $logged = array(
+		'debug' => array(),
 		'errors' => array(),
 		'warnings' => array()
 	);
 	static protected $cfg = array(
 		'enabled' => true
 	);
+
+
+	/**
+	 * Log a debug message.
+	 * @param {string} $msg Debug message to log.
+	 */
+	static public function debug( $msg ) {
+		if( self::$cfg['enabled'] ) {
+			self::$logged['debug'][] = self::format( $msg );
+		}
+	}
+
+
+	/**
+	 * Check if debug messages have been logged.
+	 * @return {int} Number of logged debug messages.
+	 */
+	static public function hasDebug() {
+		return count( self::$logged['debug'] );
+	}
 
 
 	/**
@@ -26,7 +47,7 @@ class ae_Log {
 	 * @return {int} Number of logged messages.
 	 */
 	static public function hasMessages() {
-		return self::hasErrors() + self::hasWarnings();
+		return self::hasErrors() + self::hasWarnings() + self::hasDebug();
 	}
 
 
@@ -83,6 +104,34 @@ class ae_Log {
 		$out = '';
 		$out .= self::printErrors( FALSE );
 		$out .= self::printWarnings( FALSE );
+		$out .= self::printDebug( FALSE );
+
+		if( !$echo ) {
+			return $out;
+		}
+
+		echo $out;
+	}
+
+
+	/**
+	 * Print all logged debug messages as HTML.
+	 * @param  {boolean} $echo If true (default) the HTML will be directly printed.
+	 *                         Otherwise it will be returned as string.
+	 * @return {string}        The HTML, but only if $echo == FALSE.
+	 */
+	static public function printDebug( $echo = TRUE ) {
+		$out = '';
+
+		if( self::hasDebug() ) {
+			$out .= '<ol class="log log-debug">' . PHP_EOL;
+
+			foreach( self::$logged['debug'] as $err ) {
+				$out .= "\t" . '<li class="log-entry log-entry-debug">' . $err . '</li>' . PHP_EOL;
+			}
+
+			$out .= '</ol>' . PHP_EOL;
+		}
 
 		if( !$echo ) {
 			return $out;

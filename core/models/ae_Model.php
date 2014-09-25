@@ -22,7 +22,8 @@ abstract class ae_Model {
 	 */
 	public function delete() {
 		if( !ae_Validate::id( $this->id ) ) {
-			throw new Exception( '[' . get_class() . '] Cannot delete model. No valid ID.' );
+			$msg = sprintf( '[%s] Cannot delete model. No valid ID.', get_class() );
+			throw new Exception( $msg );
 		}
 
 		$class = get_class( $this );
@@ -139,7 +140,8 @@ abstract class ae_Model {
 	 */
 	public function setId( $id ) {
 		if( !ae_Validate::id( $id ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid ID: ' . htmlspecialchars( $id ) );
+			$msg = sprintf( '[%s] Not a valid ID: %s', get_class(), htmlspecialchars( $id ) );
+			throw new Exception( $msg );
 		}
 
 		$this->id = $id;

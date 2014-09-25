@@ -87,7 +87,7 @@ class ae_Security {
 		}
 
 		$salt = md5( $salt );
-		$salt = substr( $salt, 0, 22 );
+		$salt = mb_substr( $salt, 0, 22 );
 		$salt = preg_replace( '/[^a-zA-Z0-9.\/]/', '', $salt );
 		$salt = str_pad( $salt, 22, $salt );
 		$salt = '$2a$' . self::$cfg['hash_iterations'] . '$' . $salt . '$';

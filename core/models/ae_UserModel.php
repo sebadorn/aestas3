@@ -222,7 +222,7 @@ class ae_UserModel extends ae_Model {
 	 * @throws {Exception}       If $name is empty.
 	 */
 	public function setNameInternal( $name ) {
-		if( strlen( $name ) == 0 ) {
+		if( mb_strlen( $name ) == 0 ) {
 			throw new Exception( '[' . get_class() . '] Internal name cannot be empty.' );
 		}
 
@@ -236,7 +236,7 @@ class ae_UserModel extends ae_Model {
 	 * @throws {Exception}       If $hash is empty.
 	 */
 	public function setPasswordHash( $hash ) {
-		if( strlen( $hash ) == 0 ) {
+		if( mb_strlen( $hash ) == 0 ) {
 			throw new Exception( '[' . get_class() . '] Password hash cannot be empty.' );
 		}
 

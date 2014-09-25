@@ -353,7 +353,7 @@ class ae_CategoryModel extends ae_Model {
 	 * @throws {Exception}        If $title is empty.
 	 */
 	public function setTitle( $title ) {
-		if( strlen( $title ) == 0 ) {
+		if( mb_strlen( $title ) == 0 ) {
 			throw new Exception( '[' . get_class() . '] Category title cannot be empty.' );
 		}
 

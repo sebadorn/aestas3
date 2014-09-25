@@ -1,10 +1,10 @@
 <?php
 
 function autoload( $classname ) {
-	if( substr( $classname, -5, 5 ) == 'Model' ) {
+	if( mb_substr( $classname, -5, 5, 'UTF-8' ) == 'Model' ) {
 		$classname = 'models/' . $classname;
 	}
-	else if( substr( $classname, 0, 4 ) == 'ae_i' ) {
+	else if( mb_substr( $classname, 0, 4, 'UTF-8' ) == 'ae_i' ) {
 		$classname = 'interfaces/' . $classname;
 	}
 

@@ -9,7 +9,12 @@ class ae_MediaModel extends ae_Model {
 	const TABLE = AE_TABLE_MEDIA;
 	const TABLE_ID_FIELD = 'm_id';
 
+	protected $datetime = '0000-00-00 00:00:00';
+	protected $name = '';
 	protected $status = self::STATUS_AVAILABLE;
+	protected $tmpName = '';
+	protected $type = '';
+	protected $userId = 0;
 
 
 	/**
@@ -32,9 +37,28 @@ class ae_MediaModel extends ae_Model {
 		}
 
 		// TODO: delete from file system
-		throw new Exception( '[' . get_class() . '] Deleting from file system not yet implemented!' );
+		$msg = sprintf( '[%s] Deleting from file system not yet implemented!', get_class() );
+		throw new Exception( $msg );
 
 		return TRUE;
+	}
+
+
+	/**
+	 * Get datetime of upload.
+	 * @return {string} Datetime of upload.
+	 */
+	public function getDatetime() {
+		return $this->datetime;
+	}
+
+
+	/**
+	 * Get media (file) name.
+	 * @return {string} Get the name of the file, including extension.
+	 */
+	public function getName() {
+		return $this->name;
 	}
 
 
@@ -44,6 +68,25 @@ class ae_MediaModel extends ae_Model {
 	 */
 	public function getStatus() {
 		return $this->status;
+	}
+
+
+	/**
+	 * Get the temporary name after uploading.
+	 * Will not be saved to DB.
+	 * @return {string} The temporary name after uploading or an empty string.
+	 */
+	public function getTmpName() {
+		return $this->tmpName;
+	}
+
+
+	/**
+	 * Get the MIME type.
+	 * @return {string} MIME type as determined at upload.
+	 */
+	public function getType() {
+		return $this->type;
 	}
 
 
@@ -74,8 +117,20 @@ class ae_MediaModel extends ae_Model {
 		if( isset( $data['m_id'] ) ) {
 			$this->setId( $data['m_id'] );
 		}
+		if( isset( $data['m_datetime'] ) ) {
+			$this->setDatetime( $data['m_datetime'] );
+		}
+		if( isset( $data['m_name'] ) ) {
+			$this->setName( $data['m_name'] );
+		}
 		if( isset( $data['m_status'] ) ) {
 			$this->setStatus( $data['m_status'] );
+		}
+		if( isset( $data['m_type'] ) ) {
+			$this->setType( $data['m_type'] );
+		}
+		if( isset( $data['m_user'] ) ) {
+			$this->setUserId( $data['m_user'] );
 		}
 	}
 
@@ -86,22 +141,43 @@ class ae_MediaModel extends ae_Model {
 	 * @param  {boolean}   $forceInsert If set to TRUE and an ID has been set, the model will be saved
 	 *                                  as new entry instead of updating. (Optional, default is FALSE.)
 	 * @return {boolean}                TRUE, if saving is successful, FALSE otherwise.
-	 * @throws {Exception}              If title is not valid.
+	 * @throws {Exception}              If name is not valid.
 	 * @throws {Exception}              If $forceInsert is TRUE, but no valid ID is set.
 	 */
 	public function save( $forceInsert = FALSE ) {
+		if( mb_strlen( $this->name ) == 0 ) {
+			$msg = sprintf( '[%s] Cannot save. Name is empty.', get_class() );
+			throw new Exception( $msg );
+		}
+
+		if( $this->datetime == '0000-00-00 00:00:00' ) {
+			$this->setDatetime( date( 'Y-m-d H:i:s' ) );
+		}
+
 		$params = array(
-			':status' => $this->status
+			':datetime' => $this->datetime,
+			':name' => $this->name,
+			':status' => $this->status,
+			':type' => $this->type,
+			':userId' => $this->userId
 		);
 
 		// Create new media
 		if( $this->id === FALSE && !$forceInsert ) {
 			$stmt = '
 				INSERT INTO `' . self::TABLE . '` (
-					m_status
+					m_datetime,
+					m_name,
+					m_status,
+					m_type,
+					m_user
 				)
 				VALUES (
-					:status
+					:datetime,
+					:name,
+					:status,
+					:type,
+					:userId
 				)
 			';
 		}
@@ -110,11 +186,19 @@ class ae_MediaModel extends ae_Model {
 			$stmt = '
 				INSERT INTO `' . self::TABLE . '` (
 					m_id,
-					m_status
+					m_datetime,
+					m_name,
+					m_status,
+					m_type,
+					m_user
 				)
 				VALUES (
 					:id,
-					:status
+					:datetime,
+					:name,
+					:status,
+					:type,
+					:userId
 				)
 			';
 			$params[':id'] = $this->id;
@@ -123,7 +207,11 @@ class ae_MediaModel extends ae_Model {
 		else if( $this->id !== FALSE ) {
 			$stmt = '
 				UPDATE `' . self::TABLE . '` SET
-					m_status = :status
+					m_datetime = :datetime,
+					m_name = :name,
+					m_status = :status,
+					m_type = :type,
+					m_user = :userId
 				WHERE
 					m_id = :id
 			';
@@ -148,6 +236,36 @@ class ae_MediaModel extends ae_Model {
 
 
 	/**
+	 * Set media datetime (time it was uploaded).
+	 * @param  {string}    $datetime The datetime.
+	 * @throws {Exception}           If $datetime is not a valid format.
+	 */
+	public function setDatetime( $datetime ) {
+		if( !ae_Validate::datetime( $datetime ) ) {
+			$msg = sprintf( '[%s] Not a valid datetime: %s', get_class(), htmlspecialchars( $datetime ) );
+			throw new Exception( $msg );
+		}
+
+		$this->datetime = $datetime;
+	}
+
+
+	/**
+	 * Set media name.
+	 * @param  {string}    $name Name of the file.
+	 * @throws {Exception}       If $name is empty.
+	 */
+	public function setName( $name ) {
+		if( mb_strlen( $name ) == 0 ) {
+			$msg = sprintf( '[%s] Empty name.', get_class() );
+			throw new Exception( $msg );
+		}
+
+		$this->name = str_replace( array( '/', '\\' ), '-', $name );
+	}
+
+
+	/**
 	 * Set media status.
 	 * @param  {string}    $status Media status.
 	 * @throws {Exception}         If $status is not a valid media status.
@@ -159,6 +277,39 @@ class ae_MediaModel extends ae_Model {
 		}
 
 		$this->status = $status;
+	}
+
+
+	/**
+	 * Set the temporary file name.
+	 * @param {string} $tmpName Temporary file name.
+	 */
+	public function setTmpName( $tmpName ) {
+		$this->tmpName = $tmpName;
+	}
+
+
+	/**
+	 * Set MIME type.
+	 * @param {string} $type MIME type.
+	 */
+	public function setType( $type ) {
+		$this->type = $type;
+	}
+
+
+	/**
+	 * Set user ID.
+	 * @param  {int}       $user User ID.
+	 * @throws {Exception}       If $user is not a valid ID.
+	 */
+	public function setUserId( $user ) {
+		if( !ae_Validate::id( $user ) ) {
+			$msg = sprintf( '[%s] Not a valid ID: %s', get_class(), htmlspecialchars( $user ) );
+			throw new Exception( $msg );
+		}
+
+		$this->userId = $user;
 	}
 
 
