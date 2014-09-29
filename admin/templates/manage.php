@@ -104,7 +104,7 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 		?>
 		<div class="manage-entry category-entry status-<?php echo $entry->getStatus() ?>">
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
-			<span class="entry-title"><?php echo $entry->getTitle() ?></span>
+			<div class="entry-title"><?php echo $entry->getTitle() ?></div>
 
 			<div class="entry-actions">
 				<a title="edit" class="entry-edit icon-add-before icon-before-pen" href="<?php echo $linkEdit ?>"></a>
@@ -134,11 +134,12 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 		?>
 		<div class="manage-entry comment-entry status-<?php echo $entry->getStatus() ?>">
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
-			<span class="entry-title"><?php echo $entry->getAuthorName() ?></span>
 
-			<div class="flags">
+			<div class="entry-title">
+				<?php echo $entry->getAuthorName() ?>
+				<span class="date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
 			<?php if( $entry->getUserId() > 0 ): ?>
-				<span class="flag icon-add-before icon-before-person"></span>
+				<span class="is-user icon-add-before icon-before-person"></span>
 			<?php endif ?>
 			</div>
 
@@ -175,7 +176,11 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 		?>
 		<div class="manage-entry page-entry status-<?php echo $entry->getStatus() ?>">
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
-			<span class="entry-title"><?php echo htmlspecialchars( $entry->getTitle() ) ?></span>
+
+			<div class="entry-title">
+				<?php echo htmlspecialchars( $entry->getTitle() ) ?>
+				<span class="date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
+			</div>
 
 			<div class="entry-actions">
 				<a title="edit" class="entry-edit icon-add-before icon-before-pen" href="<?php echo $linkEdit ?>"></a>
@@ -207,7 +212,11 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 		?>
 		<div class="manage-entry post-entry status-<?php echo $entry->getStatus() ?>">
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
-			<span class="entry-title"><?php echo htmlspecialchars( $entry->getTitle() ) ?></span>
+
+			<div class="entry-title">
+				<?php echo htmlspecialchars( $entry->getTitle() ) ?>
+				<span class="date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
+			</div>
 
 			<div class="entry-actions">
 				<a title="edit" class="entry-edit icon-add-before icon-before-pen" href="<?php echo $linkEdit ?>"></a>
@@ -238,7 +247,7 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 		?>
 		<div class="manage-entry user-entry status-<?php echo $entry->getStatus() ?>">
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
-			<span class="entry-title"><?php echo htmlspecialchars( $entry->getNameInternal() ) ?></span>
+			<div class="entry-title"><?php echo htmlspecialchars( $entry->getNameInternal() ) ?></div>
 
 			<div class="entry-actions">
 				<a title="edit" class="entry-edit icon-add-before icon-before-pen" href="<?php echo $linkEdit ?>"></a>

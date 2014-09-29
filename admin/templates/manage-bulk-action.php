@@ -6,6 +6,9 @@ if( $area == 'category' ) {
 else if( $area == 'comment' ) {
 	$statuses = ae_CommentModel::listStatuses();
 }
+else if( $area == 'media' ) {
+	$statuses = ae_MediaModel::listStatuses();
+}
 else if( $area == 'page' ) {
 	$statuses = ae_PageModel::listStatuses();
 }

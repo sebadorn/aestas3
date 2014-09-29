@@ -75,13 +75,13 @@ abstract class ae_List {
 	static protected function buildStatement( $base, $filter ) {
 		$stmt = $base;
 
-		if( isset( $filter['WHERE'] ) ) {
+		if( isset( $filter['WHERE'] ) && $filter['WHERE'] !== FALSE ) {
 			$stmt .= ' WHERE ' . $filter['WHERE'];
 		}
-		if( isset( $filter['ORDER BY'] ) ) {
+		if( isset( $filter['ORDER BY'] ) && $filter['ORDER BY'] !== FALSE ) {
 			$stmt .= ' ORDER BY ' . $filter['ORDER BY'];
 		}
-		if( isset( $filter['LIMIT'] ) ) {
+		if( isset( $filter['LIMIT'] ) && $filter['LIMIT'] !== FALSE ) {
 			$stmt .= ' LIMIT ' . $filter['LIMIT'];
 		}
 

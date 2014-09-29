@@ -43,6 +43,11 @@
 		top: -2px;
 	}
 
+	.form-create .icon-add-before::before {
+		position: relative;
+		top: 2px;
+	}
+
 
 .input-group-datetime {
 	margin-bottom: 10px;

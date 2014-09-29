@@ -10,6 +10,11 @@ else if( isset( $_GET['comment'] ) && ae_Validate::id( $_GET['comment'] ) ) {
 	$model = new ae_CommentModel();
 	$model->load( $_GET['comment'] );
 }
+else if( isset( $_GET['media'] ) && ae_Validate::id( $_GET['media'] ) ) {
+	$editArea = 'Media';
+	$model = new ae_MediaModel();
+	$model->load( $_GET['media'] );
+}
 else if( isset( $_GET['page'] ) && ae_Validate::id( $_GET['page'] ) ) {
 	$editArea = 'Page';
 	$model = new ae_PageModel();
@@ -24,6 +29,10 @@ else if( isset( $_GET['user'] ) && ae_Validate::id( $_GET['user'] ) ) {
 	$editArea = 'User';
 	$model = new ae_UserModel();
 	$model->load( $_GET['user'] );
+}
+else {
+	header( 'Location: admin.php?error=unknown_edit_area' );
+	exit;
 }
 
 ?>
@@ -110,6 +119,43 @@ else if( isset( $_GET['user'] ) && ae_Validate::id( $_GET['user'] ) ) {
 		<div class="input-group">
 			<input type="text" name="category-title" placeholder="Category title" value="<?php echo htmlspecialchars( $model->getTitle() ) ?>" />
 			<input type="hidden" name="category-permalink" placeholder="Permalink" value="<?php echo $model->getPermalink() ?>" />
+		</div>
+	</div>
+
+<?php elseif( $editArea == 'Media' ): ?>
+
+	<?php
+		$type = htmlspecialchars( $model->getType() );
+		$icon = ae_Forms::getIcon( $type );
+		$meta = $model->getMetaInfo();
+		$fsize = ae_Forms::formatSize( $meta['file_size'] );
+	?>
+
+	<aside>
+		<div class="input-group">
+			<h3>Type</h3>
+			<span class="icon-add-before <?php echo $icon ?>"><?php echo $type ?></span>
+		</div>
+		<div class="input-group">
+			<h3>File size</h3>
+			<span><?php echo $fsize ?></span>
+		</div>
+		<?php if( $model->isImage() && isset( $meta['image_width'] ) ): ?>
+		<div class="input-group">
+			<h3>Image size</h3>
+			<span class="image-size"><?php echo $meta['image_width'] ?> × <?php echo $meta['image_height'] ?> pixels</span>
+		</div>
+		<?php endif; ?>
+
+		<div class="submit-buttons">
+			<button type="submit" class="btn btn-publish" name="submit" value="publish">save</button>
+			<span class="clear"></span>
+		</div>
+	</aside>
+
+	<div class="main-content">
+		<div class="input-group">
+			<input type="text" name="media-name" placeholder="Media name" value="<?php echo htmlspecialchars( $model->getName() ) ?>" />
 		</div>
 	</div>
 

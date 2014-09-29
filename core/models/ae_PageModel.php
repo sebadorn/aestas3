@@ -17,6 +17,7 @@ class ae_PageModel extends ae_Model {
 	protected $commentsStatus = self::COMMENTS_OPEN;
 	protected $content = '';
 	protected $datetime = '0000-00-00 00:00:00';
+	protected $editDatetime = NULL;
 	protected $permalink = '';
 	protected $status = self::STATUS_DRAFT;
 	protected $title = '';
@@ -52,10 +53,25 @@ class ae_PageModel extends ae_Model {
 
 	/**
 	 * Get page datetime (time it was published).
-	 * @return {string} Page datetime.
+	 * @param  {string} $format Format.
+	 * @return {string}         Page datetime.
 	 */
-	public function getDatetime() {
-		return $this->datetime;
+	public function getDatetime( $format = 'Y-m-d H:i:s' ) {
+		$dt = strtotime( $this->datetime );
+
+		return date( $format, $dt );
+	}
+
+
+	/**
+	 * Get page edit datetime (time it was edited).
+	 * @param  {string} $format Format.
+	 * @return {string} Page edit datetime.
+	 */
+	public function getEditDatetime( $format = 'Y-m-d H:i:s' ) {
+		$dt = strtotime( $this->editDatetime );
+
+		return date( $format, $dt );
 	}
 
 
@@ -130,6 +146,9 @@ class ae_PageModel extends ae_Model {
 		}
 		if( isset( $data['pa_datetime'] ) ) {
 			$this->setDatetime( $data['pa_datetime'] );
+		}
+		if( isset( $data['pa_edit'] ) && $data['pa_edit'] != NULL ) {
+			$this->setEditDatetime( $data['pa_edit'] );
 		}
 		if( isset( $data['pa_title'] ) ) {
 			$this->setTitle( $data['pa_title'] );
@@ -230,6 +249,7 @@ class ae_PageModel extends ae_Model {
 					pa_permalink = :permalink,
 					pa_content = :content,
 					pa_datetime = :datetime,
+					pa_edit = :editDatetime,
 					pa_user = :user,
 					pa_comments = :comments,
 					pa_status = :status
@@ -237,6 +257,7 @@ class ae_PageModel extends ae_Model {
 					pa_id = :id
 			';
 			$params[':id'] = $this->id;
+			$params[':editDatetime'] = date( 'Y-m-d H:i:s' );
 		}
 		else {
 			$msg = sprintf( '[%s] Supposed to insert new page with set ID, but no ID has been set.', get_class() );
@@ -294,6 +315,21 @@ class ae_PageModel extends ae_Model {
 		}
 
 		$this->datetime = $datetime;
+	}
+
+
+	/**
+	 * Set page edit datetime (time it was edited).
+	 * @param  {string}    $datetime The datetime.
+	 * @throws {Exception}           If $datetime is not a valid format.
+	 */
+	public function setEditDatetime( $datetime ) {
+		if( !ae_Validate::datetime( $datetime ) ) {
+			$msg = sprintf( '[%s] Not a valid datetime: %s', get_class(), $datetime );
+			throw new Exception( $msg );
+		}
+
+		$this->editDatetime = $datetime;
 	}
 
 

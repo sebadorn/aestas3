@@ -14,6 +14,12 @@
 	<a class="filter-status-spam" href="<?php echo $urlBasis ?>&amp;status=spam">spam</a>,
 	<a class="filter-status-trash" href="<?php echo $urlBasis ?>&amp;status=trash">trash</a>
 
+<?php elseif( $area == 'media' ): ?>
+
+	<a class="filter-status-none" href="<?php echo $urlBasis ?>"><em>default</em></a>,
+	<a class="filter-status-available" href="<?php echo $urlBasis ?>&amp;status=available">available</a>,
+	<a class="filter-status-trash" href="<?php echo $urlBasis ?>&amp;status=trash">trash</a>
+
 <?php elseif( $area == 'page' ): ?>
 
 	<a class="filter-status-none" href="<?php echo $urlBasis ?>"><em>default</em></a>,

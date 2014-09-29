@@ -33,6 +33,15 @@ $securitySettings = array(
 date_default_timezone_set( 'Europe/Berlin' );
 
 
+// Media
+
+$mediaSettings = array(
+	'image_compression_png' => 9, // 0: no compression - 9: max
+	'image_quality_jpeg' => 80, // 100: no compression - 0: pixel sludge
+	'preview_image_max_width' => 80
+);
+
+
 
 // ----- NO MORE EDITS BELOW THIS LINE -----
 
@@ -43,6 +52,9 @@ include_once( 'setup.php' );
 
 
 // Delete data
+
+$mediaSettings = array();
+unset( $mediaSettings );
 
 $securitySettings = array();
 unset( $salt );

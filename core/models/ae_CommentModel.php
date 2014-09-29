@@ -78,10 +78,13 @@ class ae_CommentModel extends ae_Model {
 
 	/**
 	 * Get comment datetime.
-	 * @return {string} Comment datetime.
+	 * @param  {string} $format Format.
+	 * @return {string}         Comment datetime.
 	 */
-	public function getDatetime() {
-		return $this->datetime;
+	public function getDatetime( $format = 'Y-m-d H:i:s' ) {
+		$dt = strtotime( $this->datetime );
+
+		return date( $format, $dt );
 	}
 
 

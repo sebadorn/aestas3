@@ -1,1 +1,50 @@
 @import url( "manage.css" );
+
+
+.media-file-upload {
+	background-color: #f0f0f0;
+	border-radius: 4px;
+	display: inline-block;
+	margin-bottom: 40px;
+	min-width: 500px;
+	padding: 10px;
+}
+
+	.media-file-upload input[type="file"] {;
+		display: block;
+		margin-bottom: 10px;
+		width: 100%;
+	}
+
+	.preview-image {
+		display: inline-block;
+		overflow: hidden;
+		max-height: 60px;
+		margin-right: 10px;
+		margin-bottom: -20px;
+		position: relative;
+		top: -10px;
+		vertical-align: top;
+		width: 80px;
+	}
+
+		.preview-image img {
+			width: 80px;
+		}
+
+	.entry-title {
+		width: calc( 100% - 380px );
+	}
+
+		.entry-title span {
+			background-color: #e0e0e0;
+			border-radius: 4px;
+			color: #606060;
+			display: inline-block;
+			margin-left: 10px;
+			padding: 2px 4px;
+		}
+
+		.entry-title .file-type::before {
+			cursor: help;
+		}

@@ -12,6 +12,9 @@ define( 'AE_TABLE_POSTS2CATEGORIES', $dbSettings['table_prefix'] . 'posts2catego
 define( 'AE_TABLE_SETTINGS', $dbSettings['table_prefix'] . 'settings' );
 define( 'AE_TABLE_USERS', $dbSettings['table_prefix'] . 'users' );
 define( 'AE_VERSION', '3' );
+define( 'IMAGE_COMPRESSION_PNG', $mediaSettings['image_compression_png'] );
+define( 'IMAGE_PREVIEW_MAX_WIDTH', $mediaSettings['preview_image_max_width'] );
+define( 'IMAGE_QUALITY_JPEG', $mediaSettings['image_quality_jpeg'] );
 
 // Disable Magic Quotes (removed as of PHP 5.4)
 if( get_magic_quotes_runtime() ) {

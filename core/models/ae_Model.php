@@ -60,6 +60,15 @@ abstract class ae_Model {
 
 
 	/**
+	 * Get the ID.
+	 * @return {int} ID.
+	 */
+	public function getId() {
+		return $this->id;
+	}
+
+
+	/**
 	 * Get the last inserted ID of the DB table for this model.
 	 * @return {int|boolean} The ID on success, FALSE on failure.
 	 */
@@ -76,15 +85,6 @@ abstract class ae_Model {
 		}
 
 		return $result[0]['id'];
-	}
-
-
-	/**
-	 * Get the ID.
-	 * @return {int} ID.
-	 */
-	public function getId() {
-		return $this->id;
 	}
 
 

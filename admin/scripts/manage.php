@@ -14,6 +14,7 @@ if( !isset( $_GET['status'] ) ) {
 	exit;
 }
 
+$mainArea = 'manage';
 
 if( isset( $_GET['category'] ) && ae_Validate::id( $_GET['category'] ) ) {
 	$area = 'category';
@@ -22,6 +23,12 @@ if( isset( $_GET['category'] ) && ae_Validate::id( $_GET['category'] ) ) {
 else if( isset( $_GET['comment'] ) && ae_Validate::id( $_GET['comment'] ) ) {
 	$area = 'comment';
 	$model = new ae_CommentModel();
+}
+else if( isset( $_GET['media'] ) && ae_Validate::id( $_GET['media'] ) ) {
+	$area = 'media';
+	$mainArea = 'media';
+	$model = new ae_MediaModel();
+	$model->setMediaPath( '../../media/' );
 }
 else if( isset( $_GET['page'] ) && ae_Validate::id( $_GET['page'] ) ) {
 	$area = 'page';
@@ -45,11 +52,11 @@ $model->load( $_GET[$area] );
 
 if( $_GET['status'] == 'delete' ) {
 	if( !$model->delete() ) {
-		header( 'Location: ../admin.php?area=manage&' . $area . '&error=delete' );
+		header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&error=delete' );
 		exit;
 	}
 
-	header( 'Location: ../admin.php?area=manage&' . $area . '&success=delete' );
+	header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&success=delete' );
 	exit;
 }
 else {
@@ -57,14 +64,14 @@ else {
 		$model->setStatus( $_GET['status'] );
 	}
 	catch( Exception $e ) {
-		header( 'Location: ../admin.php?area=manage&' . $area . '&error=invalid_status' );
+		header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&error=invalid_status' );
 		exit;
 	}
 
 	if( !$model->save() ) {
-		header( 'Location: ../admin.php?area=manage&' . $area . '&error=saving_failed' );
+		header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&error=saving_failed' );
 		exit;
 	}
 }
 
-header( 'Location: ../admin.php?area=manage&' . $area . '&success=status_change' );
+header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&success=status_change' );

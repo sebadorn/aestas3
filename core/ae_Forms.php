@@ -70,6 +70,61 @@ class ae_Forms {
 
 
 	/**
+	 * Format a size value given in bytes.
+	 * Returns a size < 1024 with the correct unit.
+	 * @param  {int}    $size Size in bytes.
+	 * @return {string}       Formatted size inclusive unit.
+	 */
+	static public function formatSize( $size ) {
+		$names = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+		$numNames = count( $names );
+		$i = 0;
+
+		while( $size > 1024 && $i < $numNames ) {
+			$size /= 1024;
+			$i++;
+		}
+
+		return sprintf( '%.2f %s', $size, $names[$i] );
+	}
+
+
+	/**
+	 * Get the CSS class for the appropiate icon according to the MIME type.
+	 * @param  {string} $mime MIME type.
+	 * @return {string}       CSS class.
+	 */
+	static public function getIcon( $mime ) {
+		$mime = explode( '/', $mime );
+
+		switch( $mime[0] ) {
+
+			case 'audio':
+				$icon = 'icon-before-audio';
+				break;
+
+			case 'image':
+				$icon = 'icon-before-image';
+				break;
+
+			case 'text':
+				$icon = 'icon-before-document';
+				break;
+
+			case 'video':
+				$icon = 'icon-before-video';
+				break;
+
+			default:
+				$icon = 'icon-before-file';
+
+		}
+
+		return $icon;
+	}
+
+
+	/**
 	 * Get an HTML select for the months.
 	 * @param  {string}  $name       Value for the HTML name attribute.
 	 * @param  {int}     $preselect  Month to preselect. Defaults to the current month. (Optional.)

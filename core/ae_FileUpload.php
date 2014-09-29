@@ -4,6 +4,7 @@ class ae_FileUpload {
 
 
 	const DIR_MODE = 0755;
+	const FILE_MODE = 0644;
 
 	protected $items = array();
 	protected $mediaPath = '../media/';
@@ -19,10 +20,12 @@ class ae_FileUpload {
 		for( $i = 0; $i < $numItems; $i++ ) {
 			$error = $files['error'][$i];
 
+			// File input in form for which no file has been selected
 			if( $error == UPLOAD_ERR_NO_FILE ) {
 				continue;
 			}
 
+			// Something actually went wrong with an upload
 			if( $error != UPLOAD_ERR_OK ) {
 				$msg = sprintf(
 					'[%s] Upload error for file <code>%s</code>: %s',
@@ -47,6 +50,7 @@ class ae_FileUpload {
 			$m->setType( $type );
 			$m->setUserId( ae_Security::getCurrentUserId() );
 			$m->setStatus( ae_MediaModel::STATUS_AVAILABLE );
+			$m->setMetaInfo( self::getMetaInfo( $m ) );
 
 			$this->items[] = $m;
 		}
@@ -54,18 +58,25 @@ class ae_FileUpload {
 
 
 	/**
-	 * Build the relative path for this media model.
-	 * @param  {ae_MediaModel} $m The media model.
-	 * @return {string}           Relative path for the file.
+	 * Create and save a preview of an uploaded image.
+	 * @param {ae_MediaModel} $m The media model of the image.
 	 */
-	protected function buildRelativeFilePath( ae_MediaModel $m ) {
-		$dt = explode( ' ', $m->getDatetime() );
-		$dt = explode( '-', $dt[0] );
+	protected function createImagePreview( ae_MediaModel $m ) {
+		$path = $this->mediaPath . $m->getFilePath();
+		$previewPath = explode( '/', $path );
+		array_pop( $previewPath );
+		array_push( $previewPath, 'tiny', $m->getName() );
+		$previewPath = implode( '/', $previewPath );
 
-		$path = $this->mediaPath;
-		$path .= implode( '/', $dt ) . '/';
+		try {
+			$img = new ae_Image( $path, $m->getType() );
+		}
+		catch( Exception $exc ) {
+			return FALSE;
+		}
 
-		return $path;
+		$img->resize( IMAGE_PREVIEW_MAX_WIDTH );
+		$img->saveFile( $previewPath );
 	}
 
 
@@ -88,6 +99,38 @@ class ae_FileUpload {
 		}
 
 		return TRUE;
+	}
+
+
+	/**
+	 * Get the created media model items.
+	 * @return {array} The media models.
+	 */
+	public function getItems() {
+		return $this->items;
+	}
+
+
+	/**
+	 * Get meta info of an uploaded file.
+	 * @param  {ae_MediaModel} $m Media model.
+	 * @return {array}            Meta data.
+	 */
+	static public function getMetaInfo( ae_MediaModel $m ) {
+		$meta = array();
+
+		$meta['file_size'] = filesize( $m->getTmpName() );
+
+		if( $m->isImage() ) {
+			$size = getimagesize( $m->getTmpName() );
+
+			if( $size ) {
+				$meta['image_width'] = $size[0];
+				$meta['image_height'] = $size[1];
+			}
+		}
+
+		return $meta;
 	}
 
 
@@ -181,17 +224,33 @@ class ae_FileUpload {
 	public function saveToFileSystem() {
 		foreach( $this->items as $m ) {
 			$from = $m->getTmpName();
-			$path = $this->buildRelativeFilePath( $m );
-			$to = $path . $m->getName();
+			$to = $this->mediaPath . $m->getFilePath();
+			$path = explode( '/', $to );
+			array_pop( $path );
+			$path = implode( '/', $path ) . '/tiny';
 
 			$this->createMediaSubDirs( $path );
 
+			// Move file from temporary directory to media directory
 			if( !move_uploaded_file( $from, $to ) ) {
 				$msg = sprintf( '[%s] Failed to move <code>%s</code> to <code>%s</code>.',
 						get_class(), htmlspecialchars( $from ), htmlspecialchars( $to ) );
 				ae_Log::error( $msg );
 
 				return FALSE;
+			}
+
+			// Set file permissions of moved file
+			if( !chmod( $to, self::FILE_MODE ) ) {
+				$msg = sprintf( '[%s] Failed to change file mode of <code>%s</code>.',
+						get_class(), htmlspecialchars( $to ) );
+				ae_Log::error( $msg );
+
+				return FALSE;
+			}
+
+			if( $m->isImage() ) {
+				$this->createImagePreview( $m );
 			}
 		}
 

@@ -36,7 +36,7 @@ class ae_PostModel extends ae_PageModel {
 			WHERE pc_post = :id
 		';
 		$params = array(
-			':id' => $model->getId()
+			':id' => $this->getId()
 		);
 
 		return ( ae_Database::query( $stmt, $params ) !== FALSE );
@@ -147,6 +147,9 @@ class ae_PostModel extends ae_PageModel {
 		if( isset( $data['po_datetime'] ) ) {
 			$this->setDatetime( $data['po_datetime'] );
 		}
+		if( isset( $data['po_edit'] ) && $data['po_edit'] != NULL ) {
+			$this->setEditDatetime( $data['po_edit'] );
+		}
 		if( isset( $data['po_permalink'] ) ) {
 			$this->setPermalink( $data['po_permalink'] );
 		}
@@ -254,6 +257,7 @@ class ae_PostModel extends ae_PageModel {
 					po_permalink = :permalink,
 					po_content = :content,
 					po_datetime = :datetime,
+					po_edit = :editDatetime,
 					po_tags = :tags,
 					po_user = :user,
 					po_comments = :comments,
@@ -262,6 +266,7 @@ class ae_PostModel extends ae_PageModel {
 					po_id = :id
 			';
 			$params[':id'] = $this->id;
+			$params[':editDatetime'] = date( 'Y-m-d H:i:s' );
 		}
 		else {
 			$msg = sprintf( '[%s] Supposed to insert new post with set ID, but no ID has been set.', get_class() );

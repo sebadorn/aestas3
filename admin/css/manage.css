@@ -34,29 +34,41 @@
 .manage-entry {
 	background-color: #f0f0f0;
 	clear: both;
-	height: 40px;
+	line-height: 20px;
 	margin-bottom: 10px;
 	padding: 10px;
 }
 
 	.manage-entry input[type="checkbox"] {
 		margin-right: 10px;
-		vertical-align: middle;
+		vertical-align: top;
 	}
 
 	.entry-title {
 		display: inline-block;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		vertical-align: middle;
+		vertical-align: top;
 		white-space: nowrap;
 		width: calc( 100% - 260px );
 	}
 
-	.flags {
-		color: #404040;
-		display: inline-block;
-	}
+		.entry-title span {
+			background-color: rgba( 0, 0, 0, 0.07 );
+			border-radius: 4px;
+			color: #606060;
+			display: inline-block;
+			margin-left: 10px;
+			padding: 2px 4px;
+		}
+
+		.entry-title .icon-add-before {
+			background-color: transparent;
+			border-radius: 0;
+			padding: 0;
+			position: relative;
+			top: 2px;
+		}
 
 	.entry-actions {
 		display: inline-block;
