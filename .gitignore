@@ -1,7 +1,8 @@
 # directories
 media/*
-themes/standard/js/shl3/*
 themes/standard/fonts/*
+themes/standard/img/*
+themes/standard/js/shl3/*
 
 # files
 *.sublime-*

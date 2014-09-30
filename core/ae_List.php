@@ -4,6 +4,7 @@ abstract class ae_List {
 
 
 	protected $items = array();
+	protected $itemsCache = array();
 	protected $totalItems = 0; // Number of items in the DB
 
 
@@ -95,6 +96,55 @@ abstract class ae_List {
 	 */
 	public function current() {
 		return current( $this->items );
+	}
+
+
+	/**
+	 * Find a model by ID.
+	 * @param  {int}              $id Model ID.
+	 * @return {ae_Model|boolean}     The found model or FALSE if none found.
+	 */
+	public function find( $id ) {
+		foreach( $this->items as $item ) {
+			if( $item->getId() == $id ) {
+				return $item;
+			}
+		}
+
+		return $this->findByLoading( $id );
+	}
+
+
+	/**
+	 * Find a model by loading it from the DB.
+	 * @param  {int}              $id Model ID.
+	 * @return {ae_Model|boolean}     Loaded model or FALSE if not found.
+	 */
+	public function findByLoading( $id ) {
+		if( isset( $this->itemsCache[$id] ) ) {
+			return $this->itemsCache[$id];
+		}
+
+		$class = get_class( $this );
+		$class = constant( $class . '::ITEM_CLASS' );
+		$model = new $class();
+
+		if( !$model->load( $id ) ) {
+			return FALSE;
+		}
+
+		$this->itemsCache[$id] = $model;
+
+		return $model;
+	}
+
+
+	/**
+	 * Get all items.
+	 * @return {array} All items.
+	 */
+	public function getItems() {
+		return $this->items;
 	}
 
 

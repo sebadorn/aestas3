@@ -15,6 +15,7 @@ define( 'AE_VERSION', '3' );
 define( 'IMAGE_COMPRESSION_PNG', $mediaSettings['image_compression_png'] );
 define( 'IMAGE_PREVIEW_MAX_WIDTH', $mediaSettings['preview_image_max_width'] );
 define( 'IMAGE_QUALITY_JPEG', $mediaSettings['image_quality_jpeg'] );
+define( 'RSS_PROTOCOL', $rssSettings['protocol'] );
 
 // Disable Magic Quotes (removed as of PHP 5.4)
 if( get_magic_quotes_runtime() ) {
@@ -30,3 +31,23 @@ ae_Timer::start( 'total' );
 ae_Log::init( $logSettings );
 ae_Database::connect( $dbSettings );
 ae_Security::init( $securitySettings );
+ae_Settings::load();
+
+
+// Constants used in themes and the RSS feed
+
+$url = $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
+$url = explode( '/', $url );
+array_pop( $url );
+
+if( defined( 'IS_RSS' ) ) {
+	array_pop( $url );
+}
+
+$url = '//' . implode( '/', $url ) . '/';
+
+define( 'URL', $url );
+define( 'THEME', ae_Settings::get( 'theme' ) );
+define( 'THEME_PATH', URL . 'themes/' . THEME . '/' );
+
+unset( $url );
