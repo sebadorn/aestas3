@@ -294,6 +294,29 @@ function updateComment() {
 }
 
 
+/**
+ * Update media.
+ * @return {int} ID of the media object.
+ */
+function updateMedia() {
+	if( !isset( $_POST['media-name'] ) || $_POST['media-name'] == '' ) {
+		header( 'Location: ../admin.php?error=missing_data_for_media' );
+		exit;
+	}
+
+	$media = new ae_MediaModel();
+	$media->load( $_POST['edit-id'] );
+	$media->setMediaPath( '../../media/' );
+	$media->setName( $_POST['media-name'] );
+
+	if( !$media->save() ) {
+		return FALSE;
+	}
+
+	return $media->getId();
+}
+
+
 
 $id = FALSE;
 
@@ -305,6 +328,10 @@ switch( $_POST['area'] ) {
 
 	case 'comment':
 		$id = updateComment();
+		break;
+
+	case 'media':
+		$id = updateMedia();
 		break;
 
 	case 'page':

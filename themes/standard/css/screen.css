@@ -1,5 +1,202 @@
+/* OpenSans: Regular */
+
+@font-face {
+	font-family: "OpenSans Web";
+	src: url( "../fonts/open-sans/OpenSans-Regular.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Web";
+	font-weight: bold;
+	src: url( "../fonts/open-sans/OpenSans-Bold.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Web";
+	font-style: italic;
+	src: url( "../fonts/open-sans/OpenSans-Italic.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Web";
+	font-style: italic;
+	font-weight: bold;
+	src: url( "../fonts/open-sans/OpenSans-BoldItalic.ttf" );
+}
+
+
+/* OpenSans: Light */
+
+@font-face {
+	font-family: "OpenSans Light Web";
+	src: url( "../fonts/open-sans/OpenSans-Light.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Light Web";
+	font-style: italic;
+	src: url( "../fonts/open-sans/OpenSans-LightItalic.ttf" );
+}
+
+
+/* OpenSans: Semibold */
+
+@font-face {
+	font-family: "OpenSans Semibold Web";
+	src: url( "../fonts/open-sans/OpenSans-Semibold.ttf" );
+}
+
+@font-face {
+	font-family: "OpenSans Semibold Web";
+	font-style: italic;
+	src: url( "../fonts/open-sans/OpenSans-SemiboldItalic.ttf" );
+}
+
+
+/* Iconic */
+
+@font-face {
+	font-family: "OpenIconic";
+	src: url( "../fonts/iconic/open-iconic.otf" ) format( "opentype" );
+}
+
+
+.icon-add-before::before {
+	display: inline-block;
+	font-family: "OpenIconic";
+	font-size: 16px;
+	margin-right: 10px;
+	position: relative;
+}
+
+.icon-before-aperture::before { content: "\e007"; }
+.icon-before-audio::before { content: "\e0d5"; }
+.icon-before-ban::before { content: "\e017"; }
+.icon-before-book::before { content: "\e021"; }
+.icon-before-box::before { content: "\e023"; }
+.icon-before-check::before { content: "\e033"; }
+.icon-before-code::before { content: "\e040"; }
+.icon-before-cog::before { content: "\e041"; }
+.icon-before-comment::before { content: "\e047"; }
+.icon-before-clock::before { content: "\e03b"; }
+.icon-before-document::before { content: "\e052"; }
+.icon-before-delete::before { content: "\e050"; }
+.icon-before-download::before { content: "\e04e"; }
+.icon-before-eye::before { content: "\e065"; }
+.icon-before-file::before { content: "\e067"; }
+.icon-before-folder::before { content: "\e06b"; }
+.icon-before-grid3x3::before { content: "\e073"; }
+.icon-before-image::before { content: "\e079"; }
+.icon-before-inbox::before { content: "\e07a"; }
+.icon-before-logout::before { content: "\e001"; }
+.icon-before-minus::before { content: "\e09d"; }
+.icon-before-pen::before { content: "\e0a3"; }
+.icon-before-person::before { content: "\e0a5"; }
+.icon-before-plus::before { content: "\e0aa"; }
+.icon-before-rss::before { content: "\e0b7"; }
+.icon-before-script::before { content: "\e0b9"; }
+.icon-before-search::before { content: "\e08f"; }
+.icon-before-star::before { content: "\e0c2"; }
+.icon-before-tag::before { content: "\e0c5"; }
+.icon-before-tags::before { content: "\e0c6"; }
+.icon-before-trash::before { content: "\e0cf"; }
+.icon-before-upload::before { content: "\e04f"; }
+.icon-before-video::before { content: "\e0d4"; }
+.icon-before-x::before { content: "\e0db"; }
+.icon-before-wrench::before { content: "\e0da"; }
+
+
+
+/* End of fonts */
+
+
 * {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: "OpenSans Web", sans-serif;
 	margin: 0;
 	padding: 0;
 }
 
+html {
+	background-color: #f6f6f6;
+	color: #101010;
+	font-size: 14px;
+}
+
+a {
+	color: #4083A2;
+	text-decoration: none;
+}
+
+blockquote, hr, ol, p, pre, ul {
+	margin-bottom: 16px;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+hr {
+	border: 0;
+	border-top: 1px dotted #b0b0b0;
+}
+
+ol, ul {
+	margin-left: 20px;
+}
+
+
+
+/* Header */
+
+.main-header {
+	margin-bottom: 40px;
+}
+
+
+/* Footer */
+
+.main-footer {
+	background-color: #f0f0f0;
+	margin-top: 60px;
+	padding-top: 20px;
+}
+
+
+
+/* Post and page */
+
+article {
+	line-height: 23px;
+	margin: 0 auto 60px;
+	max-width: 600px;
+}
+
+	h2 {
+		font-size: 32px;
+		line-height: 36px;
+		margin-bottom: 32px;
+	}
+
+	h3 {
+		font-size: 24px;
+		margin-bottom: 16px;
+		margin-top: 32px;
+	}
+
+	.content {}
+
+		.illu {
+			border-radius: 4px;
+			left: -150px;
+			line-height: 0;
+			margin-bottom: 24px;
+			position: relative;
+			text-align: center;
+			width: 900px;
+		}
+
+		.illu > img {
+			box-shadow: 0 6px 20px 0 rgba( 0, 0, 0, 0.25 );
+		}

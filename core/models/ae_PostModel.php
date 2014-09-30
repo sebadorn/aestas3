@@ -3,9 +3,9 @@
 class ae_PostModel extends ae_PageModel {
 
 
+	const CONTENT_DIVIDER = '<!--more-->';
 	const TABLE = AE_TABLE_POSTS;
 	const TABLE_ID_FIELD = 'po_id';
-
 	const TAG_DELIMITER = ';';
 
 	protected $categories = array();
@@ -53,6 +53,26 @@ class ae_PostModel extends ae_PageModel {
 
 
 	/**
+	 * Get only the first part of the content until the "<!--more-->" divider.
+	 * @return {string} First part of the content.
+	 */
+	public function getContentSnippet() {
+		$content = explode( self::CONTENT_DIVIDER, $this->getContent(), 2 );
+
+		return $content[0];
+	}
+
+
+	/**
+	 * Get complete permalink for the post (not including the domain and directory).
+	 * @return {string} Complete permalink.
+	 */
+	public function getLink() {
+		return $this->getDatetime( 'Y/m/d/' ) . $this->getPermalink();
+	}
+
+
+	/**
 	 * Get post tags.
 	 * @return {array} Post tags.
 	 */
@@ -67,6 +87,15 @@ class ae_PostModel extends ae_PageModel {
 	 */
 	public function getTagsString() {
 		return $this->tags;
+	}
+
+
+	/**
+	 * Check, if there is a snippet of the content.
+	 * @return {boolean} TRUE, if snippet exists, FALSE otherwise.
+	 */
+	public function hasSnippet() {
+		return ( mb_strstr( $this->getContent(), self::CONTENT_DIVIDER ) !== FALSE );
 	}
 
 
@@ -166,6 +195,40 @@ class ae_PostModel extends ae_PageModel {
 			$this->setUserId( $data['po_user'] );
 		}
 	}
+
+
+	/**
+	 * Load model data from DB identified by the given permalink.
+	 * @param {string} $permalink Permalink to identify the post by.
+	 */
+	public function loadFromPermalink( $permalink ) {
+		$parts = explode( '/', $permalink );
+		$pl = $parts[3];
+		array_pop( $parts );
+		$date = implode( '-', $parts ) . ' %';
+
+		$stmt = '
+			SELECT * FROM `' . self::TABLE . '`
+			WHERE
+				po_permalink = :permalink AND
+				po_datetime LIKE :date
+		';
+		$params = array(
+			':permalink' => $pl,
+			':date' => $date
+		);
+
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE || count( $result ) < 1 ) {
+			return FALSE;
+		}
+
+		$this->loadFromData( $result[0] );
+
+		return TRUE;
+	}
+
 
 
 	/**

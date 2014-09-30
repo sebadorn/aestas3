@@ -86,3 +86,14 @@ $mediaList = new ae_MediaList( $filter );
 <?php endwhile ?>
 
 </form>
+
+
+<?php
+	$numPages = ceil( $mediaList->getTotalNumItems() / $itemsPerPage );
+	$queryStr = preg_replace( '/[?&]offset=?[0-9]*/i', '', $_SERVER['QUERY_STRING'] );
+	$linkBase = 'admin.php?' . htmlspecialchars( $queryStr ) . '&amp;offset=';
+?>
+
+<nav class="manage-page-navigation">
+	<?php echo ae_SiteBuilder::pagination( $numPages, $pageOffset, $linkBase ) ?>
+</nav>

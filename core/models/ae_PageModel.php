@@ -166,6 +166,31 @@ class ae_PageModel extends ae_Model {
 
 
 	/**
+	 * Load model data from DB identified by the given permalink.
+	 * @param {string} $permalink Permalink to identify the page by.
+	 */
+	public function loadFromPermalink( $permalink ) {
+		$stmt = '
+			SELECT * FROM `' . self::TABLE . '`
+			WHERE pa_permalink = :permalink
+		';
+		$params = array(
+			':permalink' => $permalink
+		);
+
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE || count( $result ) < 1 ) {
+			return FALSE;
+		}
+
+		$this->loadFromData( $result[0] );
+
+		return TRUE;
+	}
+
+
+	/**
 	 * Save the page to DB. If an ID is set, it will update
 	 * the page, otherwise it will create a new one.
 	 * @param  {boolean}   $forceInsert If set to TRUE and an ID has been set, the model will be saved

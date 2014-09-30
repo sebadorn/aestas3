@@ -24,11 +24,6 @@
 	src: url( "../fonts/open-sans/OpenSans-BoldItalic.ttf" );
 }
 
-@font-face {
-	font-family: "IconicFill";
-	src: url( "iconic/iconic_fill.otf" ) format( "opentype" );
-}
-
 
 /* OpenSans: Light */
 

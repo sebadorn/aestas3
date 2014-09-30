@@ -1,0 +1,122 @@
+.syntaxhighlighter {
+	background-color: #ffffff !important;
+	border-radius: 2px;
+	font-size: 14px !important;
+	max-width: 604px !important;
+	padding: 16px 8px;
+	width: 604px !important;
+}
+.syntaxhighlighter table td.gutter .line,
+.syntaxhighlighter table td.code .line {
+	padding-bottom: 2px !important;
+	padding-top: 2px !important;
+}
+.syntaxhighlighter .line.alt1 {
+	background-color: transparent !important;
+}
+.syntaxhighlighter .line.alt2 {
+	background-color: transparent !important;
+}
+.syntaxhighlighter .line.highlighted.alt1,
+.syntaxhighlighter .line.highlighted.alt2 {
+	background-color: #e0e0e0 !important;
+}
+.syntaxhighlighter .line.highlighted.number {
+	color: #000000 !important;
+}
+.syntaxhighlighter table caption {
+	color: #000000 !important;
+}
+.syntaxhighlighter .gutter {
+	color: #a0a0a0 !important;
+	text-shadow: 0 1px 0 #ffffff;
+}
+.syntaxhighlighter .gutter .line {
+	border-right: 0 !important;
+}
+.syntaxhighlighter .gutter .line.highlighted {
+	background-color: #6ce26c !important;
+	color: #ffffff !important;
+}
+.syntaxhighlighter.printing .line .content {
+	border: none !important;
+}
+.syntaxhighlighter.collapsed {
+	overflow: visible !important;
+}
+.syntaxhighlighter.collapsed .toolbar {
+	color: #1060d0 !important;
+	background: #ffffff !important;
+	border: 1px solid #6ce26c !important;
+}
+.syntaxhighlighter.collapsed .toolbar a {
+	color: #1060d0 !important;
+}
+.syntaxhighlighter.collapsed .toolbar a:hover {
+	color: #e02000 !important;
+}
+.syntaxhighlighter .toolbar {
+	background: transparent !important;
+	border: 0 !important;
+	color: #000000 !important;
+	right: 10px !important;
+	top: 10px !important;
+}
+.syntaxhighlighter .toolbar a {
+	border-radius: 2px;
+	color: #000000 !important;
+}
+.syntaxhighlighter .toolbar a:hover {
+	background-color: #808080 !important;
+	color: #ffffff !important;
+}
+.syntaxhighlighter .plain,
+.syntaxhighlighter .plain a {
+	color: #000000 !important;
+}
+.syntaxhighlighter .comments,
+.syntaxhighlighter .comments a {
+	color: #707070 !important;
+}
+.syntaxhighlighter .string,
+.syntaxhighlighter .string a {
+	color: #1060d0 !important;
+}
+.syntaxhighlighter .keyword {
+	color: #006699 !important;
+}
+.syntaxhighlighter .preprocessor {
+	color: #e0e0e0 !important;
+}
+.syntaxhighlighter .variable {
+	color: #107000 !important;
+}
+.syntaxhighlighter .value {
+	color: #009900 !important;
+}
+.syntaxhighlighter .functions {
+	color: #b04060 !important;
+}
+.syntaxhighlighter .constants {
+	color: #0066cc !important;
+}
+.syntaxhighlighter .script {
+	font-weight: bold !important;
+	color: #006699 !important;
+	background-color: transparent !important;
+}
+.syntaxhighlighter .color1,
+.syntaxhighlighter .color1 a {
+	color: #d02010 !important;
+}
+.syntaxhighlighter .color2,
+.syntaxhighlighter .color2 a {
+	color: #ff1493 !important;
+}
+.syntaxhighlighter .color3,
+.syntaxhighlighter .color3 a {
+	color: #e02000 !important;
+}
+.syntaxhighlighter .keyword {
+	font-weight: bold !important;
+}

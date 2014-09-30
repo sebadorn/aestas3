@@ -13,6 +13,7 @@ class ae_MediaModel extends ae_Model {
 	protected $mediaPath = '../../media/';
 	protected $meta = array();
 	protected $name = '';
+	protected $oldName = '';
 	protected $status = self::STATUS_AVAILABLE;
 	protected $tmpName = '';
 	protected $type = '';
@@ -223,6 +224,7 @@ class ae_MediaModel extends ae_Model {
 		}
 		if( isset( $data['m_name'] ) ) {
 			$this->setName( $data['m_name'] );
+			$this->oldName = $this->getName();
 		}
 		if( isset( $data['m_status'] ) ) {
 			$this->setStatus( $data['m_status'] );
@@ -232,6 +234,41 @@ class ae_MediaModel extends ae_Model {
 		}
 		if( isset( $data['m_user'] ) ) {
 			$this->setUserId( $data['m_user'] );
+		}
+	}
+
+
+	/**
+	 * Rename the file to the currently set name.
+	 */
+	protected function renameFile() {
+		$pathOld = $this->mediaPath . $this->getFilePathNoName() . $this->oldName;
+		$pathNew = $this->mediaPath . $this->getFilePath();
+
+		if( !rename( $pathOld, $pathNew ) ) {
+			$msg = sprintf( '[%s] Failed to rename "%s" to "%s".',
+					get_class(), htmlspecialchars( $pathOld ), htmlspecialchars( $pathNew ) );
+			throw new Exception( $msg );
+		}
+
+		$this->renamePreviewFile();
+	}
+
+
+	/**
+	 * Rename the preview file to the currently set name.
+	 */
+	protected function renamePreviewFile() {
+		$previewImage = $this->mediaPath . $this->getFilePathNoName() . 'tiny/' . $this->oldName;
+
+		if( $this->isImage() && file_exists( $previewImage ) ) {
+			$pathNew = $this->mediaPath . $this->getFilePathNoName() . 'tiny/' . $this->getName();
+
+			if( !rename( $previewImage, $pathNew ) ) {
+				$msg = sprintf( '[%s] Failed to rename "%s" to "%s".',
+						get_class(), htmlspecialchars( $previewImage ), htmlspecialchars( $pathNew ) );
+				throw new Exception( $msg );
+			}
 		}
 	}
 
@@ -345,6 +382,10 @@ class ae_MediaModel extends ae_Model {
 		// If new media was created, get the new ID
 		if( $this->id === FALSE ) {
 			$this->setId( $this->getLastInsertedId() );
+		}
+		// Name changed with update, rename the file
+		else if( $this->name != $this->oldName ) {
+			$this->renameFile();
 		}
 
 		return TRUE;

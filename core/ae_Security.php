@@ -10,10 +10,10 @@ class ae_Security {
 		'create', 'credits', 'dashboard', 'edit', 'manage', 'media', 'settings'
 	);
 	static protected $validSubAreas = array(
-		'create' => array( 'category', 'comment', 'page', 'post', 'user' ),
+		'create' => array( 'category', 'comment', 'media', 'page', 'post', 'user' ),
 		'credits' => array(),
 		'dashboard' => array(),
-		'manage' => array( 'category', 'comment', 'page', 'post', 'user' ),
+		'manage' => array( 'category', 'comment', 'media', 'page', 'post', 'user' ),
 		'media' => array(),
 		'settings' => array()
 	);
