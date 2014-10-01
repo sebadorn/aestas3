@@ -16,7 +16,6 @@ $filterPosts = array(
 
 $userList = new ae_UserList( $filterUsers );
 $postList = new ae_PostList( $filterPosts );
-$rss = new ae_RSSFeed( $postList->getItems() );
 
 $linkBase = RSS_PROTOCOL . ':' . URL;
 $rssLink = $linkBase . 'feed/';
@@ -43,7 +42,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL;
 		<pubDate><?php echo date( 'D, d M Y H:i:s O' ); ?></pubDate>
 		<link><?php echo $rssLink; ?></link>
 		<atom:link href="<?php echo $rssLink; ?>" rel="self" type="application/rss+xml" />
-	<?php while( $post = $rss->nextItem() ): ?>
+	<?php while( $post = $postList->next() ): ?>
 		<?php $user = $userList->find( $post->getUserId() ) ?>
 		<item>
 			<title><?php echo htmlspecialchars( $post->getTitle() ) ?></title>

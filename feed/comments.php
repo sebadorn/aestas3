@@ -18,7 +18,6 @@ $filterComments = array(
 
 $postList = new ae_PostList( $filterPosts );
 $commentList = new ae_CommentList( $filterComments );
-$rss = new ae_RSSFeed( $commentList->getItems() );
 
 $linkBase = RSS_PROTOCOL . ':' . URL;
 $rssLink = $linkBase . 'feed/';
@@ -45,7 +44,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL;
 		<pubDate><?php echo date( 'D, d M Y H:i:s O' ); ?></pubDate>
 		<link><?php echo $rssLink; ?></link>
 		<atom:link href="<?php echo $rssLink; ?>" rel="self" type="application/rss+xml" />
-	<?php while( $comment = $rss->nextItem() ): ?>
+	<?php while( $comment = $commentList->next() ): ?>
 		<?php $post = $postList->find( $comment->getPostId() ) ?>
 		<item>
 			<title><?php echo htmlspecialchars( $comment->getAuthorName() . ' [' . $post->getTitle() . '] ' ) ?></title>
