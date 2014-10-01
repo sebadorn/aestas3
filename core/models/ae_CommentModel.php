@@ -351,7 +351,7 @@ class ae_CommentModel extends ae_Model {
 			throw new Exception( $msg );
 		}
 
-		$this->url = $url;
+		$this->authorUrl = $url;
 	}
 
 

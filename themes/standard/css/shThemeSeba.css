@@ -76,7 +76,7 @@
 }
 .syntaxhighlighter .comments,
 .syntaxhighlighter .comments a {
-	color: #707070 !important;
+	color: #a0a0a0 !important;
 }
 .syntaxhighlighter .string,
 .syntaxhighlighter .string a {
@@ -86,7 +86,7 @@
 	color: #006699 !important;
 }
 .syntaxhighlighter .preprocessor {
-	color: #e0e0e0 !important;
+	color: #a0a0a0 !important;
 }
 .syntaxhighlighter .variable {
 	color: #107000 !important;

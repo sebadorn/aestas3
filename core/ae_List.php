@@ -10,26 +10,31 @@ abstract class ae_List {
 
 	/**
 	 * Constructor.
-	 * @param {string} $itemClass     Name of the class to use for the items.
-	 * @param {array}  $filter        Given filter.
-	 * @param {array}  $defaultFilter Default filter.
+	 * @param {string}  $itemClass     Name of the class to use for the items.
+	 * @param {array}   $filter        Given filter.
+	 * @param {array}   $defaultFilter Default filter.
+	 * @param {boolean} $countItems    If TRUE, extends the DB query to count the number of items. (Optional, defaults to TRUE.)
 	 */
-	public function __construct( $itemClass, $filter, $defaultFilter ) {
+	public function __construct( $itemClass, $filter, $defaultFilter, $countItems = TRUE ) {
 		$filter = self::buildFilter( $filter, $defaultFilter );
 		$numFilter = $filter;
 		unset( $numFilter['LIMIT'] );
 
 		$table = constant( $itemClass . '::TABLE' );
+		$numStmt = '';
 
 		// SQL statement for number of items
-		$numStmt = '
-			SELECT COUNT( * ) FROM `' . $table . '`
-		';
-		$numStmt = self::buildStatement( $numStmt, $numFilter );
+		if( $countItems ) {
+			$numStmt = '
+				SELECT COUNT( * ) FROM `' . $table . '`
+			';
+			$numStmt = self::buildStatement( $numStmt, $numFilter );
+			$numStmt = ', ( ' . $numStmt . ' ) AS num_entries';
+		}
 
 		// Combined statement
 		$base = '
-			SELECT *, ( ' . $numStmt . ' ) AS num_entries
+			SELECT * ' . $numStmt . '
 			FROM `' . $table . '`
 		';
 		$stmt = self::buildStatement( $base, $filter );
@@ -46,7 +51,7 @@ abstract class ae_List {
 		}
 
 		reset( $this->items );
-		$this->totalItems = $result[0]['num_entries'];
+		$this->totalItems = $countItems ? $result[0]['num_entries'] : 0;
 	}
 
 
@@ -192,6 +197,14 @@ abstract class ae_List {
 	 */
 	public function reset() {
 		reset( $this->items );
+	}
+
+
+	/**
+	 * Reverse the order of items.
+	 */
+	public function reverse() {
+		$this->items = array_reverse( $this->items );
 	}
 
 

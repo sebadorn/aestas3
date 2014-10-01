@@ -129,8 +129,21 @@ a {
 	text-decoration: none;
 }
 
+a:hover {
+	color: #000000;
+}
+
 blockquote, hr, ol, p, pre, ul {
 	margin-bottom: 16px;
+}
+
+code {
+	background-color: #ffffff;
+	border-bottom: 1px solid #e0e0e0;
+	border-radius: 3px;
+	font-family: "DejaVu Sans Mono", Georgia, "Courier New", monospace;
+	font-size: 13px;
+	padding: 2px 4px;
 }
 
 h1, h2, h3 {
@@ -143,7 +156,7 @@ hr {
 }
 
 ol, ul {
-	margin-left: 20px;
+	list-style-position: inside;
 }
 
 
@@ -151,26 +164,123 @@ ol, ul {
 /* Header */
 
 .main-header {
+	background-color: #ffffff;
 	margin-bottom: 40px;
+	padding: 10px 20px;
 }
 
+	h1 {
+		display: inline-block;
+		font-size: 24px;
+		line-height: 32px;
+		vertical-align: top;
+	}
 
-/* Footer */
+		h1 a {
+			font-family: "OpenSans Light Web";
+		}
 
-.main-footer {
-	background-color: #f0f0f0;
-	margin-top: 60px;
-	padding-top: 20px;
+	.icons {
+		display: inline-block;
+		float: right;
+		height: 32px;
+		margin: 0 0 0 20px;
+	}
+
+		.icons li {
+			display: inline-block;
+			height: 32px;
+			margin-left: 12px;
+			width: 32px;
+		}
+
+		.icons a {
+			background-image: url( "../img/icons-32.png" );
+			display: inline-block;
+			height: 32px;
+			opacity: 0.4;
+			width: 32px;
+		}
+
+		.icons a:hover {
+			opacity: 1.0;
+		}
+
+		.icon-github a { background-position: 0 64px; }
+		.icon-rss a { background-position: 0 32px; }
+		.icon-twitter a { background-position: 0 0; }
+
+
+
+/* Sidebar */
+
+.recent-comments {
+	float: left;
+	margin-left: 20px;
 }
+
+	.recent-comments h6 {
+		font-family: "OpenSans Semibold Web";
+		font-size: 18px;
+		font-weight: normal;
+		margin-bottom: 10px;
+	}
+
+	.recent-comments div {
+		margin-bottom: 10px;
+		white-space: nowrap;
+		max-width: 160px;
+	}
+
+		.recent-comments img {
+			border-radius: 48px;
+			display: inline-block;
+			margin-right: 4px;
+			vertical-align: top;
+		}
+
+		.comment-meta {
+			display: inline-block;
+			margin-top: -2px;
+		}
+
+			.comment-meta .author,
+			.comment-meta .article,
+			.comment-meta time {
+				display: block;
+				margin-bottom: -2px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.comment-meta .author {
+				font-family: "OpenSans Semibold Web";
+			}
+
+			.comment-meta .article {
+				font-size: 90%;
+			}
+
+			.comment-meta time {
+				color: #909090;
+				font-size: 80%;
+				margin-bottom: 0;
+				margin-top: 2px;
+			}
 
 
 
 /* Post and page */
 
-article {
-	line-height: 23px;
-	margin: 0 auto 60px;
+.main-body {
+	display: block;
+	margin: 0 auto;
 	max-width: 600px;
+}
+
+article {
+	line-height: 24px;
+	margin-bottom: 60px;
 }
 
 	h2 {
@@ -187,6 +297,15 @@ article {
 
 	.content {}
 
+		.content a {
+			border-bottom: 1px solid #8EB5C7;
+		}
+
+		.content a:hover {
+			border-bottom-color: transparent;
+			color: #4083A2;
+		}
+
 		.illu {
 			border-radius: 4px;
 			left: -150px;
@@ -199,4 +318,87 @@ article {
 
 		.illu > img {
 			box-shadow: 0 6px 20px 0 rgba( 0, 0, 0, 0.25 );
+		}
+
+		.syntaxhighlighter {
+			border-bottom: 1px solid #e0e0e0;
+		}
+
+
+
+
+/* Footer */
+
+.main-footer {
+	background-color: #6B98AB;
+	clear: both;
+	font-size: 16px;
+	margin-top: 120px;
+	padding: 0 60px 60px 60px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+	.main-footer a {
+		border-bottom: 1px solid #396F92;
+		color: #ffffff;
+	}
+
+	.main-footer a:hover {
+		border-bottom-color: transparent;
+	}
+
+	.main-footer div {
+		color: #ffffff;
+		display: inline-block;
+		margin: 0 30px;
+		text-align: right;
+		vertical-align: top;
+	}
+
+		.main-footer h6 {
+			font-family: "OpenSans Semibold Web";
+			font-size: 36px;
+			font-weight: normal;
+			letter-spacing: -2px;
+			line-height: 36px;
+			margin: -7px 0 18px 0;
+		}
+
+		.main-footer ul {
+			list-style-type: none;
+			margin-left: 4px;
+		}
+
+			.main-footer li {
+				margin-bottom: 8px;
+			}
+
+			.main-footer span {
+				display: inline-block;
+				margin-right: 8px;
+			}
+
+			.main-footer code {
+				background-color: transparent;
+				border: 0;
+				font-size: 17px;
+				text-shadow: 0 1px 0 rgba( 0, 0, 0, 0.4 );
+			}
+
+	.log {
+		background-color: #ffffff;
+		border-radius: 4px;
+		color: #000000;
+		font-size: 14px;
+		line-height: 14px;
+		margin-top: 20px;
+		padding: 10px;
+		text-align: left;
+		text-transform: none;
+	}
+
+		.log code {
+			font-size: 13px;
+			text-shadow: none;
 		}

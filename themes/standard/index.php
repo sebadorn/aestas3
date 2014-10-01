@@ -12,6 +12,9 @@ else {
 	$content = 'all-posts';
 }
 
+define( 'GRAVATAR_BASE', 'https://secure.gravatar.com/avatar/' );
+define( 'GRAVATAR_SIZE', 48 );
+
 ?>
 <!DOCTYPE html>
 
@@ -19,7 +22,10 @@ else {
 <?php include( 'head.php' ) ?>
 <body>
 
-<?php include( 'body.php' ) ?>
+<section class="main-body">
+	<?php include( 'body.php' ) ?>
+</section>
+
 <?php include( 'foot.php' ) ?>
 
 </body>
