@@ -225,7 +225,7 @@ else {
 				echo ae_Forms::categories(
 					'post-categories',
 					ae_Forms::INPUT_CHECKBOX,
-					$model->getCategories()
+					$model->getCategoryIds()
 				)
 			?>
 		</div>

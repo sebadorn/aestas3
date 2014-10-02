@@ -9,6 +9,8 @@ class ae_PostModel extends ae_PageModel {
 	const TAG_DELIMITER = ';';
 
 	protected $categories = array();
+	protected $categoryIds = array();
+	protected $numComments = FALSE;
 	protected $tags = '';
 
 
@@ -18,6 +20,15 @@ class ae_PostModel extends ae_PageModel {
 	 */
 	public function __construct( $data = array() ) {
 		$this->loadFromData( $data );
+	}
+
+
+	/**
+	 * Add a category model to the list of categories.
+	 * @param {ae_CategoryModel} $category Category model.
+	 */
+	public function addCategory( ae_CategoryModel $category ) {
+		$this->categories[] = $category;
 	}
 
 
@@ -45,10 +56,19 @@ class ae_PostModel extends ae_PageModel {
 
 	/**
 	 * Get post categories.
-	 * @return {array} Post categories.
+	 * @return {array} Post categories (models).
 	 */
 	public function getCategories() {
 		return $this->categories;
+	}
+
+
+	/**
+	 * Get post category IDs.
+	 * @return {array} Post category IDs.
+	 */
+	public function getCategoryIds() {
+		return $this->categoryIds;
 	}
 
 
@@ -69,6 +89,15 @@ class ae_PostModel extends ae_PageModel {
 	 */
 	public function getLink() {
 		return $this->getDatetime( 'Y/m/d/' ) . $this->getPermalink();
+	}
+
+
+	/**
+	 * Get the number of comments.
+	 * @return {int|boolean} Number of comments or FALSE if not loaded.
+	 */
+	public function getNumComments() {
+		return $this->numComments;
 	}
 
 
@@ -122,10 +151,51 @@ class ae_PostModel extends ae_PageModel {
 
 
 	/**
-	 * Load post categories.
+	 * Load post category models.
 	 * @return {boolean} TRUE, if loading succeeded, FALSE otherwise.
 	 */
-	protected function loadCategories() {
+	public function loadCategories() {
+		if( !ae_Validate::id( $this->id ) ) {
+			throw new Exception( '[' . get_class() . '] Cannot load post categories. No valid post ID.' );
+		}
+
+		$stmt = '
+			SELECT ca_id, ca_title, ca_parent, ca_permalink
+			FROM (
+				SELECT * FROM `' . AE_TABLE_POSTS2CATEGORIES . '`
+				WHERE pc_post = :id
+			) AS `' . AE_TABLE_POSTS2CATEGORIES. '`
+			LEFT JOIN `' . AE_TABLE_CATEGORIES . '`
+			ON pc_category = ca_id
+			WHERE ca_status = :caStatus
+		';
+		$params = array(
+			':id' => $this->id,
+			':caStatus' => ae_CategoryModel::STATUS_AVAILABLE
+		);
+
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		foreach( $result as $row ) {
+			$ca = new ae_CategoryModel( $row );
+			$ca->setStatus( ae_CategoryModel::STATUS_AVAILABLE );
+
+			$this->addCategory( $ca );
+		}
+
+		return TRUE;
+	}
+
+
+	/**
+	 * Load post category IDs.
+	 * @return {boolean} TRUE, if loading succeeded, FALSE otherwise.
+	 */
+	protected function loadCategoryIds() {
 		if( !ae_Validate::id( $this->id ) ) {
 			throw new Exception( '[' . get_class() . '] Cannot load post categories. No valid post ID.' );
 		}
@@ -150,7 +220,7 @@ class ae_PostModel extends ae_PageModel {
 			$categories[] = $row['pc_category'];
 		}
 
-		$this->setCategories( $categories );
+		$this->setCategoryIds( $categories );
 
 		return TRUE;
 	}
@@ -165,7 +235,7 @@ class ae_PostModel extends ae_PageModel {
 			$this->setId( $data['po_id'] );
 		}
 		if( isset( $data['categories'] ) ) {
-			$this->setCategories( $data['categories'] );
+			$this->setCategoryIds( $data['categories'] );
 		}
 		if( isset( $data['po_comments'] ) ) {
 			$this->setCommentsStatus( $data['po_comments'] );
@@ -234,6 +304,7 @@ class ae_PostModel extends ae_PageModel {
 	/**
 	 * Save the post to DB. If an ID is set, it will update
 	 * the post, otherwise it will create a new one.
+	 * Will not save/update post-category relations!
 	 * @param  {boolean}   $forceInsert If set to TRUE and an ID has been set, the model will be saved
 	 *                                  as new entry instead of updating. (Optional, default is FALSE.)
 	 * @return {boolean}                TRUE, if saving is successful, FALSE otherwise.
@@ -355,7 +426,7 @@ class ae_PostModel extends ae_PageModel {
 	 * @param  {array}     $categories Post categories.
 	 * @throws {Exception}             If $categories is not an array or contains a non-valid ID.
 	 */
-	public function setCategories( $categories ) {
+	public function setCategoryIds( $categories ) {
 		if( !is_array( $categories ) ) {
 			$msg = sprintf( '[%s] Requires categories to be passed as array.', get_class() );
 			throw new Exception( $msg );
@@ -368,7 +439,21 @@ class ae_PostModel extends ae_PageModel {
 			}
 		}
 
-		$this->categories = $categories;
+		$this->categoryIds = $categories;
+	}
+
+
+	/**
+	 * Set the number of comments.
+	 * @param {int} $numComments Number of comments.
+	 */
+	public function setNumComments( $numComments ) {
+		if( !ae_Validate::integer( $numComments ) ) {
+			$msg = sprintf( '[%s] Not a number.', get_class() );
+			throw new Exception( $msg );
+		}
+
+		$this->numComments = $numComments;
 	}
 
 

@@ -3,6 +3,9 @@
 class ae_SiteBuilder {
 
 
+	protected $basePath = '';
+
+
 	/**
 	 * Constructor.
 	 */
@@ -19,22 +22,22 @@ class ae_SiteBuilder {
 	 * @param  {int}    $numLinkAtOnce How many numbered links to display at once. (Optional, default is 7.)
 	 * @return {string}                HTML. Links to the pages.
 	 */
-	static public function pagination( $numPages, $currentPage, $linkBase, $numLinksAtOnce = 7 ) {
-		$out = '<a class="page-offset jump-first-page" href="' . $linkBase . '0" title="first page">«</a>';
+	static public function pagination( $numPages, $currentPage, $linkBase, $numLinksAtOnce = 7, $startAt = 0 ) {
+		$out = '<a class="page-offset jump-first-page" href="' . $linkBase . $startAt . '" title="first page">«</a>';
 
 		$offset = floor( $numLinksAtOnce / 2 );
-		$start = max( $currentPage - $offset, 0 );
+		$start = max( $currentPage - $offset, $startAt );
 		$end = min( $start + $numLinksAtOnce, $numPages );
 		$start -= $numLinksAtOnce - ( $end - $start );
-		$start = max( $start, 0 );
+		$start = max( $start, $startAt );
 
 		for( $i = $start; $i < $end; $i++ ) {
 			$status = ( $i == $currentPage ) ? ' current-offset' : '';
 			$out .= '<a class="page-offset' . $status . '" href="' . $linkBase . $i . '">';
-			$out .= ( $i + 1 ) . '</a>';
+			$out .= ( $i - 1 + $startAt ) . '</a>';
 		}
 
-		$out .= '<a class="page-offset jump-last-page" href="' . $linkBase . ( $numPages - 1 ) . '" title="last page">»</a>';
+		$out .= '<a class="page-offset jump-last-page" href="' . $linkBase . ( $numPages - 1 + $startAt ) . '" title="last page">»</a>';
 
 		return $out;
 	}
@@ -46,13 +49,26 @@ class ae_SiteBuilder {
 	 * @param {mixed}  $data     Data to make available.
 	 */
 	public function render( $template, $data = NULL ) {
-		if( !include( $template ) ) {
+		if( !include( $this->basePath . $template ) ) {
 			$msg = sprintf(
 				'[%s] Failed to include file <code>"%s"</code>.',
-				get_class(), htmlspecialchars( $template )
+				get_class(), htmlspecialchars( $this->basePath . $template )
 			);
 			ae_Log::error( $msg );
 		}
+	}
+
+
+	/**
+	 * Set the base path for includes.
+	 * @param {string} $path Base path.
+	 */
+	public function setBasePath( $path ) {
+		if( mb_strlen( $path ) > 0 && mb_substr( $path, -1 ) != '/' ) {
+			$path .= '/';
+		}
+
+		$this->basePath = $path;
 	}
 
 

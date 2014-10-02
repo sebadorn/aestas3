@@ -10,6 +10,25 @@ class ae_Permalink {
 
 
 	/**
+	 * Generate a permalink from the title.
+	 * @param  {string} $title Title to convert into a permalink.
+	 * @return {string}        The permalink.
+	 */
+	static public function generatePermalink( $title ) {
+		$search = array( 'ä', 'ö', 'ü', 'ß' );
+		$replace = array( 'ae', 'oe', 'ue', 'ss' );
+
+		$permalink = strtolower( $title );
+		$permalink = str_replace( $search, $replace, $permalink );
+		$permalink = preg_replace( '/<[\/]?[a-z0-9]+>/i', '', $permalink );
+		$permalink = preg_replace( '/[^a-zA-Z0-9-+]/', '-', $permalink );
+		$permalink = preg_replace( '/[-]+/', '-', $permalink );
+
+		return $permalink;
+	}
+
+
+	/**
 	 * Load the page model to the permalink.
 	 * @return {ae_PageModel} The loaded page model.
 	 */
@@ -28,6 +47,23 @@ class ae_Permalink {
 		}
 
 		return $model;
+	}
+
+
+	/**
+	 * Get the current offset for posts.
+	 * @return {int} Offset (page of posts to display).
+	 */
+	static public function getPostOffset() {
+		$offset = 0;
+
+		if( preg_match( '/\/page\/[0-9]+\/?$/', self::$url ) ) {
+			$offset = explode( '/', self::$url );
+			$offset = array_reverse( $offset );
+			$offset = ( $offset[0] == '' ) ? $offset[1] : $offset[0];
+		}
+
+		return $offset;
 	}
 
 

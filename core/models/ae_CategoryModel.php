@@ -67,6 +67,15 @@ class ae_CategoryModel extends ae_Model {
 
 
 	/**
+	 * Get complete permalink for the category (not including the domain and directory).
+	 * @return {string} Complete permalink.
+	 */
+	public function getLink() {
+		return 'category/' . $this->getPermalink();
+	}
+
+
+	/**
 	 * Get category parent ID.
 	 * @return {int|boolean} Category parent ID or FALSE, if no parent exists.
 	 */
@@ -215,7 +224,7 @@ class ae_CategoryModel extends ae_Model {
 		}
 
 		if( $this->permalink == '' ) {
-			$this->permalink = self::generatePermalink( $this->title );
+			$this->permalink = ae_Permalink::generatePermalink( $this->title );
 		}
 
 		$params = array(
@@ -326,7 +335,7 @@ class ae_CategoryModel extends ae_Model {
 	 * @return {string}            The actually used permalink.
 	 */
 	public function setPermalink( $permalink ) {
-		$this->permalink = self::generatePermalink( $permalink );
+		$this->permalink = ae_Permalink::generatePermalink( $permalink );
 
 		return $this->permalink;
 	}

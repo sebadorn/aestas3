@@ -250,7 +250,7 @@ class ae_UserModel extends ae_Model {
 	 * @return {string}            The actually used permalink.
 	 */
 	public function setPermalink( $permalink ) {
-		$this->permalink = self::generatePermalink( $permalink );
+		$this->permalink = ae_Permalink::generatePermalink( $permalink );
 
 		return $this->permalink;
 	}
