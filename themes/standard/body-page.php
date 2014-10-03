@@ -1,5 +1,5 @@
-<article class="page single-page">
-	<header>
+<article class="post single-post" id="page-<?php echo $page->getId() ?>">
+	<header class="post-header">
 		<h2><?php echo $page->getTitle() ?></h2>
 	</header>
 

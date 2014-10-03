@@ -15,6 +15,47 @@ class ae_SiteBuilder {
 
 
 	/**
+	 * Build the comment form.
+	 * @param  {int}    $postId       Post ID the comment is for.
+	 * @param  {string} $submit       Text of the submit button. (Optional, defaults to "submit".)
+	 * @param  {array}  $placeholders Placeholder texts for the form elements.
+	 * @return {string}               The form HTML.
+	 */
+	static public function commentForm( $postId, $submit = 'submit', $placeholders = array() ) {
+		$phKeys = array( 'author-name', 'author-email', 'author-url', 'content' );
+
+		foreach( $phKeys as $key ) {
+			if( !isset( $placeholders[$key] ) ) {
+				$placeholders[$key] = '';
+			}
+		}
+
+		$form = '
+			<form action="%s" method="post" class="comment-form" id="comment-form">
+				<input type="text" name="comment-do-not-fill" class="do-not-fill" />
+				<input type="hidden" name="comment-post" value="%d" />
+
+				<input type="text" name="comment-author-name" placeholder="%s" />
+				<input type="text" name="comment-author-email" placeholder="%s" />
+				<input type="text" name="comment-author-url" placeholder="%s" />
+				<textarea name="comment-content" placeholder="%s"></textarea>
+
+				<button type="submit" class="comment-submit">%s</button>
+			</form>
+		';
+		$out = sprintf(
+			$form, URL . 'scripts/comment.php',
+			$postId,
+			$placeholders['author-name'], $placeholders['author-email'], $placeholders['author-url'],
+			$placeholders['content'],
+			$submit
+		);
+
+		return $out;
+	}
+
+
+	/**
 	 * Build the links for a page navigation.
 	 * @param  {int}    $numPages      Total number of pages.
 	 * @param  {int}    $currentPage   The currently displayed page. Index starting at 0.

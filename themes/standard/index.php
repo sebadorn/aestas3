@@ -26,12 +26,17 @@ else if( ae_Permalink::isPage() ) {
 		$title = htmlspecialchars( $page->getTitle() ) . ' | ' . $title;
 	}
 }
+else if( isset( $_GET['search'] ) ) {
+	$content = 'search';
+}
 else {
 	$content = 'all-posts';
 }
 
+define( 'COMMENT_AUTHOR_DEFAULT_NAME', 'Namenlos' );
 define( 'GRAVATAR_BASE', 'https://secure.gravatar.com/avatar/' );
 define( 'GRAVATAR_SIZE', 48 );
+define( 'IS_SINGLE_POST', ( $content == 'single-post' ) );
 define( 'POSTS_OFFSET', max( ae_Permalink::getPostOffset() - 1, 0 ) );
 define( 'POSTS_PER_PAGE', 5 );
 

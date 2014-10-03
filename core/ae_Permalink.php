@@ -3,6 +3,9 @@
 class ae_Permalink {
 
 
+	const GET_OFFSET = 'offset';
+	const GET_PAGE = 'page';
+	const GET_POST = 'p';
 	const REGEX_PAGE = '/^\/[^\/]+$/i';
 	const REGEX_POST = '/^\/[0-9]{4}\/[0-9]{2}\/[0-9]{2}\/[^\/]+$/i';
 
@@ -38,12 +41,19 @@ class ae_Permalink {
 			throw new Exception( $msg );
 		}
 
-		$permalink = mb_substr( self::$url, 1 );
-
 		$model = new ae_PageModel();
 
-		if( !$model->loadFromPermalink( $permalink ) ) {
-			return FALSE;
+		if( isset( $_GET[self::GET_PAGE] ) && ae_Validate::id( $_GET[self::GET_PAGE] ) ) {
+			if( !$model->load( $_GET[self::GET_PAGE] ) ) {
+				return FALSE;
+			}
+		}
+		else {
+			$permalink = mb_substr( self::$url, 1 );
+
+			if( !$model->loadFromPermalink( $permalink ) ) {
+				return FALSE;
+			}
 		}
 
 		return $model;
@@ -62,6 +72,9 @@ class ae_Permalink {
 			$offset = array_reverse( $offset );
 			$offset = ( $offset[0] == '' ) ? $offset[1] : $offset[0];
 		}
+		else if( isset( $_GET[self::GET_OFFSET] ) && ae_Validate::integer( $_GET[self::GET_OFFSET] ) ) {
+			$offset = $_GET[self::GET_OFFSET];
+		}
 
 		return $offset;
 	}
@@ -77,12 +90,19 @@ class ae_Permalink {
 			throw new Exception( $msg );
 		}
 
-		$permalink = mb_substr( self::$url, 1 );
-
 		$model = new ae_PostModel();
 
-		if( !$model->loadFromPermalink( $permalink ) ) {
-			return FALSE;
+		if( isset( $_GET[self::GET_POST] ) && ae_Validate::id( $_GET[self::GET_POST] ) ) {
+			if( !$model->load( $_GET[self::GET_POST] ) ) {
+				return FALSE;
+			}
+		}
+		else {
+			$permalink = mb_substr( self::$url, 1 );
+
+			if( !$model->loadFromPermalink( $permalink ) ) {
+				return FALSE;
+			}
 		}
 
 		return $model;
@@ -106,7 +126,10 @@ class ae_Permalink {
 	 * @return {boolean} TRUE, if URL fits a page permalink, FALSE otherwise.
 	 */
 	static public function isPage() {
-		return preg_match( self::REGEX_PAGE, self::$url );
+		$modRewrite = preg_match( self::REGEX_PAGE, self::$url );
+		$get = ( isset( $_GET[self::GET_PAGE] ) && ae_Validate::id( $_GET[self::GET_PAGE] ) );
+
+		return $modRewrite || $get;
 	}
 
 
@@ -115,7 +138,10 @@ class ae_Permalink {
 	 * @return {boolean} TRUE, if URL fits a post permalink, FALSE otherwise.
 	 */
 	static public function isPost() {
-		return preg_match( self::REGEX_POST, self::$url );
+		$modRewrite = preg_match( self::REGEX_POST, self::$url );
+		$get = ( isset( $_GET[self::GET_POST] ) && ae_Validate::id( $_GET[self::GET_POST] ) );
+
+		return $modRewrite || $get;
 	}
 
 

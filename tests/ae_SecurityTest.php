@@ -49,4 +49,23 @@ class ae_SecurityTest extends PHPUnit_Framework_TestCase {
 	}
 
 
+	public function testSanitizing() {
+		$before = '';
+		$after = '';
+		$this->assertEquals( ae_Security::sanitizeHTML( $before ), $after );
+
+		$before = '<strong>test</strong>';
+		$after = '<strong>test</strong>';
+		$this->assertEquals( ae_Security::sanitizeHTML( $before ), $after );
+
+		$before = '<b>lorem</b> <strong>ipsum dolor</strong> sit <em>amet</em>';
+		$after = '&lt;b&gt;lorem&lt;/b&gt; <strong>ipsum dolor</strong> sit <em>amet</em>';
+		$this->assertEquals( ae_Security::sanitizeHTML( $before ), $after );
+
+		$before = 'I am <iframe src="http://evil" />! <script>Oooh!</script>';
+		$after = 'I am &lt;iframe src="http://evil" /&gt;! &lt;script&gt;Oooh!&lt;/script&gt;';
+		$this->assertEquals( ae_Security::sanitizeHTML( $before ), $after );
+	}
+
+
 }

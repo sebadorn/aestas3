@@ -4,6 +4,7 @@ class ae_Security {
 
 
 	static protected $cfg = array(
+		'allowed_tags' => array( 'a', 'blockquote', 'code', 'del', 'em', 'strong' ),
 		'hash_iterations' => '04'
 	);
 	static protected $validAreas = array(
@@ -163,9 +164,23 @@ class ae_Security {
 	}
 
 
+	/**
+	 * Sanitize HTML input. Only allow certain tags.
+	 * @param  {string} $input Input to sanitize.
+	 * @return {string}        Sanitized output.
+	 */
 	static public function sanitizeHTML( $input ) {
-		// TODO
-		throw new Exception( 'ae_Security::sanitizeHTML method not implemented' );
+		$tags = implode( '|', self::$cfg['allowed_tags'] );
+
+		$input = htmlspecialchars( $input, ENT_NOQUOTES );
+		$input = preg_replace( '/&lt;(' . $tags . ')&gt;/i', '<$1>', $input );
+		$input = preg_replace( '/&lt;\/(' . $tags . ')&gt;/i', '</$1>', $input );
+
+		if( in_array( 'a', self::$cfg['allowed_tags'] ) ) {
+			$input = preg_replace( '/&lt;a href="([^\'"]+)"&gt;/i', '<a href="$1">', $input );
+		}
+
+		return $input;
 	}
 
 

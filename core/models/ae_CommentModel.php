@@ -189,6 +189,9 @@ class ae_CommentModel extends ae_Model {
 			throw new Exception( '[' . get_class() . '] Cannot save comment. No post ID.' );
 		}
 
+		if( $this->datetime == '0000-00-00 00:00:00' ) {
+			$this->setDatetime( date( 'Y-m-d H:i:s' ) );
+		}
 
 		$params = array(
 			':postId' => $this->postId,
@@ -301,6 +304,8 @@ class ae_CommentModel extends ae_Model {
 	 * @throws {Exception}        If neither empty nor valid.
 	 */
 	public function setAuthorEmail( $email ) {
+		$email = trim( $email );
+
 		if( $email !== '' && !ae_Validate::emailSloppy( $email ) ) {
 			throw new Exception( '[' . get_class() . '] Not a valid email: ' . htmlspecialchars( $email ) );
 		}
@@ -325,16 +330,10 @@ class ae_CommentModel extends ae_Model {
 
 	/**
 	 * Set comment author name.
-	 * @param {string} $name The author name. If empty it will be set to a default name.
+	 * @param {string} $name The author name.
 	 */
 	public function setAuthorName( $name ) {
-		$name = trim( $name );
-
-		if( mb_strlen( $name ) == 0 ) {
-			$name = 'Anonymous';
-		}
-
-		$this->authorName = $name;
+		$this->authorName = trim( $name );
 	}
 
 

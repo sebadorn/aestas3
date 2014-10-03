@@ -1,6 +1,11 @@
 <header class="main-header">
 	<h1><a href="<?php echo URL ?>" title="Home"><?php echo ae_Settings::get( 'blog_title' ) ?></a></h1>
 
+	<div class="about-me">
+		<img src="https://secure.gravatar.com/avatar/dea14db0237b0a18cdf7bd87b203ad90?d=mm&amp;s=32" alt="Profilbild Seba" />
+		<a href="<?php echo URL ?>ueber">Über mich</a>
+	</div>
+
 	<ul class="icons">
 		<li class="icon-twitter">
 			<a href="http://twitter.com/sebadorn" title="Twitter"></a>

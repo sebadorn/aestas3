@@ -120,9 +120,14 @@
 }
 
 html {
-	background-color: #f6f6f6;
+	background-color: #6B98AB;
 	color: #101010;
 	font-size: 14px;
+}
+
+body {
+	background-color: #f6f6f6;
+	overflow-x: hidden;
 }
 
 a {
@@ -136,6 +141,26 @@ a:hover {
 
 blockquote, hr, ol, p, pre, ul {
 	margin-bottom: 16px;
+}
+
+blockquote {
+	background-color: #f0f0f0;
+	border-left: 3px solid #6DD954;
+	border-radius: 2px;
+	color: #303030;
+	padding: 10px;
+}
+
+	blockquote p:last-child {
+		margin-bottom: 0;
+	}
+
+	blockquote + br {
+		display: none;
+	}
+
+button, input, textarea {
+	font-size: 14px;
 }
 
 code {
@@ -167,6 +192,7 @@ ol, ul {
 .main-header {
 	background-color: #ffffff;
 	padding: 10px 20px;
+	position: relative;
 }
 
 	h1 {
@@ -178,6 +204,22 @@ ol, ul {
 
 		h1 a {
 			font-family: "OpenSans Light Web";
+		}
+
+	.about-me {
+		display: inline-block;
+		position: absolute;
+		right: 160px;
+	}
+
+		.about-me img {
+			border-radius: 32px;
+			float: left;
+			margin-right: 8px;
+		}
+
+		.about-me a {
+			line-height: 32px;
 		}
 
 	.icons {
@@ -216,7 +258,7 @@ ol, ul {
 
 .recent-comments {
 	background-color: #f0f0f0;
-	padding: 12px 20px 8px;
+	padding: 10px 20px 6px;
 	margin-bottom: 60px;
 	overflow: hidden;
 	white-space: nowrap;
@@ -453,6 +495,10 @@ article {
 		margin: 0;
 	}
 
+	.comments hr:last-of-type {
+		margin-bottom: 20px;
+	}
+
 	.comment {
 		margin: 0 auto;
 		max-width: 1000px;
@@ -492,12 +538,67 @@ article {
 				font-size: 12px;
 			}
 
+			.preview .comment-time {
+				background-color: #F5525F;
+				border-radius: 1px;
+				color: #ffffff;
+				font-weight: bold;
+				padding: 2px 6px;
+				text-transform: uppercase;
+			}
+
 		.comment-content {
 			clear: both;
 			display: inline-block;
 			line-height: 24px;
 			max-width: 600px;
+			width: 100%;
 		}
+
+
+.comment-form {}
+
+	input[type="text"],
+	input[type="password"],
+	textarea {
+		background-color: #ffffff;
+		border: 1px solid #e0e0e0;
+		border-radius: 1px;
+		padding: 6px 8px;
+	}
+
+	.comment-form input,
+	.comment-form textarea {
+		display: block;
+		margin-bottom: 8px;
+		width: 100%;
+	}
+
+	.comment-form textarea {
+		height: 200px;
+		margin-bottom: 16px;
+		resize: vertical;
+	}
+
+	.comment-form button {
+		background-color: #CF5D3D;
+		border: 0;
+		border-bottom: 1px solid #ffffff;
+		border-radius: 2px;
+		color: #ffffff;
+		float: right;
+		padding: 6px 10px;
+	}
+
+	.comment-form button:hover {
+		background-color: #505050;
+		cursor: pointer;
+	}
+
+	.do-not-fill {
+		display: none !important;
+		visibility: hidden !important;
+	}
 
 
 
@@ -523,7 +624,7 @@ article {
 	}
 
 	.main-footer div {
-		color: #ffffff;
+		color: #f6f6f6;
 		display: inline-block;
 		margin: 0 30px;
 		text-align: right;

@@ -6,6 +6,9 @@ if( $content == 'single-post' ) {
 else if( $content == 'single-page' ) {
 	include( 'body-page.php' );
 }
+else if( $content == 'search' ) {
+	include( 'search.php' );
+}
 else if( $content == '404' ) {
 	include( '404.php' );
 }

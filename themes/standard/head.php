@@ -10,6 +10,10 @@
 	<link rel="alternate" type="application/rss+xml" title="Neue Kommentare (RSS)" href="<?php echo URL ?>feed/comments.php" />
 	<script src="<?php echo THEME_PATH ?>js/shl3/scripts/shCore.js"></script>
 	<script src="<?php echo THEME_PATH ?>js/shl3/scripts/shAutoloader.js"></script>
+<?php if( IS_SINGLE_POST ): ?>
+	<script src="<?php echo THEME_PATH ?>js/md5.min.js"></script>
+	<script src="<?php echo THEME_PATH ?>js/comment-preview.js"></script>
+<?php endif ?>
 	<script>
 		window.addEventListener( "load", function() {
 			var shl3path = "<?php echo THEME_PATH ?>js/shl3/scripts/";
@@ -26,6 +30,13 @@
 				"xml " + shl3path + "shBrushXml.js"
 			);
 			SyntaxHighlighter.all();
+<?php if( IS_SINGLE_POST ): ?>
+			CommentPreview.init(
+				"<?php echo GRAVATAR_BASE ?>",
+				<?php echo GRAVATAR_SIZE ?>,
+				"<?php echo COMMENT_AUTHOR_DEFAULT_NAME ?>"
+			);
+<?php endif ?>
 		} );
 	</script>
 </head>

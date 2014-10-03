@@ -10,7 +10,7 @@ $filter = array(
 $coList = new ae_CommentList( $filter );
 
 ?>
-<article class="post">
+<article class="post" id="post-<?php echo $post->getId() ?>">
 	<header class="post-header">
 		<h2><a href="<?php echo URL . $post->getLink() ?>"><?php echo $post->getTitle() ?></a></h2>
 

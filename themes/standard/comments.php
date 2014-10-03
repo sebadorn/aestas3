@@ -1,8 +1,10 @@
 <section class="comments" id="comments">
 
+<?php if( $coList->getTotalNumItems() > 0 ): ?>
 	<h4>Kommentare</h4>
 
 	<hr />
+<?php endif ?>
 
 <?php while( $co = $coList->next() ): ?>
 	<?php
@@ -10,15 +12,17 @@
 		$gravUrl .= '?d=mm';
 		$gravUrl .= '&amp;s=' . GRAVATAR_SIZE;
 
+		$authorName = ( $co->getAuthorName() == '' ) ? COMMENT_AUTHOR_DEFAULT_NAME : $co->getAuthorName();
+
 		$postLink = URL . $post->getLink() . '#comment-' . $co->getId();
 	?>
 	<div class="comment" id="comment-<?php echo $co->getId() ?>">
 		<div class="comment-meta">
 			<img alt="avatar" class="avatar avatar-<?php echo GRAVATAR_SIZE ?>" src="<?php echo $gravUrl ?>" />
 		<?php if( $co->getAuthorUrl() != '' ): ?>
-			<a class="comment-author" href="<?php echo $co->getAuthorUrl() ?>"><?php echo $co->getAuthorName() ?></a>
+			<a class="comment-author" href="<?php echo $co->getAuthorUrl() ?>"><?php echo $authorName ?></a>
 		<?php else: ?>
-			<span class="comment-author"><?php echo $co->getAuthorName() ?></span>
+			<span class="comment-author"><?php echo $authorName ?></span>
 		<?php endif ?>
 			<a href="#comment-<?php echo $co->getId() ?>">
 				<time class="comment-time" datetime="<?php echo $co->getDatetime( 'Y-m-d' ) ?>"><?php echo $co->getDatetime( 'd.m.y \u\m H:i' ) ?></time>
@@ -30,7 +34,18 @@
 	<hr />
 <?php endwhile ?>
 
-	<form action="<?php echo URL ?>scripts/comment.php" method="post">
-	</form>
+</section>
 
+<section class="comments comment-form">
+	<h4>Schreib’ was</h4>
+
+	<?php
+		$placeholders = array(
+			'author-name' => 'Name (optional)',
+			'author-email' => 'E-Mail (optional)',
+			'author-url' => 'Website (optional)',
+			'content' => 'Kommentar'
+		);
+		echo ae_SiteBuilder::commentForm( $post->getId(), 'absenden', $placeholders )
+	?>
 </section>
