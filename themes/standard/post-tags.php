@@ -5,7 +5,7 @@ $tags = array();
 foreach( $data as $tag ) {
 	$link = sprintf(
 		'<a class="tag icon-add-before icon-before-tag" href="%s">%s</a>',
-		URL . 'tag/' . ae_Permalink::generatePermalink( $tag ), $tag
+		URL . PERMALINK_BASE_TAG . ae_Permalink::prepareTag( $tag ), $tag
 	);
 	$tags[$tag] = $link;
 }

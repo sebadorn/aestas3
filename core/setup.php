@@ -20,6 +20,7 @@ define( 'PERMALINK_BASE_CATEGORY', 'category/' );
 define( 'PERMALINK_BASE_OFFSET', 'page/' );
 define( 'PERMALINK_BASE_PAGE', '' );
 define( 'PERMALINK_BASE_POST', '' );
+define( 'PERMALINK_BASE_TAG', 'tag/' );
 define( 'PERMALINK_BASE_USER', 'author/' );
 define( 'RSS_PROTOCOL', $rssSettings['protocol'] );
 

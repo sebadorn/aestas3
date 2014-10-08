@@ -64,6 +64,10 @@ class ae_SiteBuilder {
 	 * @return {string}                HTML. Links to the pages.
 	 */
 	static public function pagination( $numPages, $currentPage, $linkBase, $numLinksAtOnce = 7, $startAt = 0 ) {
+		if( $numPages <= 1 ) {
+			return;
+		}
+
 		$out = '<a class="page-offset jump-first-page" href="' . $linkBase . $startAt . '" title="first page">«</a>';
 
 		$offset = floor( $numLinksAtOnce / 2 );

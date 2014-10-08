@@ -20,6 +20,13 @@ if( ae_Permalink::isCategory() ) {
 	';
 	$params[':catId'] = $ca->getId();
 }
+else if( ae_Permalink::isTag() ) {
+	$tag = ae_Permalink::getTagName();
+	$tag = '%' . $tag . '%';
+
+	$filter['WHERE'] .= ' AND po_tags LIKE :tag';
+	$params[':tag'] = $tag;
+}
 
 $postList = new ae_PostList( $filter, $params );
 $postList->loadCategories();
@@ -60,8 +67,12 @@ $postList->loadNumComments();
 
 <?php
 	$numPages = ceil( $postList->getTotalNumItems() / POSTS_PER_PAGE );
-	// $linkBase = URL . 'page/';
 	$linkBase = preg_replace( ';page/[0-9]+$;i', '', $_SERVER['REQUEST_URI'] );
+
+	if( $linkBase[mb_strlen( $linkBase ) - 1] !== '/' ) {
+		$linkBase .= '/';
+	}
+
 	$linkBase .= 'page/';
 ?>
 

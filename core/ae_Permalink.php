@@ -7,12 +7,14 @@ class ae_Permalink {
 	const GET_OFFSET = 'offset';
 	const GET_PAGE = 'page';
 	const GET_POST = 'p';
+	const GET_TAG = 'tag';
 
 	static protected $regex = array(
 		'category' => ';^/%CATEGORY_BASE%[^/]+$;i',
 		'offset' => ';/%OFFSET_BASE%[0-9]+/?$;i',
 		'page' => ';^/%PAGE_BASE%[^/]+$;i',
-		'post' => ';^/%POST_BASE%[0-9]{4}/[0-9]{2}/[0-9]{2}/[^/]+$;i'
+		'post' => ';^/%POST_BASE%[0-9]{4}/[0-9]{2}/[0-9]{2}/[^/]+$;i',
+		'tag' => ';^/%TAG_BASE%[^/]+$;i'
 	);
 
 	static protected $url = '';
@@ -137,7 +139,7 @@ class ae_Permalink {
 		}
 		else {
 			$permalink = mb_substr( self::$url, 1 );
-			$permalink = preg_replace( ';^' . PERMALINK_BASE_POST . '/;i', '', $permalink );
+			$permalink = preg_replace( ';^' . PERMALINK_BASE_POST . ';i', '', $permalink );
 
 			if( !$model->loadFromPermalink( $permalink ) ) {
 				return FALSE;
@@ -145,6 +147,28 @@ class ae_Permalink {
 		}
 
 		return $model;
+	}
+
+
+	/**
+	 * Get the tag name.
+	 * @return {string} The given tag.
+	 */
+	static public function getTagName() {
+		if( !self::isTag() ) {
+			$msg = sprintf( '[%s] Permalink does not represent a tag.', get_class() );
+			throw new Exception( $msg );
+		}
+
+		if( isset( $_GET[self::GET_TAG] ) ) {
+			$tag = $_GET[self::GET_TAG];
+		}
+		else {
+			$tag = mb_substr( self::$urlNoOffset, 1 );
+			$tag = preg_replace( ';^' . PERMALINK_BASE_TAG . ';i', '', $tag );
+		}
+
+		return rawurldecode( $tag );
 	}
 
 
@@ -160,6 +184,7 @@ class ae_Permalink {
 		self::$regex['offset'] = str_replace( '%OFFSET_BASE%', PERMALINK_BASE_OFFSET, self::$regex['offset'] );
 		self::$regex['page'] = str_replace( '%PAGE_BASE%', PERMALINK_BASE_PAGE, self::$regex['page'] );
 		self::$regex['post'] = str_replace( '%POST_BASE%', PERMALINK_BASE_POST, self::$regex['post'] );
+		self::$regex['tag'] = str_replace( '%TAG_BASE%', PERMALINK_BASE_TAG, self::$regex['tag'] );
 
 		self::$url = str_replace( $urlBase, '', $_SERVER['REQUEST_URI'] );
 		self::$url = preg_replace( ';/$;', '', self::$url );
@@ -201,6 +226,31 @@ class ae_Permalink {
 		$get = ( isset( $_GET[self::GET_POST] ) && ae_Validate::id( $_GET[self::GET_POST] ) );
 
 		return $modRewrite || $get;
+	}
+
+
+	/**
+	 * Check if current URL represents a tag permalink.
+	 * @return {boolean} TRUE, if URL fits a tag permalink, FALSE otherwise.
+	 */
+	static public function isTag() {
+		$modRewrite = preg_match( self::$regex['tag'], self::$urlNoOffset );
+		$get = isset( $_GET[self::GET_TAG] );
+
+		return $modRewrite || $get;
+	}
+
+
+	/**
+	 * Prepare a tag for use in a link.
+	 * @param  {string} $tag Original tag.
+	 * @return {string}      Prepared tag.
+	 */
+	static public function prepareTag( $tag ) {
+		$tag = str_replace( '/', '_', $tag );
+		$tag = rawurlencode( $tag );
+
+		return $tag;
 	}
 
 
