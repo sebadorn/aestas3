@@ -8,7 +8,7 @@ $scriptTime = ae_Timer::stop( 'total' );
 $filter = array(
 	'ORDER BY' => 'ca_title ASC'
 );
-$caList = new ae_CategoryList( $filter );
+$caList = new ae_CategoryList( $filter, array(), FALSE );
 
 ?>
 <footer class="main-footer">
@@ -17,7 +17,7 @@ $caList = new ae_CategoryList( $filter );
 		<h6>Kategorien</h6>
 		<ul class="categories">
 		<?php while( $ca = $caList->next() ): ?>
-			<li><a href=""><?php echo $ca->getTitle() ?></a></li>
+			<li><a href="<?php echo $ca->getLink() ?>"><?php echo $ca->getTitle() ?></a></li>
 		<?php endwhile ?>
 		</ul>
 	</div>

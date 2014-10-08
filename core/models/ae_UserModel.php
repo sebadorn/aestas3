@@ -26,6 +26,15 @@ class ae_UserModel extends ae_Model {
 
 
 	/**
+	 * Get complete permalink for the user (not including the domain and directory).
+	 * @return {string} Complete permalink.
+	 */
+	public function getLink() {
+		return URL . PERMALINK_BASE_USER . $this->getPermalink();
+	}
+
+
+	/**
 	 * Get external user name.
 	 * @return {string} User name (extern).
 	 */

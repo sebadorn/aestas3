@@ -88,7 +88,7 @@ class ae_PostModel extends ae_PageModel {
 	 * @return {string} Complete permalink.
 	 */
 	public function getLink() {
-		return $this->getDatetime( 'Y/m/d/' ) . $this->getPermalink();
+		return URL . PERMALINK_BASE_POST . $this->getDatetime( 'Y/m/d/' ) . $this->getPermalink();
 	}
 
 
@@ -130,10 +130,11 @@ class ae_PostModel extends ae_PageModel {
 
 	/**
 	 * Load a post with the given ID.
-	 * @param  {int}     $id ID of the post to load.
-	 * @return {boolean}     TRUE, if loading succeeded, FALSE otherwise.
+	 * @param  {int}     $id             ID of the post to load.
+	 * @param  {boolean} $loadCategories Also load the associated categories from the DB.
+	 * @return {boolean}                 TRUE, if loading succeeded, FALSE otherwise.
 	 */
-	public function load( $id ) {
+	public function load( $id, $loadCategories = FALSE ) {
 		$modelData = $this->loadModelData( $id );
 
 		if( $modelData === FALSE ) {
@@ -142,8 +143,8 @@ class ae_PostModel extends ae_PageModel {
 
 		$this->loadFromData( $modelData );
 
-		if( !$this->loadCategories() ) {
-			return FALSE;
+		if( $loadCategories ) {
+			return $this->loadCategories();
 		}
 
 		return TRUE;

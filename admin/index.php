@@ -31,6 +31,10 @@ $username = htmlspecialchars( $username );
 	<input type="password" name="userpwd" id="userpwd" placeholder="Password" />
 
 	<button type="submit" class="btn">login ›</button>
+
+	<div class="link-blog">
+		<a href="../">‹ blog</a>
+	</div>
 </form>
 
 <?php ae_Log::printAll(); ?>

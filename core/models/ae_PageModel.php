@@ -76,6 +76,15 @@ class ae_PageModel extends ae_Model {
 
 
 	/**
+	 * Get complete permalink for the page (not including the domain and directory).
+	 * @return {string} Complete permalink.
+	 */
+	public function getLink() {
+		return URL . PERMALINK_BASE_PAGE . $this->getPermalink();
+	}
+
+
+	/**
 	 * Get page permalink.
 	 * @return {string} Page permalink.
 	 */

@@ -71,7 +71,7 @@ class ae_CategoryModel extends ae_Model {
 	 * @return {string} Complete permalink.
 	 */
 	public function getLink() {
-		return 'category/' . $this->getPermalink();
+		return URL . PERMALINK_BASE_CATEGORY . $this->getPermalink();
 	}
 
 
@@ -179,6 +179,35 @@ class ae_CategoryModel extends ae_Model {
 		}
 
 		$this->setChildren( $children );
+
+		return TRUE;
+	}
+
+
+	/**
+	 * Load model data from DB identified by the given permalink.
+	 * @param {string} $permalink Permalink to identify the category by.
+	 */
+	public function loadFromPermalink( $permalink, $loadChildren = FALSE ) {
+		$stmt = '
+			SELECT * FROM `' . self::TABLE . '`
+			WHERE ca_permalink = :permalink
+		';
+		$params = array(
+			':permalink' => $permalink
+		);
+
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE || count( $result ) < 1 ) {
+			return FALSE;
+		}
+
+		$this->loadFromData( $result[0] );
+
+		if( $loadChildren ) {
+			return $this->loadChildren( $this->getId() );
+		}
 
 		return TRUE;
 	}

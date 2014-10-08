@@ -16,6 +16,11 @@ define( 'COMMENT_DEFAULT_STATUS', ae_CommentModel::STATUS_APPROVED );
 define( 'IMAGE_COMPRESSION_PNG', $mediaSettings['image_compression_png'] );
 define( 'IMAGE_PREVIEW_MAX_WIDTH', $mediaSettings['preview_image_max_width'] );
 define( 'IMAGE_QUALITY_JPEG', $mediaSettings['image_quality_jpeg'] );
+define( 'PERMALINK_BASE_CATEGORY', 'category/' );
+define( 'PERMALINK_BASE_OFFSET', 'page/' );
+define( 'PERMALINK_BASE_PAGE', '' );
+define( 'PERMALINK_BASE_POST', '' );
+define( 'PERMALINK_BASE_USER', 'author/' );
 define( 'RSS_PROTOCOL', $rssSettings['protocol'] );
 
 // Disable Magic Quotes (removed as of PHP 5.4)
@@ -37,6 +42,15 @@ ae_Settings::load();
 
 // Constants used in themes and the RSS feed
 
+$protocol = 'http://';
+
+if(
+	( !empty( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] !== 'off' ) ||
+	$_SERVER['SERVER_PORT'] == 443
+) {
+	$protocol = 'https://';
+}
+
 $url = $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF'];
 $url = explode( '/', $url );
 array_pop( $url );
@@ -45,7 +59,7 @@ if( defined( 'IS_RSS' ) ) {
 	array_pop( $url );
 }
 
-$url = '//' . implode( '/', $url ) . '/';
+$url = $protocol . implode( '/', $url ) . '/';
 
 define( 'URL', $url );
 define( 'THEME', ae_Settings::get( 'theme' ) );

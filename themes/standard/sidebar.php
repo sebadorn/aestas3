@@ -4,25 +4,37 @@ $filter = array(
 	'LIMIT' => '0, 5',
 	'ORDER BY' => 'co_datetime DESC',
 	'WHERE' => '
-		co_status = "' . ae_CommentModel::STATUS_APPROVED . '" AND (
+		co_status = :coStatus AND (
 			(
 				SELECT po_status FROM `' . ae_PostModel::TABLE . '`
-				WHERE po_id = co_post
-			) = "' . ae_PostModel::STATUS_PUBLISHED . '"
+				WHERE po_id = co_post AND po_datetime <= :date
+			) = :poStatus
 		)
 	'
 );
-$coList = new ae_CommentList( $filter, FALSE );
+$params = array(
+	':coStatus' => ae_CommentModel::STATUS_APPROVED,
+	':poStatus' => ae_PostModel::STATUS_PUBLISHED,
+	':date' => date( 'Y-m-d H:i:s' )
+);
+$coList = new ae_CommentList( $filter, $params, FALSE );
 
+$i = 0;
 $filter = array(
 	'LIMIT' => FALSE,
 	'WHERE' => '( '
 );
+$params = array();
+
 while( $co = $coList->next() ) {
-	$filter['WHERE'] .= 'po_id = ' . $co->getPostId() . ' OR ';
+	$filter['WHERE'] .= 'po_id = :id' . $i . ' OR ';
+	$params[':id' . $i] = $co->getId();
+	$i++;
 }
+
 $filter['WHERE'] = mb_substr( $filter['WHERE'], 0, -4 ) . ' )';
-$poList = new ae_PostList( $filter );
+
+$poList = new ae_PostList( $filter, $params, FALSE );
 
 $coList->reset();
 $coList->reverse();
@@ -38,7 +50,7 @@ $coList->reverse();
 		$gravUrl .= '&amp;s=' . GRAVATAR_SIZE;
 
 		$p = $poList->find( $co->getPostId() );
-		$postLink = URL . $p->getLink() . '#comment-' . $co->getId();
+		$postLink = $p->getLink() . '#comment-' . $co->getId();
 	?>
 	<div>
 		<a href="<?php echo $postLink ?>">

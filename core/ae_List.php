@@ -15,31 +15,17 @@ abstract class ae_List {
 	 * @param {array}   $defaultFilter Default filter.
 	 * @param {boolean} $countItems    If TRUE, extends the DB query to count the number of items. (Optional, defaults to TRUE.)
 	 */
-	public function __construct( $itemClass, $filter, $defaultFilter, $countItems = TRUE ) {
+	public function __construct( $itemClass, $filter, $params, $defaultFilter, $countItems = TRUE ) {
 		$filter = self::buildFilter( $filter, $defaultFilter );
-		$numFilter = $filter;
-		unset( $numFilter['LIMIT'] );
-
 		$table = constant( $itemClass . '::TABLE' );
-		$numStmt = '';
-
-		// SQL statement for number of items
-		if( $countItems ) {
-			$numStmt = '
-				SELECT COUNT( * ) FROM `' . $table . '`
-			';
-			$numStmt = self::buildStatement( $numStmt, $numFilter );
-			$numStmt = ', ( ' . $numStmt . ' ) AS num_entries';
-		}
 
 		// Combined statement
 		$base = '
-			SELECT * ' . $numStmt . '
-			FROM `' . $table . '`
+			SELECT * FROM `' . $table . '`
 		';
 		$stmt = self::buildStatement( $base, $filter );
 
-		$result = ae_Database::query( $stmt );
+		$result = ae_Database::query( $stmt, $params );
 
 		if( $result === FALSE || empty( $result ) ) {
 			return;
@@ -51,7 +37,10 @@ abstract class ae_List {
 		}
 
 		reset( $this->items );
-		$this->totalItems = $countItems ? $result[0]['num_entries'] : 0;
+
+		if( $countItems ) {
+			$this->queryNumItems( $table, $filter, $params );
+		}
 	}
 
 
@@ -189,6 +178,34 @@ abstract class ae_List {
 		next( $this->items );
 
 		return $item;
+	}
+
+
+	/**
+	 * Query the number of items for the given filter from the DB.
+	 * @param  {string}  $table  DB table name.
+	 * @param  {array}   $filter Filter.
+	 * @param  {array}   $params Parameters of the filter.
+	 * @return {boolean}         TRUE on success, FALSE otherwise.
+	 */
+	protected function queryNumItems( $table, $filter, $params ) {
+		$numFilter = $filter;
+		unset( $numFilter['LIMIT'] );
+
+		$numStmt = '
+			SELECT COUNT( * ) AS num_entries FROM `' . $table . '`
+		';
+		$numStmt = self::buildStatement( $numStmt, $numFilter );
+
+		$result = ae_Database::query( $numStmt, $params );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		$this->totalItems = $result[0]['num_entries'];
+
+		return TRUE;
 	}
 
 
