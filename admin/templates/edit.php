@@ -24,6 +24,7 @@ else if( isset( $_GET['post'] ) && ae_Validate::id( $_GET['post'] ) ) {
 	$editArea = 'Post';
 	$model = new ae_PostModel();
 	$model->load( $_GET['post'] );
+	$model->loadCategoryIds();
 }
 else if( isset( $_GET['user'] ) && ae_Validate::id( $_GET['user'] ) ) {
 	$editArea = 'User';
@@ -117,8 +118,8 @@ else {
 
 	<div class="main-content">
 		<div class="input-group">
-			<input type="text" name="category-title" placeholder="Category title" value="<?php echo htmlspecialchars( $model->getTitle() ) ?>" />
-			<input type="hidden" name="category-permalink" placeholder="Permalink" value="<?php echo $model->getPermalink() ?>" />
+			<input type="text" name="category-title" id="convert-to-permalink" placeholder="Category title" value="<?php echo htmlspecialchars( $model->getTitle() ) ?>" />
+			<input type="text" name="category-permalink" class="permalink" placeholder="Permalink" value="<?php echo $model->getPermalink() ?>" />
 		</div>
 	</div>
 
@@ -201,8 +202,8 @@ else {
 
 	<div class="main-content">
 		<div class="input-group">
-			<input type="text" name="page-title" placeholder="Title" value="<?php echo htmlspecialchars( $model->getTitle() ) ?>" />
-			<input type="hidden" name="page-permalink" placeholder="Permalink" value="<?php echo $model->getPermalink() ?>" />
+			<input type="text" name="page-title" id="convert-to-permalink" placeholder="Title" value="<?php echo htmlspecialchars( $model->getTitle() ) ?>" />
+			<input type="text" name="page-permalink" class="permalink" placeholder="Permalink" value="<?php echo $model->getPermalink() ?>" />
 		</div>
 		<div class="input-group">
 			<textarea name="page-content" placeholder="Content"><?php echo htmlspecialchars( $model->getContent() ) ?></textarea>
@@ -263,8 +264,8 @@ else {
 
 	<div class="main-content">
 		<div class="input-group">
-			<input type="text" name="post-title" placeholder="Title" value="<?php echo htmlspecialchars( $model->getTitle() ) ?>" />
-			<input type="hidden" name="post-permalink" placeholder="Permalink" value="<?php echo $model->getPermalink() ?>" />
+			<input type="text" name="post-title" id="convert-to-permalink" placeholder="Title" value="<?php echo htmlspecialchars( $model->getTitle() ) ?>" />
+			<input type="text" name="post-permalink" class="permalink" placeholder="Permalink" value="<?php echo $model->getPermalink() ?>" />
 		</div>
 		<div class="input-group">
 			<textarea name="post-content" placeholder="Content"><?php echo htmlspecialchars( $model->getContent() ) ?></textarea>
@@ -295,8 +296,8 @@ else {
 			<input type="text" name="user-name-internal" placeholder="Internal name, used for login" value="<?php echo htmlspecialchars( $model->getNameInternal() ) ?>" />
 		</div>
 		<div class="input-group">
-			<input type="text" name="user-name-external" placeholder="External name, displayed under posts" value="<?php echo htmlspecialchars( $model->getNameExternal() ) ?>" />
-			<input type="hidden" name="user-permalink" placeholder="Permalink" value="<?php echo $model->getPermalink() ?>" />
+			<input type="text" name="user-name-external" id="convert-to-permalink" placeholder="External name, displayed under posts" value="<?php echo htmlspecialchars( $model->getNameExternal() ) ?>" />
+			<input type="text" name="user-permalink" class="permalink" placeholder="Permalink" value="<?php echo $model->getPermalink() ?>" />
 		</div>
 		<div class="input-group">
 			<input type="password" name="user-password" placeholder="Password" />

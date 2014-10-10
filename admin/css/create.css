@@ -112,3 +112,14 @@
 	.submit-buttons .btn-publish {
 		float: right;
 	}
+
+
+.permalink {
+	background-color: #ffffff;
+	border: 0;
+	border-bottom: 1px solid #d0d0d0;
+	border-radius: 0;
+	font-size: 12px;
+	margin-top: 6px;
+	padding: 1px 2px;
+}

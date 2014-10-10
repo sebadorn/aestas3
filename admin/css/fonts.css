@@ -88,6 +88,7 @@
 .icon-before-grid3x3::before { content: "\e073"; }
 .icon-before-image::before { content: "\e079"; }
 .icon-before-inbox::before { content: "\e07a"; }
+.icon-before-link::before { content: "\e086"; }
 .icon-before-logout::before { content: "\e001"; }
 .icon-before-minus::before { content: "\e09d"; }
 .icon-before-pen::before { content: "\e0a3"; }

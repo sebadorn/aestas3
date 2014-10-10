@@ -35,8 +35,8 @@ else if( isset( $_GET['user'] ) ) {
 
 	<div class="main-content">
 		<div class="input-group">
-			<input type="text" name="category-title" placeholder="Category title" />
-			<input type="hidden" name="category-permalink" placeholder="Permalink" />
+			<input type="text" name="category-title" id="convert-to-permalink" placeholder="Category title" />
+			<input type="text" name="category-permalink" class="permalink" placeholder="Permalink" />
 		</div>
 	</div>
 
@@ -76,8 +76,8 @@ else if( isset( $_GET['user'] ) ) {
 
 	<div class="main-content">
 		<div class="input-group">
-			<input type="text" name="page-title" placeholder="Title" />
-			<input type="hidden" name="page-permalink" placeholder="Permalink" />
+			<input type="text" name="page-title" id="convert-to-permalink" placeholder="Title" />
+			<input type="text" name="page-permalink" class="permalink" placeholder="Permalink" />
 		</div>
 		<div class="input-group">
 			<textarea name="page-content" placeholder="Content"></textarea>
@@ -126,8 +126,8 @@ else if( isset( $_GET['user'] ) ) {
 
 	<div class="main-content">
 		<div class="input-group">
-			<input type="text" name="post-title" placeholder="Title" />
-			<input type="hidden" name="post-permalink" placeholder="Permalink" />
+			<input type="text" name="post-title" id="convert-to-permalink" placeholder="Title" />
+			<input type="text" name="post-permalink" class="permalink" placeholder="Permalink" />
 		</div>
 		<div class="input-group">
 			<textarea name="post-content" placeholder="Content"></textarea>
@@ -156,8 +156,8 @@ else if( isset( $_GET['user'] ) ) {
 			<input type="text" name="user-name-internal" placeholder="Internal name, used for login" />
 		</div>
 		<div class="input-group">
-			<input type="text" name="user-name-external" placeholder="External name, displayed under posts" />
-			<input type="hidden" name="user-permalink" placeholder="Permalink" />
+			<input type="text" name="user-name-external" id="convert-to-permalink" placeholder="External name, displayed under posts" />
+			<input type="text" name="user-permalink" class="permalink" placeholder="Permalink" />
 		</div>
 		<div class="input-group">
 			<input type="password" name="user-password" placeholder="Password" />

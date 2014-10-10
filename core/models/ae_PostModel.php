@@ -196,7 +196,7 @@ class ae_PostModel extends ae_PageModel {
 	 * Load post category IDs.
 	 * @return {boolean} TRUE, if loading succeeded, FALSE otherwise.
 	 */
-	protected function loadCategoryIds() {
+	public function loadCategoryIds() {
 		if( !ae_Validate::id( $this->id ) ) {
 			throw new Exception( '[' . get_class() . '] Cannot load post categories. No valid post ID.' );
 		}

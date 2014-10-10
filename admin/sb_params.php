@@ -8,6 +8,7 @@
 $paramsHead = new stdClass;
 $paramsHead->title = 'admin area';
 $paramsHead->css = ( $area == 'edit' ) ? 'create' : $area;
+$paramsHead->js = ( $area == 'create' || $area == 'edit' ) ? 'create' : FALSE;
 
 
 $paramsNav = array(
