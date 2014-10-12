@@ -61,13 +61,13 @@ $mediaList = new ae_MediaList( $filter );
 		</div>
 
 		<div class="entry-title">
+			<span class="file-type icon-add-before <?php echo $icon ?>" title="<?php echo $type ?>"></span>
 			<a href="<?php echo $path ?>"><?php echo $entry->getName() ?></a>
 			<span class="upload-date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
 		<?php if( $entry->isImage() && isset( $meta['image_width'] ) ): ?>
 			<span class="image-size"><?php echo $meta['image_width'] ?> × <?php echo $meta['image_height'] ?> pixels</span>
 		<?php endif ?>
 			<span class="file-size"><?php echo ae_Forms::formatSize( $meta['file_size'] ) ?></span>
-			<span class="file-type icon-add-before <?php echo $icon ?>" title="<?php echo $type ?>"></span>
 		</div>
 
 		<div class="entry-actions">

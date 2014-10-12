@@ -68,10 +68,19 @@ class ae_CategoryModel extends ae_Model {
 
 	/**
 	 * Get complete permalink for the category (not including the domain and directory).
-	 * @return {string} Complete permalink.
+	 * @param  {string} $urlBase URL base of the link. (Optional, defaults to constant "URL".)
+	 * @return {string}          Complete permalink.
 	 */
-	public function getLink() {
-		return URL . PERMALINK_BASE_CATEGORY . $this->getPermalink();
+	public function getLink( $urlBase = URL ) {
+		if( ae_Settings::isModRewriteEnabled() ) {
+			$link= $urlBase . PERMALINK_BASE_CATEGORY . $this->getPermalink();
+		}
+		else {
+			$urlBase .= ( $urlBase[mb_strlen( $urlBase ) - 1] == '?' ) ? '&amp;' : '?';
+			$link = $urlBase . PERMALINK_GET_CATEGORY . '=' . $this->getId();
+		}
+
+		return $link;
 	}
 
 

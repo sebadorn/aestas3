@@ -22,6 +22,12 @@ define( 'PERMALINK_BASE_PAGE', '' );
 define( 'PERMALINK_BASE_POST', '' );
 define( 'PERMALINK_BASE_TAG', 'tag/' );
 define( 'PERMALINK_BASE_USER', 'author/' );
+define( 'PERMALINK_GET_CATEGORY', 'category' );
+define( 'PERMALINK_GET_OFFSET', 'offset' );
+define( 'PERMALINK_GET_PAGE', 'page' );
+define( 'PERMALINK_GET_POST', 'p' );
+define( 'PERMALINK_GET_TAG', 'tag' );
+define( 'PERMALINK_GET_USER', 'author' );
 define( 'RSS_PROTOCOL', $rssSettings['protocol'] );
 
 // Disable Magic Quotes (removed as of PHP 5.4)

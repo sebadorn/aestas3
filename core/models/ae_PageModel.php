@@ -77,10 +77,19 @@ class ae_PageModel extends ae_Model {
 
 	/**
 	 * Get complete permalink for the page (not including the domain and directory).
-	 * @return {string} Complete permalink.
+	 * @param  {string} $urlBase URL base of the link. (Optional, defaults to constant "URL".)
+	 * @return {string}          Complete permalink.
 	 */
-	public function getLink() {
-		return URL . PERMALINK_BASE_PAGE . $this->getPermalink();
+	public function getLink( $urlBase = URL ) {
+		if( ae_Settings::isModRewriteEnabled() ) {
+			$link= $urlBase . PERMALINK_BASE_PAGE . $this->getPermalink();
+		}
+		else {
+			$urlBase .= ( $urlBase[mb_strlen( $urlBase ) - 1] == '?' ) ? '&amp;' : '?';
+			$link = $urlBase . PERMALINK_GET_PAGE . '=' . $this->getId();
+		}
+
+		return $link;
 	}
 
 

@@ -214,7 +214,7 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
 
 			<div class="entry-title">
-				<?php echo htmlspecialchars( $entry->getTitle() ) ?>
+				<a href="<?php echo $entry->getLink( '../' ) ?>"><?php echo htmlspecialchars( $entry->getTitle() ) ?></a>
 				<span class="date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
 			</div>
 

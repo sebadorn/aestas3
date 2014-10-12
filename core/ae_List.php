@@ -3,6 +3,7 @@
 abstract class ae_List {
 
 
+	protected $itemClass = '';
 	protected $items = array();
 	protected $itemsCache = array();
 	protected $totalItems = 0; // Number of items in the DB
@@ -17,7 +18,8 @@ abstract class ae_List {
 	 */
 	public function __construct( $itemClass, $filter, $params, $defaultFilter, $countItems = TRUE ) {
 		$filter = self::buildFilter( $filter, $defaultFilter );
-		$table = constant( $itemClass . '::TABLE' );
+		$this->itemClass = $itemClass;
+		$table = constant( $this->itemClass . '::TABLE' );
 
 		// Combined statement
 		$base = '
@@ -33,7 +35,7 @@ abstract class ae_List {
 
 		// Initialize items
 		foreach( $result as $item ) {
-			$this->items[] = new $itemClass( $item );
+			$this->items[] = new $this->itemClass( $item );
 		}
 
 		reset( $this->items );
@@ -81,6 +83,37 @@ abstract class ae_List {
 		}
 
 		return $stmt;
+	}
+
+
+	/**
+	 * Count the number each status has been used by quering the DB.
+	 * @return {array} List of the statuses with at least 1 occurrence and their number of occurrences.
+	 */
+	public function countStatuses() {
+		$table = constant( $this->itemClass . '::TABLE' );
+		$prefix = constant( $this->itemClass . '::TABLE_ID_FIELD' );
+		$prefix = explode( '_', $prefix );
+		$prefix = $prefix[0];
+
+		$stmt = '
+			SELECT ' . $prefix . '_status AS status, COUNT( * ) AS num
+			FROM `' . $table . '`
+			GROUP BY ' . $prefix . '_status
+		';
+		$result = ae_Database::query( $stmt );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		$statuses = array();
+
+		foreach( $result as $row ) {
+			$statuses[$row['status']] = $row['num'];
+		}
+
+		return $statuses;
 	}
 
 

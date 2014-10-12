@@ -85,10 +85,19 @@ class ae_PostModel extends ae_PageModel {
 
 	/**
 	 * Get complete permalink for the post (not including the domain and directory).
-	 * @return {string} Complete permalink.
+	 * @param  {string} $urlBase URL base of the link. (Optional, defaults to constant "URL".)
+	 * @return {string}          Complete permalink.
 	 */
-	public function getLink() {
-		return URL . PERMALINK_BASE_POST . $this->getDatetime( 'Y/m/d/' ) . $this->getPermalink();
+	public function getLink( $urlBase = URL ) {
+		if( ae_Settings::isModRewriteEnabled() ) {
+			$link= $urlBase . PERMALINK_BASE_POST . $this->getDatetime( 'Y/m/d/' ) . $this->getPermalink();
+		}
+		else {
+			$urlBase .= ( $urlBase[mb_strlen( $urlBase ) - 1] == '?' ) ? '&amp;' : '?';
+			$link = $urlBase . PERMALINK_GET_POST . '=' . $this->getId();
+		}
+
+		return $link;
 	}
 
 

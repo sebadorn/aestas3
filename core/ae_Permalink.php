@@ -3,12 +3,6 @@
 class ae_Permalink {
 
 
-	const GET_CATEGORY = 'category';
-	const GET_OFFSET = 'offset';
-	const GET_PAGE = 'page';
-	const GET_POST = 'p';
-	const GET_TAG = 'tag';
-
 	static protected $regex = array(
 		'category' => ';^/%CATEGORY_BASE%[^/]+$;i',
 		'offset' => ';/%OFFSET_BASE%[0-9]+/?$;i',
@@ -52,8 +46,8 @@ class ae_Permalink {
 
 		$model = new ae_CategoryModel();
 
-		if( isset( $_GET[self::GET_CATEGORY] ) && ae_Validate::id( $_GET[self::GET_CATEGORY] ) ) {
-			if( !$model->load( $_GET[self::GET_CATEGORY] ) ) {
+		if( isset( $_GET[PERMALINK_GET_CATEGORY] ) && ae_Validate::id( $_GET[PERMALINK_GET_CATEGORY] ) ) {
+			if( !$model->load( $_GET[PERMALINK_GET_CATEGORY] ) ) {
 				return FALSE;
 			}
 		}
@@ -82,8 +76,8 @@ class ae_Permalink {
 
 		$model = new ae_PageModel();
 
-		if( isset( $_GET[self::GET_PAGE] ) && ae_Validate::id( $_GET[self::GET_PAGE] ) ) {
-			if( !$model->load( $_GET[self::GET_PAGE] ) ) {
+		if( isset( $_GET[PERMALINK_GET_PAGE] ) && ae_Validate::id( $_GET[PERMALINK_GET_PAGE] ) ) {
+			if( !$model->load( $_GET[PERMALINK_GET_PAGE] ) ) {
 				return FALSE;
 			}
 		}
@@ -112,8 +106,8 @@ class ae_Permalink {
 			$offset = array_reverse( $offset );
 			$offset = ( $offset[0] == '' ) ? $offset[1] : $offset[0];
 		}
-		else if( isset( $_GET[self::GET_OFFSET] ) && ae_Validate::integer( $_GET[self::GET_OFFSET] ) ) {
-			$offset = $_GET[self::GET_OFFSET];
+		else if( isset( $_GET[PERMALINK_GET_OFFSET] ) && ae_Validate::integer( $_GET[PERMALINK_GET_OFFSET] ) ) {
+			$offset = $_GET[PERMALINK_GET_OFFSET];
 		}
 
 		return $offset;
@@ -132,8 +126,8 @@ class ae_Permalink {
 
 		$model = new ae_PostModel();
 
-		if( isset( $_GET[self::GET_POST] ) && ae_Validate::id( $_GET[self::GET_POST] ) ) {
-			if( !$model->load( $_GET[self::GET_POST] ) ) {
+		if( isset( $_GET[PERMALINK_GET_POST] ) && ae_Validate::id( $_GET[PERMALINK_GET_POST] ) ) {
+			if( !$model->load( $_GET[PERMALINK_GET_POST] ) ) {
 				return FALSE;
 			}
 		}
@@ -160,8 +154,8 @@ class ae_Permalink {
 			throw new Exception( $msg );
 		}
 
-		if( isset( $_GET[self::GET_TAG] ) ) {
-			$tag = $_GET[self::GET_TAG];
+		if( isset( $_GET[PERMALINK_GET_TAG] ) ) {
+			$tag = $_GET[PERMALINK_GET_TAG];
 		}
 		else {
 			$tag = mb_substr( self::$urlNoOffset, 1 );
@@ -199,7 +193,7 @@ class ae_Permalink {
 	 */
 	static public function isCategory() {
 		$modRewrite = preg_match( self::$regex['category'], self::$urlNoOffset );
-		$get = ( isset( $_GET[self::GET_CATEGORY] ) && ae_Validate::id( $_GET[self::GET_CATEGORY] ) );
+		$get = ( isset( $_GET[PERMALINK_GET_CATEGORY] ) && ae_Validate::id( $_GET[PERMALINK_GET_CATEGORY] ) );
 
 		return $modRewrite || $get;
 	}
@@ -211,7 +205,7 @@ class ae_Permalink {
 	 */
 	static public function isPage() {
 		$modRewrite = preg_match( self::$regex['page'], self::$url );
-		$get = ( isset( $_GET[self::GET_PAGE] ) && ae_Validate::id( $_GET[self::GET_PAGE] ) );
+		$get = ( isset( $_GET[PERMALINK_GET_PAGE] ) && ae_Validate::id( $_GET[PERMALINK_GET_PAGE] ) );
 
 		return $modRewrite || $get;
 	}
@@ -223,7 +217,7 @@ class ae_Permalink {
 	 */
 	static public function isPost() {
 		$modRewrite = preg_match( self::$regex['post'], self::$url );
-		$get = ( isset( $_GET[self::GET_POST] ) && ae_Validate::id( $_GET[self::GET_POST] ) );
+		$get = ( isset( $_GET[PERMALINK_GET_POST] ) && ae_Validate::id( $_GET[PERMALINK_GET_POST] ) );
 
 		return $modRewrite || $get;
 	}
@@ -235,7 +229,7 @@ class ae_Permalink {
 	 */
 	static public function isTag() {
 		$modRewrite = preg_match( self::$regex['tag'], self::$urlNoOffset );
-		$get = isset( $_GET[self::GET_TAG] );
+		$get = isset( $_GET[PERMALINK_GET_TAG] );
 
 		return $modRewrite || $get;
 	}
