@@ -8,7 +8,8 @@ class ae_Permalink {
 		'offset' => ';/%OFFSET_BASE%[0-9]+/?$;i',
 		'page' => ';^/%PAGE_BASE%[^/]+$;i',
 		'post' => ';^/%POST_BASE%[0-9]{4}/[0-9]{2}/[0-9]{2}/[^/]+$;i',
-		'tag' => ';^/%TAG_BASE%[^/]+$;i'
+		'tag' => ';^/%TAG_BASE%[^/]+$;i',
+		'user' => ';^/%USER_BASE%[^/]+$;i',
 	);
 
 	static protected $url = '';
@@ -167,6 +168,34 @@ class ae_Permalink {
 
 
 	/**
+	 * Get the user ID.
+	 * @return {int|boolean} The user ID or FALSE on failure.
+	 */
+	static public function getUserId() {
+		if( !self::isUser() ) {
+			$msg = sprintf( '[%s] Permalink does not represent a user.', get_class() );
+			throw new Exception( $msg );
+		}
+
+		$model = new ae_UserModel();
+
+		if( isset( $_GET[PERMALINK_GET_USER] ) ) {
+			$permalink = $_GET[PERMALINK_GET_USER];
+		}
+		else {
+			$permalink = mb_substr( self::$url, 1 );
+			$permalink = preg_replace( ';^' . PERMALINK_BASE_USER . ';i', '', $permalink );
+		}
+
+		if( !$model->loadFromPermalink( $permalink ) ) {
+			return FALSE;
+		}
+
+		return $model->getId();
+	}
+
+
+	/**
 	 * Initialize by setting the revelant URL part.
 	 */
 	static public function init() {
@@ -179,6 +208,7 @@ class ae_Permalink {
 		self::$regex['page'] = str_replace( '%PAGE_BASE%', PERMALINK_BASE_PAGE, self::$regex['page'] );
 		self::$regex['post'] = str_replace( '%POST_BASE%', PERMALINK_BASE_POST, self::$regex['post'] );
 		self::$regex['tag'] = str_replace( '%TAG_BASE%', PERMALINK_BASE_TAG, self::$regex['tag'] );
+		self::$regex['user'] = str_replace( '%USER_BASE%', PERMALINK_BASE_USER, self::$regex['user'] );
 
 		self::$url = str_replace( $urlBase, '', $_SERVER['REQUEST_URI'] );
 		self::$url = preg_replace( ';/$;', '', self::$url );
@@ -230,6 +260,18 @@ class ae_Permalink {
 	static public function isTag() {
 		$modRewrite = preg_match( self::$regex['tag'], self::$urlNoOffset );
 		$get = isset( $_GET[PERMALINK_GET_TAG] );
+
+		return $modRewrite || $get;
+	}
+
+
+	/**
+	 * Check if current URL represents a user permalink.
+	 * @return {boolean} TRUE, if URL fits a user permalink, FALSE otherwise.
+	 */
+	static public function isUser() {
+		$modRewrite = preg_match( self::$regex['user'], self::$urlNoOffset );
+		$get = isset( $_GET[PERMALINK_GET_USER] );
 
 		return $modRewrite || $get;
 	}

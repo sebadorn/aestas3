@@ -69,6 +69,10 @@
 	position: relative;
 }
 
+.icon-only::before {
+	margin-right: 0;
+}
+
 .icon-before-aperture::before { content: "\e007"; }
 .icon-before-audio::before { content: "\e0d5"; }
 .icon-before-ban::before { content: "\e017"; }
@@ -86,10 +90,12 @@
 .icon-before-file::before { content: "\e067"; }
 .icon-before-folder::before { content: "\e06b"; }
 .icon-before-grid3x3::before { content: "\e073"; }
+.icon-before-home::before { content: "\e078"; }
 .icon-before-image::before { content: "\e079"; }
 .icon-before-inbox::before { content: "\e07a"; }
 .icon-before-link::before { content: "\e086"; }
 .icon-before-logout::before { content: "\e001"; }
+.icon-before-mail::before { content: "\e05c"; }
 .icon-before-minus::before { content: "\e09d"; }
 .icon-before-pen::before { content: "\e0a3"; }
 .icon-before-person::before { content: "\e0a5"; }

@@ -42,6 +42,7 @@
 
 <?php endforeach ?>
 
+	<a href="../" class="nav-visit-blog icon-add-before icon-before-home" title="visit blog"></a>
 	<a href="scripts/logout.php" class="nav-logout icon-add-before icon-before-logout" title="logout"></a>
 
 </nav>

@@ -9,6 +9,7 @@ $params = array(
 	':date' => date( 'Y-m-d H:i:s' )
 );
 
+// Filter by category
 if( ae_Permalink::isCategory() ) {
 	$ca = ae_Permalink::getCategoryModel();
 
@@ -20,12 +21,20 @@ if( ae_Permalink::isCategory() ) {
 	';
 	$params[':catId'] = $ca->getId();
 }
+// Filter by tag
 else if( ae_Permalink::isTag() ) {
 	$tag = ae_Permalink::getTagName();
 	$tag = '%' . $tag . '%';
 
 	$filter['WHERE'] .= ' AND po_tags LIKE :tag';
 	$params[':tag'] = $tag;
+}
+// Filter by user
+else if( ae_Permalink::isUser() ) {
+	if( ( $userId = ae_Permalink::getUserId() ) !== FALSE ) {
+		$filter['WHERE'] .= ' AND po_user = :user';
+		$params[':user'] = $userId;
+	}
 }
 
 $postList = new ae_PostList( $filter, $params );

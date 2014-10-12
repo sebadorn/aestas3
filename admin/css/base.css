@@ -87,7 +87,8 @@ h1 {
 
 	.nav-category:hover,
 	.sub-nav-container:hover .nav-category,
-	.nav-logout:hover {
+	.nav-logout:hover,
+	.nav-visit-blog:hover {
 		background-color: #ffffff;
 		color: #202020;
 	}
@@ -172,11 +173,16 @@ h1 {
 					border-bottom-right-radius: 2px;
 				}
 
+	.nav-visit-blog,
 	.nav-logout {
 		line-height: 40px;
 		padding: 0 10px 0 20px;
 		position: absolute;
 		right: 0;
+	}
+
+	.nav-visit-blog {
+		right: 56px;
 	}
 
 

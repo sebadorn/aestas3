@@ -30,7 +30,7 @@ class ae_UserModel extends ae_Model {
 	 * @param  {string} $urlBase URL base of the link. (Optional, defaults to constant "URL".)
 	 * @return {string}          Complete permalink.
 	 */
-	public function getLink() {
+	public function getLink( $urlBase = URL ) {
 		if( ae_Settings::isModRewriteEnabled() ) {
 			$link= $urlBase . PERMALINK_BASE_USER . $this->getPermalink();
 		}
@@ -130,6 +130,31 @@ class ae_UserModel extends ae_Model {
 		if( isset( $data['u_status'] ) ) {
 			$this->setStatus( $data['u_status'] );
 		}
+	}
+
+
+	/**
+	 * Load model data from DB identified by the given permalink.
+	 * @param {string} $permalink Permalink to identify the user by.
+	 */
+	public function loadFromPermalink( $permalink ) {
+		$stmt = '
+			SELECT * FROM `' . self::TABLE . '`
+			WHERE u_permalink = :permalink
+		';
+		$params = array(
+			':permalink' => $permalink
+		);
+
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE || count( $result ) < 1 ) {
+			return FALSE;
+		}
+
+		$this->loadFromData( $result[0] );
+
+		return TRUE;
 	}
 
 

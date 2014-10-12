@@ -104,7 +104,11 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 		?>
 		<div class="manage-entry category-entry status-<?php echo $entry->getStatus() ?>">
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
-			<div class="entry-title"><?php echo $entry->getTitle() ?></div>
+
+			<div class="entry-title">
+				<span class="entry-id">#<?php echo $entry->getId() ?></span>
+				<a href="<?php echo $entry->getLink( '../' ) ?>"><?php echo $entry->getTitle() ?></a>
+			</div>
 
 			<div class="entry-actions">
 				<a title="edit" class="entry-edit icon-add-before icon-before-pen" href="<?php echo $linkEdit ?>"></a>
@@ -131,15 +135,24 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 			$linkSpam = $linkStatus . '&amp;status=' . ae_CommentModel::STATUS_SPAM;
 			$linkTrash = $linkStatus . '&amp;status=' . ae_CommentModel::STATUS_TRASH;
 			$linkDelete = $linkStatus . '&amp;status=delete';
+
+			$linkPost = '../?' . PERMALINK_GET_POST . '=' . $entry->getPostId() . '#comment-' . $entry->getId();
 		?>
 		<div class="manage-entry comment-entry status-<?php echo $entry->getStatus() ?>">
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
 
 			<div class="entry-title">
-				<?php echo $entry->getAuthorName() ?>
-				<span class="date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
+				<span class="entry-id">#<?php echo $entry->getId() ?></span>
+				<span class="entry-date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
+				<a href="<?php echo $linkPost ?>"><?php echo $entry->getAuthorName() ?></a>
 			<?php if( $entry->getUserId() > 0 ): ?>
-				<span class="is-user icon-add-before icon-before-person"></span>
+				<span class="is-user icon-add-before icon-before-person icon-only" title="registered user (ID: <?php echo $entry->getUserId() ?>)"></span>
+			<?php endif ?>
+			<?php if( $entry->getAuthorUrl() != '' ): ?>
+				<a class="url icon-add-before icon-before-home icon-only" href="<?php echo htmlspecialchars( $entry->getAuthorUrl() )?>"></a>
+			<?php endif ?>
+			<?php if( $entry->getAuthorEmail() != '' ): ?>
+				<a class="url icon-add-before icon-before-mail icon-only" href="mailto:<?php echo htmlspecialchars( $entry->getAuthorEmail() )?>"></a>
 			<?php endif ?>
 			</div>
 
@@ -178,8 +191,9 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
 
 			<div class="entry-title">
+				<span class="entry-id">#<?php echo $entry->getId() ?></span>
+				<span class="entry-date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
 				<?php echo htmlspecialchars( $entry->getTitle() ) ?>
-				<span class="date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
 			</div>
 
 			<div class="entry-actions">
@@ -214,8 +228,9 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
 
 			<div class="entry-title">
+				<span class="entry-id">#<?php echo $entry->getId() ?></span>
+				<span class="entry-date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
 				<a href="<?php echo $entry->getLink( '../' ) ?>"><?php echo htmlspecialchars( $entry->getTitle() ) ?></a>
-				<span class="date"><?php echo $entry->getDatetime( 'Y-m-d' ) ?></span>
 			</div>
 
 			<div class="entry-actions">
@@ -247,7 +262,11 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 		?>
 		<div class="manage-entry user-entry status-<?php echo $entry->getStatus() ?>">
 			<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
-			<div class="entry-title"><?php echo htmlspecialchars( $entry->getNameInternal() ) ?></div>
+
+			<div class="entry-title">
+				<span class="entry-id">#<?php echo $entry->getId() ?></span>
+				<a href="<?php echo $entry->getLink( '../' ) ?>"><?php echo htmlspecialchars( $entry->getNameInternal() ) ?></a>
+			</div>
 
 			<div class="entry-actions">
 				<a title="edit" class="entry-edit icon-add-before icon-before-pen" href="<?php echo $linkEdit ?>"></a>

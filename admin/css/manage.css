@@ -62,12 +62,22 @@
 			padding: 2px 4px;
 		}
 
+		.entry-date, .entry-id {
+			margin-left: 0 !important;
+			margin-right: 10px;
+		}
+
 		.entry-title .icon-add-before {
 			background-color: transparent;
 			border-radius: 0;
+			margin-left: 10px;
 			padding: 0;
 			position: relative;
 			top: 2px;
+		}
+
+		.entry-title a.icon-add-before::before {
+			cursor: pointer;
 		}
 
 	.entry-actions {
@@ -106,11 +116,27 @@
 			}
 
 .status-active,
+.status-approved,
 .status-available,
-.status-published {}
+.status-published {
+	background-color: #f0f0f0;
+}
 
-.status-draft {
+.status-active:hover,
+.status-approved:hover,
+.status-available:hover,
+.status-published:hover {
+	background-color: #e4e4e4;
+}
+
+.status-draft,
+.status-unapproved {
 	background-color: #C9E2EE;
+}
+
+.status-draft:hover,
+.status-unapproved:hover {
+	background-color: #B7D0DC;
 }
 
 .status-spam,
@@ -118,8 +144,17 @@
 	background-color: #F8C2C2;
 }
 
+.status-spam:hover,
+.status-suspended:hover {
+	background-color: #E69E9E;
+}
+
 .status-trash {
 	background-color: #DCD6D1;
+}
+
+.status-trash:hover {
+	background-color: #DAC8BA;
 }
 
 
