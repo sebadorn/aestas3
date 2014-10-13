@@ -25,6 +25,30 @@ class ae_Settings {
 
 
 	/**
+	 * Get a list of the names of all theme directories.
+	 * @param  {string} $themeDir Path to the theme directory.
+	 * @return {array}            List of all theme names.
+	 */
+	static public function getListOfThemes( $themeDir = '../../themes/' ) {
+		$themes = array();
+
+		if( $handle = opendir( $themeDir ) ) {
+			$ignore = array( '.', '..' );
+
+			while( ( $file = readdir( $handle ) ) !== FALSE ) {
+				if( !in_array( $file, $ignore ) ) {
+					$themes[] = $file;
+				}
+			}
+
+			closedir( $handle );
+		}
+
+		return $themes;
+	}
+
+
+	/**
 	 * Check if mod_rewrite is enabled on the server.
 	 * @return {boolean} TRUE, if mod_rewrite is enabled, FALSE otherwise.
 	 */
