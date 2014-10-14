@@ -13,7 +13,7 @@ if( ae_MediaModel::isValidStatus( $status ) ) {
 	$filter['WHERE'] = 'm_status = "' . $status . '"';
 }
 
-$mediaList = new ae_MediaList( $filter );
+$list = new ae_MediaList( $filter );
 
 ?>
 <h1>Media</h1>
@@ -32,7 +32,7 @@ $mediaList = new ae_MediaList( $filter );
 <?php include( 'manage-bulk-action.php' ) ?>
 
 
-<?php while( $entry = $mediaList->next() ): ?>
+<?php while( $entry = $list->next() ): ?>
 
 	<?php
 		$status = $entry->getStatus();
@@ -89,7 +89,7 @@ $mediaList = new ae_MediaList( $filter );
 
 
 <?php
-	$numPages = ceil( $mediaList->getTotalNumItems() / $itemsPerPage );
+	$numPages = ceil( $list->getTotalNumItems() / $itemsPerPage );
 	$queryStr = preg_replace( '/[?&]offset=?[0-9]*/i', '', $_SERVER['QUERY_STRING'] );
 	$linkBase = 'admin.php?' . htmlspecialchars( $queryStr ) . '&amp;offset=';
 ?>

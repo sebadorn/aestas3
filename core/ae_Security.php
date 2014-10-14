@@ -11,12 +11,12 @@ class ae_Security {
 		'create', 'credits', 'dashboard', 'edit', 'manage', 'media', 'settings'
 	);
 	static protected $validSubAreas = array(
-		'create' => array( 'category', 'comment', 'media', 'page', 'post', 'user' ),
+		'create' => array( 'category', 'cofilter', 'comment', 'media', 'page', 'post', 'user' ),
 		'credits' => array(),
 		'dashboard' => array(),
 		'manage' => array( 'category', 'comment', 'media', 'page', 'post', 'user' ),
 		'media' => array(),
-		'settings' => array()
+		'settings' => array( 'general', 'cofilters' )
 	);
 
 

@@ -1,3 +1,5 @@
+@import url( "manage.css" );
+
 .setting {
 	border-bottom: 1px solid #e0e0e0;
 	padding: 20px 0;
@@ -11,3 +13,19 @@
 	.settings .btn {
 		margin-top: 20px;
 	}
+
+.create-filter {
+	background-color: #f0f0f0;
+	border-radius: 4px;
+	margin-bottom: 60px;
+	padding: 10px;
+}
+
+	.create-filter .btn {
+		margin-left: 20px;
+		margin-top: 0;
+	}
+
+.manage-entry span {
+	margin-left: 0;
+}

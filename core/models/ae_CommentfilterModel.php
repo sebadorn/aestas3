@@ -21,7 +21,6 @@ class ae_CommentfilterModel extends ae_Model {
 	const TARGET_URL = 'url';
 
 	protected $action = self::ACTION_SPAM;
-	protected $id = 0;
 	protected $match = '';
 	protected $name = '';
 	protected $status = self::STATUS_ACTIVE;

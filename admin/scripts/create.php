@@ -56,6 +56,38 @@ function createCategory() {
 
 
 /**
+ * Create the comment filter.
+ * @return {int} ID of the comment filter.
+ */
+function createCommentfilter() {
+	if( !isset(
+		$_POST['cf-name'], $_POST['cf-target'], $_POST['cf-match'], $_POST['cf-action'],
+		$_POST['submit']
+	) ) {
+		header( 'Location: ../admin.php?error=missing_data_for_cofilter' );
+		exit;
+	}
+
+	$cf = new ae_CommentfilterModel();
+	$cf->setName( $_POST['cf-name'] );
+	$cf->setMatchTarget( $_POST['cf-target'] );
+	try {
+		$cf->setMatchRule( $_POST['cf-match'] );
+	}
+	catch( Exception $exc ) {
+		header( 'Location: ../admin.php?area=settings&cofilter&error=invalid_regex' );
+		exit;
+	}
+	$cf->setAction( $_POST['cf-action'] );
+	$cf->setStatus( ae_CommentfilterModel::STATUS_ACTIVE );
+
+	$cf->save();
+
+	return $cf->getId();
+}
+
+
+/**
  * Create the page.
  * @return {int} ID of the new page.
  */
@@ -326,6 +358,10 @@ switch( $_POST['area'] ) {
 		$id = createCategory();
 		break;
 
+	case 'cofilter':
+		$id = createCommentfilter();
+		break;
+
 	case 'comment':
 		$id = updateComment();
 		break;
@@ -351,9 +387,14 @@ switch( $_POST['area'] ) {
 }
 
 
-if( $id !== FALSE ) {
-	header( 'Location: ../admin.php?area=edit&' . $_POST['area'] . '=' . $id . '&saved' );
+if( $id === FALSE ) {
+	ae_Log::printAll();
+	exit;
+}
+
+if( $_POST['area'] == 'cofilter' ) {
+	header( 'Location: ../admin.php?area=settings&cofilter&saved' );
 }
 else {
-	ae_Log::printAll();
+	header( 'Location: ../admin.php?area=edit&' . $_POST['area'] . '=' . $id . '&saved' );
 }

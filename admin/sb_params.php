@@ -75,6 +75,14 @@ $paramsNav = array(
 	'Settings' => array(
 		'active' => ( $area == 'settings' ),
 		'icon' => 'wrench',
-		'link' => 'settings'
+
+		'General' => array(
+			'active' => ( isset( $_GET['general'] ) && $area == 'settings' ),
+			'link' => 'settings&general'
+		),
+		'Filters' => array(
+			'active' => ( isset( $_GET['cofilter'] ) && $area == 'settings' ),
+			'link' => 'settings&cofilter'
+		)
 	)
 );
