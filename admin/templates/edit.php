@@ -2,32 +2,44 @@
 
 if( isset( $_GET['category'] ) && ae_Validate::id( $_GET['category'] ) ) {
 	$editArea = 'Category';
+	$areaId = 'category';
 	$model = new ae_CategoryModel();
 	$model->load( $_GET['category'] );
 }
+else if( isset( $_GET['cofilter'] ) && ae_Validate::id( $_GET['cofilter'] ) ) {
+	$editArea = 'Comment filter';
+	$areaId = 'cofilter';
+	$model = new ae_CommentfilterModel();
+	$model->load( $_GET['cofilter'] );
+}
 else if( isset( $_GET['comment'] ) && ae_Validate::id( $_GET['comment'] ) ) {
 	$editArea = 'Comment';
+	$areaId = 'comment';
 	$model = new ae_CommentModel();
 	$model->load( $_GET['comment'] );
 }
 else if( isset( $_GET['media'] ) && ae_Validate::id( $_GET['media'] ) ) {
 	$editArea = 'Media';
+	$areaId = 'media';
 	$model = new ae_MediaModel();
 	$model->load( $_GET['media'] );
 }
 else if( isset( $_GET['page'] ) && ae_Validate::id( $_GET['page'] ) ) {
 	$editArea = 'Page';
+	$areaId = 'page';
 	$model = new ae_PageModel();
 	$model->load( $_GET['page'] );
 }
 else if( isset( $_GET['post'] ) && ae_Validate::id( $_GET['post'] ) ) {
 	$editArea = 'Post';
+	$areaId = 'post';
 	$model = new ae_PostModel();
 	$model->load( $_GET['post'] );
 	$model->loadCategoryIds();
 }
 else if( isset( $_GET['user'] ) && ae_Validate::id( $_GET['user'] ) ) {
 	$editArea = 'User';
+	$areaId = 'user';
 	$model = new ae_UserModel();
 	$model->load( $_GET['user'] );
 }
@@ -40,7 +52,7 @@ else {
 <h1>Edit: <?php echo $editArea ?></h1>
 
 <form method="post" action="scripts/create.php" class="form-create">
-	<input type="hidden" name="area" value="<?php echo strtolower( $editArea ) ?>" />
+	<input type="hidden" name="area" value="<?php echo $areaId ?>" />
 	<input type="hidden" name="edit-id" value="<?php echo $model->getId() ?>" />
 
 <?php if( $editArea == 'Comment' ): ?>
@@ -91,6 +103,73 @@ else {
 
 		<div class="input-group">
 			<textarea name="comment-content" placeholder="Content"><?php echo $content ?></textarea>
+		</div>
+	</div>
+
+<?php elseif( $editArea == 'Comment filter' ): ?>
+
+	<?php
+		$actions = array(
+			ae_CommentfilterModel::ACTION_SPAM => 'Move to spam',
+			ae_CommentfilterModel::ACTION_TRASH => 'Move to trash',
+			ae_CommentfilterModel::ACTION_DROP => 'Drop comment',
+			ae_CommentfilterModel::ACTION_APPROVE => 'Approve comment',
+			ae_CommentfilterModel::ACTION_UNAPPROVE => 'Unapprove comment'
+		);
+		$targets = array(
+			ae_CommentfilterModel::TARGET_IP => 'Author IP',
+			ae_CommentfilterModel::TARGET_NAME => 'Author name',
+			ae_CommentfilterModel::TARGET_EMAIL => 'Author eMail',
+			ae_CommentfilterModel::TARGET_URL => 'Author URL',
+			ae_CommentfilterModel::TARGET_USERID => 'Author user ID',
+			ae_CommentfilterModel::TARGET_CONTENT => 'Comment content'
+		);
+		$statuses = ae_CommentfilterModel::listStatuses();
+	?>
+
+	<aside>
+		<div class="input-group">
+			<h3>Status</h3>
+
+			<select name="cf-status">
+			<?php foreach( $statuses as $s ): ?>
+				<?php $sel = ( $s == $model->getStatus() ) ? ' selected' : '' ?>
+				<option value="<?php echo htmlspecialchars( $s ) ?>"<?php echo $sel ?>><?php echo $s ?></option>
+			<?php endforeach ?>
+			</select>
+		</div>
+
+		<div class="submit-buttons">
+			<button type="submit" class="btn btn-publish" name="submit" value="publish">save</button>
+			<span class="clear"></span>
+		</div>
+	</aside>
+
+	<div class="main-content">
+		<div class="input-group">
+			<input type="text" name="cf-name" placeholder="Filter name" value="<?php echo htmlspecialchars( $model->getName() ) ?>" />
+		</div>
+
+		<div class="input-group">
+			If <select name="cf-target">
+			<?php foreach( $targets as $key => $val ): ?>
+				<?php
+					$sel = ( $key == $model->getMatchTarget() ) ? ' selected' : '';
+					$key = htmlspecialchars( $key );
+				?>
+				<option value="<?php echo $key ?>"<?php echo $sel ?>><?php echo $val ?></option>
+			<?php endforeach ?>
+			</select>
+			matches <input type="text" name="cf-match" placeholder="Filter regex" value="<?php echo htmlspecialchars( $model->getMatchRule() )?>" />
+			then <select name="cf-action">
+			<?php foreach( $actions as $key => $val ): ?>
+				<?php
+					$sel = ( $key == $model->getAction() ) ? ' selected' : '';
+					$key = htmlspecialchars( $key );
+				?>
+				<option value="<?php echo $key ?>"<?php echo $sel ?>><?php echo $val ?></option>
+			<?php endforeach ?>
+			</select>
 		</div>
 	</div>
 

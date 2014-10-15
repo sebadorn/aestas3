@@ -12,13 +12,14 @@ class ae_CommentfilterModel extends ae_Model {
 	const STATUS_INACTIVE = 'inactive';
 
 	const TABLE = AE_TABLE_COMMENTFILTERS;
-	const TABLE_ID_FIELD = 'cf_name';
+	const TABLE_ID_FIELD = 'cf_id';
 
 	const TARGET_CONTENT = 'content';
 	const TARGET_EMAIL = 'email';
 	const TARGET_IP = 'ip';
 	const TARGET_NAME = 'name';
 	const TARGET_URL = 'url';
+	const TARGET_USERID = 'userId';
 
 	protected $action = self::ACTION_SPAM;
 	protected $match = '';
@@ -260,7 +261,7 @@ class ae_CommentfilterModel extends ae_Model {
 	public function setMatchTarget( $target ) {
 		$targets = array(
 			self::TARGET_CONTENT, self::TARGET_EMAIL, self::TARGET_IP,
-			self::TARGET_NAME, self::TARGET_URL
+			self::TARGET_NAME, self::TARGET_URL, self::TARGET_USERID
 		);
 
 		if( !in_array( $target, $targets ) ) {

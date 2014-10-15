@@ -149,10 +149,12 @@
 	background-color: #E69E9E;
 }
 
+.status-inactive,
 .status-trash {
 	background-color: #DCD6D1;
 }
 
+.status-inactive:hover,
 .status-trash:hover {
 	background-color: #DAC8BA;
 }

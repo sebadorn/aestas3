@@ -77,6 +77,7 @@ $targets = array(
 	ae_CommentfilterModel::TARGET_NAME => 'Author name',
 	ae_CommentfilterModel::TARGET_EMAIL => 'Author eMail',
 	ae_CommentfilterModel::TARGET_URL => 'Author URL',
+	ae_CommentfilterModel::TARGET_USERID => 'Author user ID',
 	ae_CommentfilterModel::TARGET_CONTENT => 'Comment content'
 );
 
@@ -108,6 +109,16 @@ $targets = array(
 
 	<?php while( $entry = $list->next() ): ?>
 
+
+		<?php
+			$status = $entry->getStatus();
+			$linkEdit = 'admin.php?area=edit&amp;cofilter=' . $entry->getId();
+			$linkStatus = 'scripts/manage.php?cofilter=' . $entry->getId();
+			$linkActive = $linkStatus . '&amp;status=' . ae_CommentfilterModel::STATUS_ACTIVE;
+			$linkInactive = $linkStatus . '&amp;status=' . ae_CommentfilterModel::STATUS_INACTIVE;
+			$linkDelete = $linkStatus . '&amp;status=delete';
+		?>
+
 	<div class="manage-entry cf-entry status-<?php echo $entry->getStatus() ?>">
 		<input type="checkbox" name="entry[]" value="<?php echo $entry->getId() ?>" />
 
@@ -116,6 +127,17 @@ $targets = array(
 			If <span class="entry-target"><?php echo htmlspecialchars( $targets[$entry->getMatchTarget()] ) ?></span>
 			matches <span class="entry-match"><code><?php echo htmlspecialchars( $entry->getMatchRule() ) ?></code></span>
 			then <span class="entry-action"><?php echo htmlspecialchars( $actions[$entry->getAction()] ) ?></span>
+		</div>
+
+		<div class="entry-actions">
+			<a title="edit" class="entry-edit icon-add-before icon-before-pen" href="<?php echo $linkEdit ?>"></a>
+		<?php if( $status != ae_CommentfilterModel::STATUS_ACTIVE ): ?>
+			<a title="set active" class="entry-approve icon-add-before icon-before-check" href="<?php echo $linkActive ?>"></a>
+		<?php endif ?>
+		<?php if( $status != ae_CommentfilterModel::STATUS_INACTIVE ): ?>
+			<a title="set inactive" class="entry-spam icon-add-before icon-before-ban" href="<?php echo $linkInactive ?>"></a>
+		<?php endif ?>
+			<a title="delete" class="entry-delete icon-add-before icon-before-trash" href="<?php echo $linkDelete ?>"></a>
 		</div>
 	</div>
 

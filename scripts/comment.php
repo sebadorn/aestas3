@@ -19,6 +19,7 @@ if(
 	exit;
 }
 
+
 $url = trim( $_POST['comment-author-url'] );
 
 if( mb_strlen( $url ) > 0 && !preg_match( '/^(http|ftp)s?:\/\//i', $url ) ) {
@@ -50,6 +51,21 @@ try {
 
 	if( ae_Security::isLoggedIn() ) {
 		$co->setUserId( ae_Security::getCurrentUserId() );
+	}
+
+	$filter = array(
+		'LIMIT' => FALSE,
+		'WHERE' => 'cf_status = :status'
+	);
+	$params = array(
+		':status' => ae_CommentfilterModel::STATUS_ACTIVE
+	);
+	$cfList = new ae_CommentfilterList( $filter, $params, FALSE );
+	$keep = $cfList->applyFilters( $co );
+
+	if( !$keep ) {
+		header( 'Location: ../?p=' . $_POST['comment-post'] . '&error=comment_deleted_by_filter' );
+		exit;
 	}
 
 	$co->save();

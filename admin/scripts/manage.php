@@ -20,6 +20,11 @@ if( isset( $_GET['category'] ) && ae_Validate::id( $_GET['category'] ) ) {
 	$area = 'category';
 	$model = new ae_CategoryModel();
 }
+else if( isset( $_GET['cofilter'] ) && ae_Validate::id( $_GET['cofilter'] ) ) {
+	$area = 'cofilter';
+	$mainArea = 'settings';
+	$model = new ae_CommentfilterModel();
+}
 else if( isset( $_GET['comment'] ) && ae_Validate::id( $_GET['comment'] ) ) {
 	$area = 'comment';
 	$model = new ae_CommentModel();

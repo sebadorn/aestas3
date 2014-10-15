@@ -68,6 +68,10 @@
 		width: 54px;
 	}
 
+	input[name="cf-match"] {
+		max-width: 260px;
+	}
+
 	.input-group-datetime .comma {
 		margin-left: -1px;
 		margin-right: 2px;

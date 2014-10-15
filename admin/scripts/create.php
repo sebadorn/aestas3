@@ -69,6 +69,11 @@ function createCommentfilter() {
 	}
 
 	$cf = new ae_CommentfilterModel();
+
+	if( isset( $_POST['edit-id'] ) ) {
+		$cf->setId( $_POST['edit-id'] );
+	}
+
 	$cf->setName( $_POST['cf-name'] );
 	$cf->setMatchTarget( $_POST['cf-target'] );
 	try {
@@ -79,7 +84,7 @@ function createCommentfilter() {
 		exit;
 	}
 	$cf->setAction( $_POST['cf-action'] );
-	$cf->setStatus( ae_CommentfilterModel::STATUS_ACTIVE );
+	$cf->setStatus( isset( $_POST['cf-status'] ) ? $_POST['cf-status'] : ae_CommentfilterModel::STATUS_ACTIVE );
 
 	$cf->save();
 
