@@ -48,4 +48,9 @@
 		);
 		echo ae_SiteBuilder::commentForm( $post->getId(), 'absenden', $placeholders )
 	?>
+
+	<div class="comment-code">
+		<span>Verwendbares HTML</span>
+		<code>&lt;a href=""&gt;</code>, <code>&lt;blockquote&gt;</code>, <code>&lt;code&gt;</code>, <code>&lt;del&gt;</code>, <code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code>
+	</div>
 </section>

@@ -595,9 +595,31 @@ article {
 		cursor: pointer;
 	}
 
+	.comment-form .invalid {
+		border-color: #DE4C4C;
+	}
+
 	.do-not-fill {
 		display: none !important;
 		visibility: hidden !important;
+	}
+
+.comment-code {
+	background-color: #e6e6e6;
+	border-radius: 4px;
+	clear: both;
+	margin-top: 80px;
+	padding: 20px;
+}
+
+	.comment-code span {
+		color: #606060;
+		display: block;
+		margin-bottom: 10px;
+	}
+
+	.comment-code code {
+		opacity: 0.8;
 	}
 
 

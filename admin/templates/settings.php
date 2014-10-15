@@ -17,6 +17,8 @@ if( isset( $_GET['cofilter'] ) ) {
 	}
 
 	$list = new ae_CommentfilterList( $filter );
+
+	$urlBasis = '?area=settings&amp;offset=' . $pageOffset . '&amp;' . $area;
 }
 // general
 else {
@@ -105,7 +107,11 @@ $targets = array(
 </form>
 
 
-<form class="settings" method="post" action="scripts/settings.php">
+<form method="post" action="scripts/manage-bulk.php">
+	<input type="hidden" name="area" value="<?php echo $area ?>" />
+
+	<?php include( 'manage-filter-nav.php' ) ?>
+	<?php include( 'manage-bulk-action.php' ) ?>
 
 	<?php while( $entry = $list->next() ): ?>
 

@@ -31,6 +31,13 @@ switch( $_POST['area'] ) {
 		$preDelete = ae_CategoryModel::STATUS_TRASH;
 		break;
 
+	case 'cofilter':
+		$isValidStatus = ( $status == 'delete' ) ? TRUE : ae_CommentfilterModel::isValidStatus( $status );
+		$mainArea = 'settings';
+		$modelName = 'ae_CommentfilterModel';
+		$preDelete = ae_CommentfilterModel::STATUS_INACTIVE;
+		break;
+
 	case 'comment':
 		$isValidStatus = ( $status == 'delete' ) ? TRUE : ae_CommentModel::isValidStatus( $status );
 		$modelName = 'ae_CommentModel';

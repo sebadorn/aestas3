@@ -13,6 +13,7 @@
 <?php if( IS_SINGLE_POST ): ?>
 	<script src="<?php echo THEME_PATH ?>js/md5.min.js"></script>
 	<script src="<?php echo THEME_PATH ?>js/comment-preview.js"></script>
+	<script src="<?php echo THEME_PATH ?>js/comment-validate.js"></script>
 <?php endif ?>
 	<script>
 		window.addEventListener( "load", function() {
@@ -36,6 +37,7 @@
 				<?php echo GRAVATAR_SIZE ?>,
 				"<?php echo COMMENT_AUTHOR_DEFAULT_NAME ?>"
 			);
+			CommentValidate.init();
 <?php endif ?>
 		} );
 	</script>

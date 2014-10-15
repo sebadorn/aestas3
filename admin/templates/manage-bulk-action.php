@@ -3,6 +3,9 @@
 if( $area == 'category' ) {
 	$statuses = ae_CategoryModel::listStatuses();
 }
+else if( $area == 'cofilter' ) {
+	$statuses = ae_CommentfilterModel::listStatuses();
+}
 else if( $area == 'comment' ) {
 	$statuses = ae_CommentModel::listStatuses();
 }
@@ -24,6 +27,9 @@ $select = ae_Forms::selectStatus( 'bulk-status-change', $statuses );
 
 if( isset( $_GET['status'] ) && $_GET['status'] == 'trash' ) {
 	$select = str_replace( 'trash', 'delete', $select );
+}
+else if( isset( $_GET['status'] ) && $_GET['status'] == 'inactive' && $area == 'cofilter' ) {
+	$select = str_replace( 'inactive', 'delete', $select );
 }
 
 ?>

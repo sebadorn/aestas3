@@ -7,7 +7,7 @@ class ae_CommentfilterList extends ae_List {
 
 	static protected $defaultFilter = array(
 		'LIMIT' => '0, 50',
-		'ORDER BY' => 'cf_id ASC'
+		'ORDER BY' => 'cf_id DESC'
 	);
 
 

@@ -18,6 +18,16 @@ $s = $list->countStatuses();
 	<a class="filter-status-available" href="<?php echo $urlBasis ?>&amp;status=available">available (<?php echo $numAvailable ?>)</a>,
 	<a class="filter-status-trash" href="<?php echo $urlBasis ?>&amp;status=trash">trash (<?php echo $numTrash ?>)</a>
 
+<?php elseif( $area == 'cofilter' ): ?>
+
+	<?php
+	$numActive = isset( $s[ae_CommentfilterModel::STATUS_ACTIVE] ) ? $s[ae_CommentfilterModel::STATUS_ACTIVE] : 0;
+	$numInactive = isset( $s[ae_CommentfilterModel::STATUS_INACTIVE] ) ? $s[ae_CommentfilterModel::STATUS_INACTIVE] : 0;
+	?>
+
+	<a class="filter-status-active" href="<?php echo $urlBasis ?>&amp;status=active">active (<?php echo $numActive ?>)</a>,
+	<a class="filter-status-inactive" href="<?php echo $urlBasis ?>&amp;status=inactive">inactive (<?php echo $numInactive ?>)</a>
+
 <?php elseif( $area == 'comment' ): ?>
 
 	<?php
