@@ -13,7 +13,7 @@ class ae_CommentModel extends ae_Model {
 
 	protected $authorEmail = '';
 	protected $authorIp = '';
-	protected $authorName = 'Anonymous';
+	protected $authorName = COMMENT_DEFAULT_NAME;
 	protected $authorUrl = '';
 	protected $content = '';
 	protected $datetime = '0000-00-00 00:00:00';

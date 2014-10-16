@@ -34,6 +34,13 @@ $securitySettings = array(
 date_default_timezone_set( 'Europe/Berlin' );
 
 
+// Comments
+
+$commentSettings = array(
+	'default_name' => 'Namenlos'
+);
+
+
 // Media
 
 $mediaSettings = array(
@@ -66,6 +73,9 @@ unset( $rssSettings );
 
 $mediaSettings = array();
 unset( $mediaSettings );
+
+$commentSettings = array();
+unset( $commentSettings );
 
 $securitySettings = array();
 unset( $salt );

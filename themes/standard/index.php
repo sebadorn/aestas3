@@ -33,7 +33,11 @@ else {
 	$content = 'all-posts';
 }
 
-define( 'COMMENT_AUTHOR_DEFAULT_NAME', 'Namenlos' );
+// HTTP 404: Not found
+if( $content == '404' ) {
+	header( 'HTTP/1.0 404 Not Found' );
+}
+
 define( 'GRAVATAR_BASE', 'https://secure.gravatar.com/avatar/' );
 define( 'GRAVATAR_SIZE', 48 );
 define( 'IS_SINGLE_POST', ( $content == 'single-post' ) );

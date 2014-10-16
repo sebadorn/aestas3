@@ -13,6 +13,7 @@ define( 'AE_TABLE_POSTS2CATEGORIES', $dbSettings['table_prefix'] . 'posts2catego
 define( 'AE_TABLE_SETTINGS', $dbSettings['table_prefix'] . 'settings' );
 define( 'AE_TABLE_USERS', $dbSettings['table_prefix'] . 'users' );
 define( 'AE_VERSION', '3' );
+define( 'COMMENT_DEFAULT_NAME', $commentSettings['default_name'] );
 define( 'COMMENT_DEFAULT_STATUS', ae_CommentModel::STATUS_APPROVED );
 define( 'IMAGE_COMPRESSION_PNG', $mediaSettings['image_compression_png'] );
 define( 'IMAGE_PREVIEW_MAX_WIDTH', $mediaSettings['preview_image_max_width'] );

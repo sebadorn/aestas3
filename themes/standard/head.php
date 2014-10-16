@@ -35,7 +35,7 @@
 			CommentPreview.init(
 				"<?php echo GRAVATAR_BASE ?>",
 				<?php echo GRAVATAR_SIZE ?>,
-				"<?php echo COMMENT_AUTHOR_DEFAULT_NAME ?>"
+				"<?php echo COMMENT_DEFAULT_NAME ?>"
 			);
 			CommentValidate.init();
 <?php endif ?>
