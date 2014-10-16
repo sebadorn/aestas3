@@ -210,7 +210,8 @@ class ae_Permalink {
 		self::$regex['tag'] = str_replace( '%TAG_BASE%', PERMALINK_BASE_TAG, self::$regex['tag'] );
 		self::$regex['user'] = str_replace( '%USER_BASE%', PERMALINK_BASE_USER, self::$regex['user'] );
 
-		self::$url = str_replace( $urlBase, '', $_SERVER['REQUEST_URI'] );
+		self::$url = str_replace( '?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI'] );
+		self::$url = str_replace( $urlBase, '', self::$url );
 		self::$url = preg_replace( ';/$;', '', self::$url );
 
 		self::$urlNoOffset = preg_replace( self::$regex['offset'], '', self::$url );

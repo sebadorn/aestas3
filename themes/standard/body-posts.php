@@ -9,17 +9,25 @@ $params = array(
 	':date' => date( 'Y-m-d H:i:s' )
 );
 
+if( ae_Security::isLoggedIn() ) {
+	$filter['WHERE'] = '1';
+	unset( $params[':status'] );
+	unset( $params[':date'] );
+}
+
 // Filter by category
 if( ae_Permalink::isCategory() ) {
 	$ca = ae_Permalink::getCategoryModel();
 
-	$filter['WHERE'] .= '
-		AND po_id IN (
-			SELECT DISTINCT pc_post FROM `' . AE_TABLE_POSTS2CATEGORIES . '`
-			WHERE pc_category = :catId
-		)
-	';
-	$params[':catId'] = $ca->getId();
+	if( $ca !== FALSE ) {
+		$filter['WHERE'] .= '
+			AND po_id IN (
+				SELECT DISTINCT pc_post FROM `' . AE_TABLE_POSTS2CATEGORIES . '`
+				WHERE pc_category = :catId
+			)
+		';
+		$params[':catId'] = $ca->getId();
+	}
 }
 // Filter by tag
 else if( ae_Permalink::isTag() ) {
@@ -45,7 +53,12 @@ $postList->loadNumComments();
 
 <?php while( $post = $postList->next() ): ?>
 
-<article class="post" id="post-<?php echo $post->getId() ?>">
+	<?php
+	$class = 'post post-' . $post->getStatus();
+	$class .= ( $post->getDatetime( 'YmdHis' ) > date( 'YmdHis' ) ) ? ' post-future' : '';
+	?>
+
+<article class="<?php echo $class ?>" id="post-<?php echo $post->getId() ?>">
 	<header class="post-header">
 		<h2><a href="<?php echo $post->getLink() ?>"><?php echo $post->getTitle() ?></a></h2>
 

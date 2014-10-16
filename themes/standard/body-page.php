@@ -1,4 +1,10 @@
-<article class="post single-post" id="page-<?php echo $page->getId() ?>">
+<?php
+
+$class = 'post single-post post-' . $page->getStatus();
+$class .= ( $page->getDatetime( 'YmdHis' ) > date( 'YmdHis' ) ) ? ' post-future' : '';
+
+?>
+<article class="<?php echo $class ?>" id="page-<?php echo $page->getId() ?>">
 	<header class="post-header">
 		<h2><?php echo $page->getTitle() ?></h2>
 	</header>

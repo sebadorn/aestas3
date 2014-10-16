@@ -206,6 +206,37 @@ ol, ul {
 			font-family: "OpenSans Light Web";
 		}
 
+	form.search {
+		display: inline-block;
+		margin-left: 20px;
+		white-space: nowrap;
+	}
+
+		.search-input {
+			max-width: 160px;
+			padding: 2px 6px !important;
+		}
+
+		.search-submit {
+			background-color: #e0e0e0;
+			border: 1px solid #e0e0e0;
+			cursor: default;
+			display: inline-block;
+			font-family: "OpenIconic";
+			font-size: 16px;
+			height: 26px;
+			left: -5px;
+			position: relative;
+			top: 3px;
+			width: 34px;
+		}
+
+		.search-submit:hover {
+			background-color: #B7D1E0;
+			border-color: #B7D1E0;
+			cursor: pointer;
+		}
+
 	.about-me {
 		display: inline-block;
 		position: absolute;
@@ -339,6 +370,19 @@ article {
 	max-width: 600px;
 }
 
+	.post-draft,
+	.post-trash {
+		border-left: 4px solid #77A9CA;
+		border-radius: 4px;
+		left: -24px;
+		padding-left: 20px;
+		position: relative;
+	}
+
+	.post-trash {
+		border-left-color: #a0a0a0;
+	}
+
 	.post-header {
 		margin-bottom: 32px;
 	}
@@ -353,6 +397,10 @@ article {
 		.post-header time {
 			display: inline-block;
 			margin-right: 24px;
+		}
+
+		.post-future time {
+			color: #E74949;
 		}
 
 		.post-categories::before,

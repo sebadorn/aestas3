@@ -1,5 +1,7 @@
 <?php
 
+// Recent comments
+
 $filter = array(
 	'LIMIT' => '0, 5',
 	'ORDER BY' => 'co_datetime DESC',
@@ -19,22 +21,25 @@ $params = array(
 );
 $coList = new ae_CommentList( $filter, $params, FALSE );
 
-$i = 0;
+
+// Posts of the recent comments
+
 $filter = array(
 	'LIMIT' => FALSE,
 	'WHERE' => '( '
 );
 $params = array();
+$i = 0;
 
 while( $co = $coList->next() ) {
 	$filter['WHERE'] .= 'po_id = :id' . $i . ' OR ';
-	$params[':id' . $i] = $co->getId();
+	$params[':id' . $i] = $co->getPostId();
 	$i++;
 }
 
 $filter['WHERE'] = mb_substr( $filter['WHERE'], 0, -4 ) . ' )';
-
 $poList = new ae_PostList( $filter, $params, FALSE );
+
 
 $coList->reset();
 $coList->reverse();

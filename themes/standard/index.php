@@ -26,7 +26,7 @@ else if( ae_Permalink::isPage() ) {
 		$title = htmlspecialchars( $page->getTitle() ) . ' | ' . $title;
 	}
 }
-else if( isset( $_GET['search'] ) ) {
+else if( isset( $_GET[PERMALINK_GET_SEARCH] ) ) {
 	$content = 'search';
 }
 else {

@@ -11,10 +11,20 @@ $params = array(
 	':postId' => $post->getId(),
 	':status' => ae_CommentModel::STATUS_APPROVED
 );
+
+if( ae_Security::isLoggedIn() ) {
+	$filter['WHERE'] = 'co_post = :postId';
+	unset( $params[':status'] );
+}
+
 $coList = new ae_CommentList( $filter, $params );
 
+
+$class = 'post single-post post-' . $post->getStatus();
+$class .= ( $post->getDatetime( 'YmdHis' ) > date( 'YmdHis' ) ) ? ' post-future' : '';
+
 ?>
-<article class="post" id="post-<?php echo $post->getId() ?>">
+<article class="<?php echo $class ?>" id="post-<?php echo $post->getId() ?>">
 	<header class="post-header">
 		<h2><a href="<?php echo $post->getLink() ?>"><?php echo $post->getTitle() ?></a></h2>
 

@@ -28,6 +28,7 @@ define( 'PERMALINK_GET_CATEGORY', 'category' );
 define( 'PERMALINK_GET_OFFSET', 'offset' );
 define( 'PERMALINK_GET_PAGE', 'page' );
 define( 'PERMALINK_GET_POST', 'p' );
+define( 'PERMALINK_GET_SEARCH', 'search' );
 define( 'PERMALINK_GET_TAG', 'tag' );
 define( 'PERMALINK_GET_USER', 'author' );
 define( 'RSS_PROTOCOL', $rssSettings['protocol'] );
