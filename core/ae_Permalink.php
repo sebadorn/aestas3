@@ -212,6 +212,7 @@ class ae_Permalink {
 
 		self::$url = str_replace( '?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI'] );
 		self::$url = str_replace( $urlBase, '', self::$url );
+		self::$url = preg_replace( ';/index.php$;', '', self::$url );
 		self::$url = preg_replace( ';/$;', '', self::$url );
 
 		self::$urlNoOffset = preg_replace( self::$regex['offset'], '', self::$url );

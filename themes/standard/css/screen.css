@@ -213,13 +213,14 @@ ol, ul {
 	}
 
 		.search-input {
+			border-color: #f0f0f0 !important;
 			max-width: 160px;
 			padding: 2px 6px !important;
 		}
 
 		.search-submit {
-			background-color: #e0e0e0;
-			border: 1px solid #e0e0e0;
+			background-color: #f0f0f0;
+			border: 1px solid #f0f0f0;
 			cursor: default;
 			display: inline-block;
 			font-family: "OpenIconic";
@@ -579,6 +580,10 @@ article {
 				display: block;
 				font-family: "OpenSans Semibold Web";
 				font-size: 16px;
+			}
+
+			.comment-registered-user .comment-author {
+				color: #4AB41D !important;
 			}
 
 			.comment-time {

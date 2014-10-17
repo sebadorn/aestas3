@@ -16,13 +16,13 @@ $filterPosts = array(
 
 $userList = new ae_UserList( $filterUsers );
 $postList = new ae_PostList( $filterPosts );
+$postList->loadCategories();
 
-$linkBase = RSS_PROTOCOL . ':' . URL;
-$rssLink = $linkBase . 'feed/';
+$rssLink = URL . 'feed/';
 $image = FALSE;
 
 if( file_exists( '../themes/' . THEME . '/img/favicon.png' ) ) {
-	$image = $linkBase . 'themes/' . THEME . '/img/favicon.png';
+	$image = URL . 'themes/' . THEME . '/img/favicon.png';
 }
 
 echo '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL;
@@ -36,20 +36,26 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL;
 		<image>
 			<url><?php echo $image ?></url>
 			<title><?php echo ae_Settings::get( 'blog_title' ) ?></title>
-			<link><?php echo $linkBase ?></link>
+			<link><?php echo URL ?></link>
 		</image>
 	<?php endif ?>
 		<pubDate><?php echo date( 'D, d M Y H:i:s O' ); ?></pubDate>
 		<link><?php echo $rssLink; ?></link>
 		<atom:link href="<?php echo $rssLink; ?>" rel="self" type="application/rss+xml" />
 	<?php while( $post = $postList->next() ): ?>
-		<?php $user = $userList->find( $post->getUserId() ) ?>
+		<?php
+		$user = $userList->find( $post->getUserId() );
+		$categories = $post->getCategories();
+		?>
 		<item>
 			<title><?php echo htmlspecialchars( $post->getTitle() ) ?></title>
 			<pubDate><?php echo $post->getDatetime( 'D, d M Y H:i:s O' ) ?></pubDate>
-			<link><?php echo $linkBase . $post->getLink() ?></link>
-			<guid><?php echo $linkBase . $post->getLink() ?></guid>
+			<link><?php echo $post->getLink() ?></link>
+			<guid><?php echo $post->getLink() ?></guid>
 			<dc:creator><?php echo $user->getNameExternal() ?></dc:creator>
+		<?php foreach( $categories as $c ): ?>
+			<category><?php echo htmlspecialchars( $c->getTitle() ) ?></category>
+		<?php endforeach ?>
 			<description><?php echo htmlspecialchars( $post->getContent() ) ?></description>
 		</item>
 	<?php endwhile ?>

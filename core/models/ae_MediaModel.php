@@ -104,9 +104,7 @@ class ae_MediaModel extends ae_Model {
 	 * @return {string} Path to the file directory inside the media directory.
 	 */
 	public function getFilePathNoName() {
-		$dt = explode( ' ', $this->getDatetime() );
-
-		return str_replace( '-', '/', $dt[0] ) . '/';
+		return $this->getDatetime( 'Y/m/' );
 	}
 
 

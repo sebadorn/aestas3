@@ -27,6 +27,7 @@ class ae_Database {
 				$pdoStr, $dbInfo['username'], $dbInfo['password'],
 				array( PDO::ATTR_PERSISTENT => true )
 			);
+			self::$pdo->exec( 'SET NAMES utf8' );
 		}
 		catch( PDOException $exc ) {
 			$msg = '[' . get_class() . '] Could not connect to database: ' . $exc->getMessage();
@@ -67,11 +68,12 @@ class ae_Database {
 		$pdoStatement = self::$pdo->prepare( $statement );
 
 		if( !$pdoStatement || $pdoStatement->execute( $params ) === FALSE ) {
+			$errorInfo = @$pdoStatement->errorInfo();
 			$msg = sprintf(
 				'[%s] Statement failed: <code>%s</code>. %s',
 				get_class(),
 				htmlspecialchars( $statement ),
-				@$pdoStatement->errorInfo()[2]
+				@$errorInfo[2]
 			);
 			ae_Log::error( $msg );
 

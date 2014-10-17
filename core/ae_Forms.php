@@ -76,7 +76,7 @@ class ae_Forms {
 	 * @return {string}       Formatted size inclusive unit.
 	 */
 	static public function formatSize( $size ) {
-		$names = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+		$names = array( 'Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB' );
 		$numNames = count( $names );
 		$i = 0;
 

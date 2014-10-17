@@ -49,6 +49,7 @@ $coList->reverse();
 	<h6>Neue Kommentare</h6>
 
 <?php while( $co = $coList->next() ): ?>
+
 	<?php
 		$gravUrl = GRAVATAR_BASE . md5( $co->getAuthorEmail() );
 		$gravUrl .= '?d=mm';

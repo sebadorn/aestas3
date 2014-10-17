@@ -249,7 +249,9 @@ function createUser() {
 	$user = new ae_UserModel();
 
 	if( isset( $_POST['edit-id'] ) ) {
-		$user->setId( $_POST['edit-id'] );
+		if( !$user->load( $_POST['edit-id'] ) ) {
+			return FALSE;
+		}
 	}
 
 	$user->setNameInternal( $_POST['user-name-internal'] );
@@ -259,7 +261,10 @@ function createUser() {
 		$user->setPermalink( $permalink );
 	}
 
-	$user->setPasswordHash( ae_Security::hash( $_POST['user-password'], $user->getNameInternal() ) );
+	if( $_POST['user-password'] !== '' ) {
+		$user->setPasswordHash( ae_Security::hash( $_POST['user-password'] ) );
+	}
+
 	$user->setStatus( $status );
 	$user->save();
 

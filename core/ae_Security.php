@@ -76,30 +76,14 @@ class ae_Security {
 
 
 	/**
-	 * Generate a hash. (Blowfish.)
-	 * @param  {string}    $input Input to hash.
-	 * @param  {string}    $salt  Salt to use.
-	 * @return {string}           Generated hash.
-	 * @throws {Exception}        If $salt is empty or the hashing failed.
+	 * Generate a hash.
+	 * @param  {string} $input Input to hash.
+	 * @return {string}        Generated hash.
 	 */
-	static public function hash( $input, $salt ) {
-		if( $salt == '' ) {
-			throw new Exception( '[' . get_class() . '] Salt cannot be empty.' );
-		}
+	static public function hash( $input ) {
+		$phpass = new PasswordHash( self::$cfg['hash_iterations'], FALSE );
 
-		$salt = md5( $salt );
-		$salt = mb_substr( $salt, 0, 22 );
-		$salt = preg_replace( '/[^a-zA-Z0-9.\/]/', '', $salt );
-		$salt = str_pad( $salt, 22, $salt );
-		$salt = '$2a$' . self::$cfg['hash_iterations'] . '$' . $salt . '$';
-
-		$hash = crypt( $input, $salt );
-
-		if( $hash == '*0' || $hash == '*1' || $hash == $salt ) {
-			throw new Exception( '[' . get_class() . '] Hashing failed.');
-		}
-
-		return $hash;
+		return $phpass->HashPassword( $input );
 	}
 
 
@@ -191,7 +175,9 @@ class ae_Security {
 	 * @return {boolean}       TRUE, if input matches hash, FALSE otherwise.
 	 */
 	static public function verify( $input, $hash ) {
-		return ( $hash === crypt( $input, $hash ) );
+		$phpass = new PasswordHash( self::$cfg['hash_iterations'], FALSE );
+
+		return $phpass->CheckPassword( $input, $hash );
 	}
 
 

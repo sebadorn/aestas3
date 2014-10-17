@@ -18,6 +18,7 @@ define( 'COMMENT_DEFAULT_STATUS', ae_CommentModel::STATUS_APPROVED );
 define( 'IMAGE_COMPRESSION_PNG', $mediaSettings['image_compression_png'] );
 define( 'IMAGE_PREVIEW_MAX_WIDTH', $mediaSettings['preview_image_max_width'] );
 define( 'IMAGE_QUALITY_JPEG', $mediaSettings['image_quality_jpeg'] );
+define( 'OVERWRITE_MOD_REWRITE_ENABLED', FALSE ); // Detection does not work with PHP running in CGI mode
 define( 'PERMALINK_BASE_CATEGORY', 'category/' );
 define( 'PERMALINK_BASE_OFFSET', 'page/' );
 define( 'PERMALINK_BASE_PAGE', '' );

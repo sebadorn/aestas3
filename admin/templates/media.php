@@ -15,6 +15,11 @@ if( ae_MediaModel::isValidStatus( $status ) ) {
 
 $list = new ae_MediaList( $filter );
 
+// pagination
+$numPages = ceil( $list->getTotalNumItems() / $itemsPerPage );
+$queryStr = preg_replace( '/[?&]offset=?[0-9]*/i', '', $_SERVER['QUERY_STRING'] );
+$linkBase = 'admin.php?' . htmlspecialchars( $queryStr ) . '&amp;offset=';
+
 ?>
 <h1>Media</h1>
 
@@ -31,19 +36,21 @@ $list = new ae_MediaList( $filter );
 <?php include( 'manage-filter-nav.php' ) ?>
 <?php include( 'manage-bulk-action.php' ) ?>
 
+<nav class="manage-page-navigation">
+	<?php echo ae_SiteBuilder::pagination( $numPages, $pageOffset, $linkBase ) ?>
+</nav>
 
 <?php while( $entry = $list->next() ): ?>
 
 	<?php
 		$status = $entry->getStatus();
-		$dt = explode( ' ', $entry->getDatetime() );
-		$date = str_replace( '-', '/', $dt[0] );
-		$basePath = '../media/' . $date . '/';
+		$basePath = '../media/' . $entry->getDatetime( 'Y/m/' );
 		$path = $basePath . $entry->getName();
 		$meta = $entry->getMetaInfo();
 
-		$type = htmlspecialchars( $entry->getType() );
+		$filesize = isset( $meta['file_size'] ) ? ae_Forms::formatSize( $meta['file_size'] ) : '? KB';
 		$icon = ae_Forms::getIcon( $entry->getType() );
+		$type = htmlspecialchars( $entry->getType() );
 
 		$linkEdit = 'admin.php?area=edit&amp;media=' . $entry->getId();
 		$linkStatus = 'scripts/manage.php?media=' . $entry->getId();
@@ -67,7 +74,7 @@ $list = new ae_MediaList( $filter );
 		<?php if( $entry->isImage() && isset( $meta['image_width'] ) ): ?>
 			<span class="image-size"><?php echo $meta['image_width'] ?> × <?php echo $meta['image_height'] ?> pixels</span>
 		<?php endif ?>
-			<span class="file-size"><?php echo ae_Forms::formatSize( $meta['file_size'] ) ?></span>
+			<span class="file-size"><?php echo $filesize ?></span>
 		</div>
 
 		<div class="entry-actions">
@@ -86,13 +93,6 @@ $list = new ae_MediaList( $filter );
 <?php endwhile ?>
 
 </form>
-
-
-<?php
-	$numPages = ceil( $list->getTotalNumItems() / $itemsPerPage );
-	$queryStr = preg_replace( '/[?&]offset=?[0-9]*/i', '', $_SERVER['QUERY_STRING'] );
-	$linkBase = 'admin.php?' . htmlspecialchars( $queryStr ) . '&amp;offset=';
-?>
 
 <nav class="manage-page-navigation">
 	<?php echo ae_SiteBuilder::pagination( $numPages, $pageOffset, $linkBase ) ?>

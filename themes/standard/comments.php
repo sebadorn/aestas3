@@ -15,8 +15,11 @@
 		$authorName = ( $co->getAuthorName() == '' ) ? COMMENT_AUTHOR_DEFAULT_NAME : $co->getAuthorName();
 
 		$postLink = URL . $post->getLink() . '#comment-' . $co->getId();
+
+		$class = 'comment';
+		$class .= ( $co->getUserId() > 0 ) ? ' comment-registered-user' : '';
 	?>
-	<div class="comment" id="comment-<?php echo $co->getId() ?>">
+	<div class="<?php echo $class ?>" id="comment-<?php echo $co->getId() ?>">
 		<div class="comment-meta">
 			<img alt="avatar" class="avatar avatar-<?php echo GRAVATAR_SIZE ?>" src="<?php echo $gravUrl ?>" />
 		<?php if( $co->getAuthorUrl() != '' ): ?>

@@ -7,3 +7,4 @@ themes/standard/js/shl3/*
 # files
 *.sublime-*
 db_move.php
+tiny.php

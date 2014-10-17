@@ -4,7 +4,7 @@
 		'PHP' => '<td>' . phpversion() . '</td>',
 		'MySQL' => '<td>' . ae_Database::serverVersion() . '</td>',
 		'Memory limit' => '<td>' . ini_get( 'memory_limit' ) . '</td>',
-		'mod_rewrite' => apache_get_modules( 'mod_rewrite' )
+		'mod_rewrite' => ae_Settings::isModRewriteEnabled()
 		                 ? '<td class="cell-okay">enabled</td>'
 		                 : '<td class="cell-warning">disabled</td>',
 		'Max filesize for uploads'=> '<td>' . ini_get( 'upload_max_filesize' ) . '</td>'

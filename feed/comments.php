@@ -19,12 +19,11 @@ $filterComments = array(
 $postList = new ae_PostList( $filterPosts );
 $commentList = new ae_CommentList( $filterComments );
 
-$linkBase = RSS_PROTOCOL . ':' . URL;
-$rssLink = $linkBase . 'feed/';
+$rssLink = URL . 'feed/';
 $image = FALSE;
 
 if( file_exists( '../themes/' . THEME . '/img/favicon.png' ) ) {
-	$image = $linkBase . 'themes/' . THEME . '/img/favicon.png';
+	$image = URL . 'themes/' . THEME . '/img/favicon.png';
 }
 
 echo '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL;
@@ -38,7 +37,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL;
 		<image>
 			<url><?php echo $image ?></url>
 			<title><?php echo ae_Settings::get( 'blog_title' ) ?></title>
-			<link><?php echo $linkBase ?></link>
+			<link><?php echo URL ?></link>
 		</image>
 	<?php endif ?>
 		<pubDate><?php echo date( 'D, d M Y H:i:s O' ); ?></pubDate>
@@ -49,8 +48,8 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . PHP_EOL;
 		<item>
 			<title><?php echo htmlspecialchars( $comment->getAuthorName() . ' [' . $post->getTitle() . '] ' ) ?></title>
 			<pubDate><?php echo $comment->getDatetime( 'D, d M Y H:i:s O' ) ?></pubDate>
-			<link><?php echo $linkBase . $post->getLink() ?></link>
-			<guid><?php echo $linkBase . $post->getLink() ?></guid>
+			<link><?php echo $post->getLink() . '#comment-' . $comment->getId() ?></link>
+			<guid><?php echo $post->getLink() . '#comment-' . $comment->getId() ?></guid>
 			<dc:creator><?php echo $comment->getAuthorName() ?></dc:creator>
 			<description><?php echo htmlspecialchars( $comment->getContent() ) ?></description>
 		</item>

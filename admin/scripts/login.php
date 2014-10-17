@@ -9,28 +9,25 @@ if( !isset( $_POST['username'], $_POST['userpwd'] ) ) {
 }
 
 
-$hash = ae_Security::hash( $_POST['userpwd'], $_POST['username'] );
 $query = '
-	SELECT COUNT( u_id ) as hits, u_id, u_status
+	SELECT COUNT( u_id ) as hits, u_id, u_pwd, u_status
 	FROM `' . AE_TABLE_USERS . '`
-	WHERE
-		u_pwd = :hash AND
-		u_name_intern = :name
+	WHERE u_name_intern = :name
 ';
 $params = array(
-	':hash' => $hash,
 	':name' => $_POST['username']
 );
 $result = ae_Database::query( $query, $params );
+$u = $result[0];
 
 
 // Reject: Account is suspended
-if( $result[0]['hits'] == '1' && $result[0]['u_status'] != ae_UserModel::STATUS_ACTIVE ) {
+if( $u['hits'] == '1' && $u['u_status'] != ae_UserModel::STATUS_ACTIVE ) {
 	header( 'Location: ../index.php?error=account_suspended&username=' . urlencode( $_POST['username'] ) );
 	exit;
 }
 // Accept: Exactly one user found
-else if( $result[0]['hits'] == '1' && $result[0]['u_id'] >= 0 ) {
+else if( $u['hits'] == '1' && $u['u_id'] >= 0 && ae_Security::verify( $_POST['userpwd'], $u['u_pwd'] ) ) {
 	ae_Security::login( $result[0]['u_id'] );
 	header( 'Location: ../admin.php' );
 	exit;

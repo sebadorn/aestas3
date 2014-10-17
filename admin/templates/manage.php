@@ -79,6 +79,11 @@ else {
 
 $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 
+// pagination
+$numPages = ceil( $list->getTotalNumItems() / $itemsPerPage );
+$queryStr = preg_replace( '/[?&]offset=?[0-9]*/i', '', $_SERVER['QUERY_STRING'] );
+$linkBase = 'admin.php?' . htmlspecialchars( $queryStr ) . '&amp;offset=';
+
 ?>
 <h1>Manage: <?php echo $areaName ?></h1>
 
@@ -88,6 +93,9 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 <?php include( 'manage-filter-nav.php' ) ?>
 <?php include( 'manage-bulk-action.php' ) ?>
 
+<nav class="manage-page-navigation">
+	<?php echo ae_SiteBuilder::pagination( $numPages, $pageOffset, $linkBase ) ?>
+</nav>
 
 <?php while( $entry = $list->next() ): ?>
 	<?php $status = $entry->getStatus() ?>
@@ -289,13 +297,6 @@ $urlBasis = '?area=manage&amp;offset=' . $pageOffset . '&amp;' . $area;
 <?php endwhile ?>
 
 </form>
-
-
-<?php
-	$numPages = ceil( $list->getTotalNumItems() / $itemsPerPage );
-	$queryStr = preg_replace( '/[?&]offset=?[0-9]*/i', '', $_SERVER['QUERY_STRING'] );
-	$linkBase = 'admin.php?' . htmlspecialchars( $queryStr ) . '&amp;offset=';
-?>
 
 <nav class="manage-page-navigation">
 	<?php echo ae_SiteBuilder::pagination( $numPages, $pageOffset, $linkBase ) ?>
