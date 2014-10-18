@@ -12,11 +12,6 @@ $params = array(
 	':status' => ae_CommentModel::STATUS_APPROVED
 );
 
-if( ae_Security::isLoggedIn() ) {
-	$filter['WHERE'] = 'co_post = :postId';
-	unset( $params[':status'] );
-}
-
 $coList = new ae_CommentList( $filter, $params );
 
 

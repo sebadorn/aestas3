@@ -3,16 +3,22 @@
 require_once( '../core/autoload.php' );
 require_once( '../core/config.php' );
 
-if( isset( $_POST['do-not-fill'] ) || !isset( $_POST['comment-post'] ) ) {
+if(
+	( isset( $_POST['comment-do-not-fill'] ) && $_POST['comment-do-not-fill'] != '' ) ||
+	!isset( $_POST['comment-post'] )
+) {
 	header( 'Location: ../' );
 	exit;
 }
 
 if(
-	!isset( $_POST['comment-author-name'] ) ||
-	!isset( $_POST['comment-author-email'] ) ||
-	!isset( $_POST['comment-author-url'] ) ||
-	!isset( $_POST['comment-content'] ) ||
+	!isset(
+		$_POST['comment-author-name'],
+		$_POST['comment-author-email'],
+		$_POST['comment-author-url'],
+		$_POST['comment-content'],
+		$_POST['comment-post']
+	) ||
 	mb_strlen( trim( $_POST['comment-content'] ) ) == 0
 ) {
 	header( 'Location: ../?p=' . $_POST['comment-post'] . '&error=missing_data#comment-form' );

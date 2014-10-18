@@ -3,6 +3,11 @@
 require_once( '../../core/autoload.php' );
 require_once( '../../core/config.php' );
 
+if( !ae_Security::isLoggedIn() ) {
+	header( 'Location: ../index.php?error=not_logged_in' );
+	exit;
+}
+
 
 if( !isset( $_FILES['upload'] ) ) {
 	header( 'Location: ../admin.php?area=media&error=no_files_uploaded' );

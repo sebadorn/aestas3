@@ -208,14 +208,22 @@ ol, ul {
 
 	form.search {
 		display: inline-block;
+		height: 28px;
 		margin-left: 20px;
+		position: relative;
+		top: 4px;
 		white-space: nowrap;
+		width: 192px;
 	}
 
 		.search-input {
 			border-color: #f0f0f0 !important;
+			height: 26px;
+			left: 0;
 			max-width: 160px;
 			padding: 2px 6px !important;
+			position: absolute;
+			top: 0;
 		}
 
 		.search-submit {
@@ -226,9 +234,8 @@ ol, ul {
 			font-family: "OpenIconic";
 			font-size: 16px;
 			height: 26px;
-			left: -5px;
-			position: relative;
-			top: 3px;
+			position: absolute;
+			right: 0;
 			width: 34px;
 		}
 
