@@ -139,7 +139,7 @@ a:hover {
 	color: #000000;
 }
 
-blockquote, hr, ol, p, pre, ul {
+blockquote, dialog, dl, hr, ol, p, pre, table, ul {
 	margin-bottom: 16px;
 }
 
@@ -167,10 +167,21 @@ code {
 	background-color: #ffffff;
 	border-bottom: 1px solid #e0e0e0;
 	border-radius: 3px;
-	font-family: "DejaVu Sans Mono", Georgia, "Courier New", monospace;
+	font-family: "DejaVu Sans Mono", "Courier New", monospace;
 	font-size: 13px;
 	padding: 2px 4px;
 }
+
+dl {}
+
+	dd {
+		color: #404040;
+		margin-left: 26px;
+	}
+
+	dt {
+		font-weight: bold;
+	}
 
 h1, h2, h3 {
 	font-weight: normal;
@@ -184,6 +195,24 @@ hr {
 ol, ul {
 	margin-left: 16px;
 }
+
+table {
+	border-spacing: 0;
+	width: 100%;
+}
+
+	td, th {
+		padding: 4px 10px;
+	}
+
+	th {
+		font-weight: bold;
+		text-align: left;
+	}
+
+	tr:nth-child( 2n + 1 ) {
+		background-color: #DDE6E9;
+	}
 
 
 
@@ -287,9 +316,9 @@ ol, ul {
 			opacity: 1.0;
 		}
 
-		.icon-github a { background-position: 0 64px; }
 		.icon-rss a { background-position: 0 32px; }
-		.icon-twitter a { background-position: 0 0; }
+		.icon-seba-github a { background-position: 0 64px; }
+		.icon-seba-twitter a { background-position: 0 0; }
 
 
 
@@ -759,3 +788,27 @@ article {
 			font-size: 13px;
 			text-shadow: none;
 		}
+
+
+
+/* CSS for old content or only very special cases */
+
+img[title] {
+	cursor: help;
+}
+
+.annotation {
+	font-size: 13px;
+	line-height: 19px;
+}
+
+.rating {
+	text-align: center;
+}
+
+	.rating strong {
+		color: #C0B813;
+		font-size: 140%;
+		margin-left: 10px;
+		vertical-align: top;
+	}

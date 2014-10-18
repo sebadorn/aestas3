@@ -15,10 +15,10 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 	</div>
 
 	<ul class="icons">
-		<li class="icon-twitter">
+		<li class="icon-seba-twitter">
 			<a href="http://twitter.com/sebadorn" title="Twitter"></a>
 		</li>
-		<li class="icon-github">
+		<li class="icon-seba-github">
 			<a href="https://github.com/sebadorn" title="GitHub"></a>
 		</li>
 		<li class="icon-rss">

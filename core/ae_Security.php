@@ -106,7 +106,7 @@ class ae_Security {
 	 * @return {boolean}      TRUE, if it exists, FALSE otherwise.
 	 */
 	static public function isValidArea( $area ) {
-		return in_array( $area, self::$validAreas );
+		return in_array( $area, self::$validAreas, TRUE );
 	}
 
 
@@ -122,7 +122,7 @@ class ae_Security {
 			throw new Exception( '[' . get_class() . '] Unknown area "' . htmlspecialchars( $area ) . '".' );
 		}
 
-		return in_array( $subArea, self::$validSubAreas[$area] );
+		return in_array( $subArea, self::$validSubAreas[$area], TRUE );
 	}
 
 

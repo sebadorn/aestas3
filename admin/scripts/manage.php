@@ -54,14 +54,15 @@ else {
 
 
 $model->load( $_GET[$area] );
+$prevStatus = $model->getStatus();
 
 if( $_GET['status'] == 'delete' ) {
 	if( !$model->delete() ) {
-		header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&error=delete' );
+		header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&status=' . $prevStatus . '&error=delete' );
 		exit;
 	}
 
-	header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&success=delete' );
+	header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&status=' . $prevStatus . '&success=delete' );
 	exit;
 }
 else {
@@ -69,14 +70,15 @@ else {
 		$model->setStatus( $_GET['status'] );
 	}
 	catch( Exception $e ) {
-		header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&error=invalid_status' );
+		header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&status=' . $prevStatus . '&error=invalid_status' );
 		exit;
 	}
 
 	if( !$model->save() ) {
-		header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&error=saving_failed' );
+		header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&status=' . $prevStatus . '&error=saving_failed' );
 		exit;
 	}
 }
 
-header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&success=status_change' );
+
+header( 'Location: ../admin.php?area=' . $mainArea . '&' . $area . '&status=' . $prevStatus .'&success=status_change' );

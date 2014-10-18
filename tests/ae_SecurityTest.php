@@ -3,6 +3,33 @@
 class ae_SecurityTest extends PHPUnit_Framework_TestCase {
 
 
+	public function testArea() {
+		$areas = array( 'create', 'credits', 'dashboard', 'edit', 'manage', 'media', 'settings' );
+
+		foreach( $areas as $area ) {
+			$this->assertTrue( ae_Security::isValidArea( $area ) );
+		}
+
+		$this->assertFalse( ae_Security::isValidArea( 'created' ) );
+		$this->assertFalse( ae_Security::isValidArea( '' ) );
+		$this->assertFalse( ae_Security::isValidArea( TRUE ) );
+		$this->assertFalse( ae_Security::isValidArea( NULL ) );
+
+
+		$subAreasManage = array( 'category', 'comment', 'media', 'page', 'post', 'user' );
+
+		foreach( $subAreasManage as $area ) {
+			$this->assertTrue( ae_Security::isValidSubArea( 'manage', $area ) );
+		}
+
+		$this->assertFalse( ae_Security::isValidSubArea( 'manage', 'created' ) );
+		$this->assertFalse( ae_Security::isValidSubArea( 'media', 'created' ) );
+		$this->assertFalse( ae_Security::isValidSubArea( 'media', '' ) );
+		$this->assertFalse( ae_Security::isValidSubArea( 'media', TRUE ) );
+		$this->assertFalse( ae_Security::isValidSubArea( 'media', NULL ) );
+	}
+
+
 	public function testHashing() {
 		$this->assertNotEquals( trim( ae_Security::hash( 'lorem ipsum' ) ), '' );
 		$this->assertNotEquals(
