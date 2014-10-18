@@ -32,7 +32,7 @@ define( 'PERMALINK_GET_POST', 'p' );
 define( 'PERMALINK_GET_SEARCH', 'search' );
 define( 'PERMALINK_GET_TAG', 'tag' );
 define( 'PERMALINK_GET_USER', 'author' );
-define( 'RSS_PROTOCOL', $rssSettings['protocol'] );
+
 
 // Disable Magic Quotes (removed as of PHP 5.4)
 if( get_magic_quotes_runtime() ) {

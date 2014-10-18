@@ -51,13 +51,6 @@ $mediaSettings = array(
 );
 
 
-// RSS
-
-$rssSettings = array(
-	'protocol' => 'http'
-);
-
-
 
 // ----- NO MORE EDITS BELOW THIS LINE -----
 
@@ -68,9 +61,6 @@ include_once( 'setup.php' );
 
 
 // Delete data
-
-$rssSettings = array();
-unset( $rssSettings );
 
 $mediaSettings = array();
 unset( $mediaSettings );

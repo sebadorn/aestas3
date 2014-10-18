@@ -38,6 +38,7 @@ class ae_SiteBuilder {
 				<input type="text" name="comment-author-name" placeholder="%s" />
 				<input type="text" name="comment-author-email" placeholder="%s" />
 				<input type="text" name="comment-author-url" placeholder="%s" />
+				<textarea name="comment-content-do-not-fill" class="do-not-fill"></textarea>
 				<textarea name="comment-content" placeholder="%s"></textarea>
 
 				<button type="submit" class="comment-submit">%s</button>

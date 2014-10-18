@@ -5,6 +5,7 @@ require_once( '../core/config.php' );
 
 if(
 	( isset( $_POST['comment-do-not-fill'] ) && $_POST['comment-do-not-fill'] != '' ) ||
+	( isset( $_POST['comment-content-do-not-fill'] ) && $_POST['comment-content-do-not-fill'] != '' ) ||
 	!isset( $_POST['comment-post'] )
 ) {
 	header( 'Location: ../' );
