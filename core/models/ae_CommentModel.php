@@ -121,7 +121,7 @@ class ae_CommentModel extends ae_Model {
 	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
 	 */
 	static public function isValidStatus( $status ) {
-		return in_array( $status, self::listStatuses() );
+		return in_array( $status, self::listStatuses(), TRUE );
 	}
 
 
@@ -307,7 +307,8 @@ class ae_CommentModel extends ae_Model {
 		$email = trim( $email );
 
 		if( $email !== '' && !ae_Validate::emailSloppy( $email ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid email: ' . htmlspecialchars( $email ) );
+			$msg = sprintf( '[%s] Not a valid eMail: %s', get_class(), htmlspecialchars( $email ) );
+			throw new Exception( $msg );
 		}
 
 		$this->authorEmail = $email;
@@ -321,7 +322,8 @@ class ae_CommentModel extends ae_Model {
 	 */
 	public function setAuthorIp( $ip ) {
 		if( !ae_Validate::ip( $ip ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid IP: ' . htmlspecialchars( $ip ) );
+			$msg = sprintf( '[%s] Not a valid IP: %s', get_class(), htmlspecialchars( $ip ) );
+			throw new Exception( $msg );
 		}
 
 		$this->authorIp = $ip;
@@ -385,7 +387,8 @@ class ae_CommentModel extends ae_Model {
 	 */
 	public function setPostId( $postId ) {
 		if( !ae_Validate::id( $postId ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid post ID: ' . htmlspecialchars( $postId ) );
+			$msg = sprintf( '[%s] Not a valid post ID: %s', get_class(), htmlspecialchars( $postId ) );
+			throw new Exception( $msg );
 		}
 
 		$this->postId = $postId;
@@ -414,7 +417,8 @@ class ae_CommentModel extends ae_Model {
 	 */
 	public function setUserId( $userId ) {
 		if( !ae_Validate::integer( $userId ) || $userId < 0 ) {
-			throw new Exception( '[' . get_class() . '] User ID must be >= 0.' );
+			$msg = sprintf( '[%s] User ID must be >= 0.', get_class() );
+			throw new Exception( $msg );
 		}
 
 		$this->userId = $userId;

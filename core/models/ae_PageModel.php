@@ -135,7 +135,7 @@ class ae_PageModel extends ae_Model {
 	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
 	 */
 	static public function isValidStatus( $status ) {
-		return in_array( $status, self::listStatuses() );
+		return in_array( $status, self::listStatuses(), TRUE );
 	}
 
 

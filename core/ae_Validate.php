@@ -24,12 +24,12 @@ class ae_Validate {
 
 
 	/**
-	 * Validate ID. (A positive integer.)
+	 * Validate ID. (A positive, non-zero integer.)
 	 * @param  {int|string} $input ID to validate.
 	 * @return {boolean}           TRUE, if matches an ID, FALSE otherwise.
 	 */
 	static public function id( $input ) {
-		return ( preg_match( '/^[0-9]+$/', $input ) === 1 );
+		return ( preg_match( '/^[1-9][0-9]*$/', $input ) === 1 );
 	}
 
 

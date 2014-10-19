@@ -797,6 +797,17 @@ img[title] {
 	cursor: help;
 }
 
+blockquote.code {
+	font-family: "DejaVu Sans Mono", "Courier New", monospace;
+	font-size: 13px;
+	line-height: 19px;
+}
+
+blockquote.error {
+	border-color: #c00000;
+	color: #c00000;
+}
+
 .annotation {
 	font-size: 13px;
 	line-height: 19px;

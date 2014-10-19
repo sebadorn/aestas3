@@ -10,4 +10,9 @@ class ae_PermalinkTest extends PHPUnit_Framework_TestCase {
 	}
 
 
+	public function testPrepareTag() {
+		$this->assertEquals( ae_Permalink::prepareTag( 'foo/bär 4' ), 'foo_b%C3%A4r%204' );
+	}
+
+
 }

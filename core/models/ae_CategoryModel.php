@@ -126,7 +126,7 @@ class ae_CategoryModel extends ae_Model {
 	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
 	 */
 	static public function isValidStatus( $status ) {
-		return in_array( $status, self::listStatuses() );
+		return in_array( $status, self::listStatuses(), TRUE );
 	}
 
 
@@ -346,7 +346,15 @@ class ae_CategoryModel extends ae_Model {
 	 */
 	public function setChildren( $children ) {
 		if( !is_array( $children ) ) {
-			throw new Exception( '[' . get_class() . '] Child categories must be passed as array.' );
+			$msg = sprintf( '[%s] Child categories must be passed as array.', get_class() );
+			throw new Exception( $msg );
+		}
+
+		foreach( $children as $child ) {
+			if( !ae_Validate::id( $child ) ) {
+				$msg = sprintf( '[%s] Category child ID invalid: %s', get_class(), htmlspecialchars( $child ) );
+				throw new Exception( $msg );
+			}
 		}
 
 		$this->children = $children;
@@ -359,8 +367,9 @@ class ae_CategoryModel extends ae_Model {
 	 * @throws {Exception}         If $parent is not valid.
 	 */
 	public function setParent( $parent ) {
-		if( !ae_Validate::id( $parent ) ) {
-			throw new Exception( '[' . get_class() . '] Not a valid ID: ' . htmlspecialchars( $parent ) );
+		if( !ae_Validate::id( $parent ) && $parent !== 0 ) {
+			$msg = sprintf( '[%s] Not a valid ID: %s', get_class(), htmlspecialchars( $parent ) );
+			throw new Exception( $msg );
 		}
 
 		$this->parent = $parent;
@@ -401,10 +410,11 @@ class ae_CategoryModel extends ae_Model {
 	 */
 	public function setTitle( $title ) {
 		if( mb_strlen( $title ) == 0 ) {
-			throw new Exception( '[' . get_class() . '] Category title cannot be empty.' );
+			$msg = sprintf( '[%s] Category title cannot be empty.', get_class() );
+			throw new Exception( $msg );
 		}
 
-		$this->title = $title;
+		$this->title = (string) $title;
 	}
 
 
