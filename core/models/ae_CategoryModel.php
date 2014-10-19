@@ -367,7 +367,7 @@ class ae_CategoryModel extends ae_Model {
 	 * @throws {Exception}         If $parent is not valid.
 	 */
 	public function setParent( $parent ) {
-		if( !ae_Validate::id( $parent ) && $parent !== 0 ) {
+		if( $parent != 0 && !ae_Validate::id( $parent ) ) {
 			$msg = sprintf( '[%s] Not a valid ID: %s', get_class(), htmlspecialchars( $parent ) );
 			throw new Exception( $msg );
 		}
