@@ -44,14 +44,7 @@ if( ini_get( 'register_globals' ) ) {
 	ini_set( 'register_globals', 0 );
 }
 
-ae_Timer::start( 'total' );
-ae_Log::init( $logSettings );
-ae_Database::connect( $dbSettings );
-ae_Security::init( $securitySettings );
-ae_Settings::load();
-
-
-// Constants used in themes and the RSS feed
+// URL constant
 
 $protocol = 'http://';
 
@@ -73,7 +66,28 @@ if( defined( 'IS_RSS' ) ) {
 $url = $protocol . implode( '/', $url ) . '/';
 
 define( 'URL', $url );
-define( 'THEME', ae_Settings::get( 'theme' ) );
-define( 'THEME_PATH', URL . 'themes/' . THEME . '/' );
 
 unset( $url );
+
+
+// Initialize some needed classes
+
+ae_Timer::start( 'total' );
+ae_Log::init( $logSettings );
+
+if( ae_Database::connect( $dbSettings ) === FALSE ) {
+	$path = 'themes/error-msg-db.php';
+	$path = file_exists( $path ) ? $path : '../' . $path;
+	include( $path );
+
+	exit;
+}
+
+ae_Security::init( $securitySettings );
+ae_Settings::load();
+
+
+// Constants used in themes and the RSS feed
+
+define( 'THEME', ae_Settings::get( 'theme' ) );
+define( 'THEME_PATH', URL . 'themes/' . THEME . '/' );

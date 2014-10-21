@@ -17,22 +17,45 @@ class ae_Database {
 
 	/**
 	 * Connect to the MySQL database.
-	 * @param {array} $dbInfo Database information.
+	 * @param  {array}   $dbInfo Database information.
+	 * @return {boolean}         TRUE on success, FALSE otherwise.
 	 */
 	static public function connect( $dbInfo ) {
 		$pdoStr = sprintf( 'mysql:host=%s;dbname=%s;charset=utf8', $dbInfo['host'], $dbInfo['name'] );
 
 		try {
-			self::$pdo = new PDO(
+			self::$pdo = @new PDO(
 				$pdoStr, $dbInfo['username'], $dbInfo['password'],
 				array( PDO::ATTR_PERSISTENT => true )
 			);
 			self::$pdo->exec( 'SET NAMES utf8' );
 		}
 		catch( PDOException $exc ) {
-			$msg = '[' . get_class() . '] Could not connect to database: ' . $exc->getMessage();
+			$codeMsg = '(error ' . $exc->getCode() . ')';
+
+			switch( $exc->getCode() ) {
+
+				case 1044:
+					$codeMsg .= ': No database table found';
+					break;
+
+				case 1045:
+					$codeMsg .= ': Access denied';
+					break;
+
+				case 2002:
+					$codeMsg .= ': Host not found';
+					break;
+
+			}
+
+			$msg = sprintf( '[%s] Could not connect to database %s.', get_class(), $codeMsg );
 			ae_Log::error( $msg );
+
+			return FALSE;
 		}
+
+		return TRUE;
 	}
 
 

@@ -15,7 +15,7 @@ $logSettings = array(
 $dbSettings = array(
 	'host' => 'localhost',
 	'name' => 'aestas3',
-	'table_prefix' => 'ae_',
+	'table_prefix' => 'ae3_',
 	'username' => 'aestas3-dev',
 	'password' => 'Summer'
 );
