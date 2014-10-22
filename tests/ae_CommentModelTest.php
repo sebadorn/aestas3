@@ -127,6 +127,7 @@ class ae_CommentModelTest extends PHPUnit_Framework_TestCase {
 
 		$c->setDatetime( '2014-10-19 23:34:00' );
 		$this->assertEquals( $c->getDatetime(), '2014-10-19 23:34:00' );
+		$this->assertEquals( $c->getDatetime( 'Y H:i' ), '2014 23:34' );
 
 		$this->setExpectedException( 'Exception' );
 		$c->setDatetime( '2014-10-19' );

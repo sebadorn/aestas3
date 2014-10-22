@@ -391,7 +391,7 @@ class ae_CommentModel extends ae_Model {
 			throw new Exception( $msg );
 		}
 
-		$this->postId = $postId;
+		$this->postId = (int) $postId;
 	}
 
 
@@ -421,7 +421,7 @@ class ae_CommentModel extends ae_Model {
 			throw new Exception( $msg );
 		}
 
-		$this->userId = $userId;
+		$this->userId = (int) $userId;
 	}
 
 

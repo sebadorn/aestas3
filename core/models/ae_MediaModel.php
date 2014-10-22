@@ -109,6 +109,15 @@ class ae_MediaModel extends ae_Model {
 
 
 	/**
+	 * Get the set path to the media directory.
+	 * @return {string} Absolute or relative path to the media directory.
+	 */
+	public function getMediaPath() {
+		return $this->mediaPath;
+	}
+
+
+	/**
 	 * Get the encoded meta info.
 	 * @return {array} Meta info.
 	 */
@@ -151,6 +160,15 @@ class ae_MediaModel extends ae_Model {
 	 */
 	public function getType() {
 		return $this->type;
+	}
+
+
+	/**
+	 * Get the upload user ID.
+	 * @return {int} User ID of the uploader.
+	 */
+	public function getUserId() {
+		return $this->userId;
 	}
 
 
@@ -422,7 +440,7 @@ class ae_MediaModel extends ae_Model {
 		if( is_string( $meta ) ) {
 			$meta = json_decode( $meta, TRUE );
 
-			if( $meta === FALSE ) {
+			if( $meta === NULL ) {
 				$msg = sprintf( '[%s] Failed to JSON decode meta data.', get_class() );
 				throw new Exception( $msg );
 			}
@@ -471,7 +489,7 @@ class ae_MediaModel extends ae_Model {
 	 * @param {string} $tmpName Temporary file name.
 	 */
 	public function setTmpName( $tmpName ) {
-		$this->tmpName = $tmpName;
+		$this->tmpName = (string) $tmpName;
 	}
 
 
@@ -480,7 +498,7 @@ class ae_MediaModel extends ae_Model {
 	 * @param {string} $type MIME type.
 	 */
 	public function setType( $type ) {
-		$this->type = $type;
+		$this->type = (string) $type;
 	}
 
 
@@ -495,7 +513,7 @@ class ae_MediaModel extends ae_Model {
 			throw new Exception( $msg );
 		}
 
-		$this->userId = $user;
+		$this->userId = (int) $user;
 	}
 
 

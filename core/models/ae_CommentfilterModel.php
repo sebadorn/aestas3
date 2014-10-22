@@ -2,6 +2,7 @@
 
 class ae_CommentfilterModel extends ae_Model {
 
+
 	const ACTION_APPROVE = 'approve';
 	const ACTION_DROP = 'drop';
 	const ACTION_SPAM = 'spam';
@@ -229,7 +230,7 @@ class ae_CommentfilterModel extends ae_Model {
 			self::ACTION_TRASH, self::ACTION_UNAPPROVE
 		);
 
-		if( !in_array( $action, $actions ) ) {
+		if( !in_array( $action, $actions, TRUE ) ) {
 			$msg = sprintf( '[%s] Invalid action: %s', get_class(), htmlspecialchars( $action ) );
 			throw new Exception( $msg );
 		}
@@ -264,7 +265,7 @@ class ae_CommentfilterModel extends ae_Model {
 			self::TARGET_NAME, self::TARGET_URL, self::TARGET_USERID
 		);
 
-		if( !in_array( $target, $targets ) ) {
+		if( !in_array( $target, $targets, TRUE ) ) {
 			$msg = sprintf( '[%s] Invalid target: %s', get_class(), htmlspecialchars( $target ) );
 			throw new Exception( $msg );
 		}
@@ -278,7 +279,7 @@ class ae_CommentfilterModel extends ae_Model {
 	 * @param {string} $name Name.
 	 */
 	public function setName( $name ) {
-		$this->name = $name;
+		$this->name = (string) $name;
 	}
 
 

@@ -65,7 +65,7 @@ abstract class ae_Model {
 			return FALSE;
 		}
 
-		return $result[0]['id'];
+		return (int) $result[0]['id'];
 	}
 
 
@@ -125,7 +125,7 @@ abstract class ae_Model {
 			throw new Exception( $msg );
 		}
 
-		$this->id = $id;
+		$this->id = (int) $id;
 	}
 
 
