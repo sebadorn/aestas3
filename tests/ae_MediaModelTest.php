@@ -185,7 +185,7 @@ class ae_MediaModelTest extends PHPUnit_Framework_TestCase {
 		$m = new ae_MediaModel();
 
 		$m->setTmpName( 'gh934h89jndf' );
-		$this->assertEquals( $m->getTmpName(), 'gh934h89jndf.png' );
+		$this->assertEquals( $m->getTmpName(), 'gh934h89jndf' );
 	}
 
 

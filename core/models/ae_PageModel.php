@@ -328,7 +328,7 @@ class ae_PageModel extends ae_Model {
 	public function setCommentsStatus( $commentsStatus ) {
 		$validStatuses = array( self::COMMENTS_CLOSED, self::COMMENTS_DISABLED, self::COMMENTS_OPEN );
 
-		if( !in_array( $commentsStatus, $validStatuses ) ) {
+		if( !in_array( $commentsStatus, $validStatuses, TRUE ) ) {
 			$msg = sprintf( '[%s] Not a valid comments status: %d', get_class(), htmlspecialchars( $commentsStatus ) );
 			throw new Exception( $msg );
 		}
@@ -342,7 +342,7 @@ class ae_PageModel extends ae_Model {
 	 * @param {string} $content Post content.
 	 */
 	public function setContent( $content ) {
-		$this->content = $content;
+		$this->content = (string) $content;
 	}
 
 
@@ -408,7 +408,7 @@ class ae_PageModel extends ae_Model {
 	 * @param {string} $title Page title.
 	 */
 	public function setTitle( $title ) {
-		$this->title = $title;
+		$this->title = (string) $title;
 	}
 
 
@@ -424,7 +424,7 @@ class ae_PageModel extends ae_Model {
 			throw new Exception( $msg );
 		}
 
-		$this->userId = $userId;
+		$this->userId = (int) $userId;
 	}
 
 

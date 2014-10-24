@@ -255,7 +255,7 @@ class ae_UserModel extends ae_Model {
 	 * @param {string} $name New user name (external).
 	 */
 	public function setNameExternal( $name ) {
-		$this->nameExternal = $name;
+		$this->nameExternal = (string) $name;
 	}
 
 
@@ -266,10 +266,11 @@ class ae_UserModel extends ae_Model {
 	 */
 	public function setNameInternal( $name ) {
 		if( mb_strlen( $name ) == 0 ) {
-			throw new Exception( '[' . get_class() . '] Internal name cannot be empty.' );
+			$msg = sprintf( '[%s] Internal name cannot be empty.', get_class() );
+			throw new Exception( $msg );
 		}
 
-		$this->nameInternal = $name;
+		$this->nameInternal = (string) $name;
 	}
 
 
@@ -280,10 +281,11 @@ class ae_UserModel extends ae_Model {
 	 */
 	public function setPasswordHash( $hash ) {
 		if( mb_strlen( $hash ) == 0 ) {
-			throw new Exception( '[' . get_class() . '] Password hash cannot be empty.' );
+			$msg = sprintf( '[%s] Password hash cannot be empty.', get_class() );
+			throw new Exception( $msg );
 		}
 
-		$this->pwdHash = $hash;
+		$this->pwdHash = (string) $hash;
 	}
 
 

@@ -9,6 +9,20 @@ class ae_CategoryModelTest extends PHPUnit_Framework_TestCase {
 	}
 
 
+	public function testGetLink() {
+		$c = new ae_CategoryModel();
+		$c->setId( 4 );
+		$c->setPermalink( 'a-category' );
+
+		if( ae_Settings::isModRewriteEnabled() ) {
+			$this->assertEquals( $c->getLink( 'http://example.com/' ), 'http://example.com/' . PERMALINK_BASE_CATEGORY . 'a-category' );
+		}
+		else {
+			$this->assertEquals( $c->getLink( 'http://example.com/' ), 'http://example.com/?' . PERMALINK_GET_CATEGORY . '=4' );
+		}
+	}
+
+
 	public function testIsValidStatus() {
 		$this->assertTrue( ae_CategoryModel::isValidStatus( ae_CategoryModel::STATUS_AVAILABLE ) );
 		$this->assertTrue( ae_CategoryModel::isValidStatus( ae_CategoryModel::STATUS_TRASH ) );

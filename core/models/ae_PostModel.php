@@ -458,12 +458,12 @@ class ae_PostModel extends ae_PageModel {
 	 * @param {int} $numComments Number of comments.
 	 */
 	public function setNumComments( $numComments ) {
-		if( !ae_Validate::integer( $numComments ) ) {
-			$msg = sprintf( '[%s] Not a number.', get_class() );
+		if( !ae_Validate::integer( $numComments ) || $numComments < 0 ) {
+			$msg = sprintf( '[%s] Not a number: %s', get_class(), htmlspecialchars( $numComments ) );
 			throw new Exception( $msg );
 		}
 
-		$this->numComments = $numComments;
+		$this->numComments = (int) $numComments;
 	}
 
 
