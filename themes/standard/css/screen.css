@@ -1,56 +1,4 @@
-/* OpenSans: Regular */
-
-@font-face {
-	font-family: "OpenSans Web";
-	src: url( "../fonts/open-sans/OpenSans-Regular.ttf" );
-}
-
-@font-face {
-	font-family: "OpenSans Web";
-	font-weight: bold;
-	src: url( "../fonts/open-sans/OpenSans-Bold.ttf" );
-}
-
-@font-face {
-	font-family: "OpenSans Web";
-	font-style: italic;
-	src: url( "../fonts/open-sans/OpenSans-Italic.ttf" );
-}
-
-@font-face {
-	font-family: "OpenSans Web";
-	font-style: italic;
-	font-weight: bold;
-	src: url( "../fonts/open-sans/OpenSans-BoldItalic.ttf" );
-}
-
-
-/* OpenSans: Light */
-
-@font-face {
-	font-family: "OpenSans Light Web";
-	src: url( "../fonts/open-sans/OpenSans-Light.ttf" );
-}
-
-@font-face {
-	font-family: "OpenSans Light Web";
-	font-style: italic;
-	src: url( "../fonts/open-sans/OpenSans-LightItalic.ttf" );
-}
-
-
-/* OpenSans: Semibold */
-
-@font-face {
-	font-family: "OpenSans Semibold Web";
-	src: url( "../fonts/open-sans/OpenSans-Semibold.ttf" ) format( "truetype" );
-}
-
-@font-face {
-	font-family: "OpenSans Semibold Web";
-	font-style: italic;
-	src: url( "../fonts/open-sans/OpenSans-SemiboldItalic.ttf" );
-}
+@import url( "http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,300,300italic" );
 
 
 /* Iconic */
@@ -114,7 +62,7 @@
 * {
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	font-family: "OpenSans Web", sans-serif;
+	font-family: "Open Sans", sans-serif;
 	margin: 0;
 	padding: 0;
 }
@@ -232,7 +180,8 @@ table {
 	}
 
 		h1 a {
-			font-family: "OpenSans Light Web";
+			font-family: "Open Sans";
+			font-weight: 300;
 		}
 
 	form.search {
@@ -343,9 +292,9 @@ table {
 
 	.recent-comments h6 {
 		display: none;
-		font-family: "OpenSans Semibold Web";
+		font-family: "Open Sans";
 		font-size: 18px;
-		font-weight: normal;
+		font-weight: 600;
 		margin-bottom: 10px;
 	}
 
@@ -378,7 +327,8 @@ table {
 			}
 
 			.recent-comment-meta .author {
-				font-family: "OpenSans Semibold Web";
+				font-family: "Open Sans";
+				font-weight: 600;
 			}
 
 			.recent-comment-meta .article {
@@ -520,8 +470,9 @@ article {
 		border-left: 0;
 		border-right: 0;
 		display: block;
-		font-family: "OpenSans Semibold Web";
+		font-family: "Open Sans";
 		font-style: italic;
+		font-weight: 600;
 		margin-top: 24px;
 		padding: 8px 0;
 		text-align: center;
@@ -566,9 +517,9 @@ article {
 	}
 
 	.comments h4 {
-		font-family: "OpenSans Semibold Web";
+		font-family: "Open Sans";
 		font-size: 24px;
-		font-weight: normal;
+		font-weight: 600;
 		margin-bottom: 30px;
 	}
 
@@ -614,8 +565,9 @@ article {
 
 			.comment-author {
 				display: block;
-				font-family: "OpenSans Semibold Web";
+				font-family: "Open Sans";
 				font-size: 16px;
+				font-weight: 600;
 			}
 
 			.comment-registered-user .comment-author {
@@ -743,9 +695,9 @@ article {
 	}
 
 		.main-footer h6 {
-			font-family: "OpenSans Semibold Web";
+			font-family: "Open Sans";
 			font-size: 36px;
-			font-weight: normal;
+			font-weight: 600;
 			letter-spacing: -2px;
 			line-height: 36px;
 			margin: -7px 0 18px 0;
