@@ -6,6 +6,11 @@
 	padding: 16px 8px;
 	width: 604px !important;
 }
+.syntaxhighlighter div,
+.syntaxhighlighter code {
+	font-family: "Source Code Pro", "DejaVu Sans Mono", "Consolas", "Courier New", monospace !important;
+	font-size: 13px !important;
+}
 .syntaxhighlighter table td.gutter .line,
 .syntaxhighlighter table td.code .line {
 	padding-bottom: 2px !important;
