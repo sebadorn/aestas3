@@ -42,7 +42,6 @@ $poList = new ae_PostList( $filter, $params, FALSE );
 
 
 $coList->reset();
-$coList->reverse();
 
 ?>
 <aside class="recent-comments icon-add-before icon-before-comment">
