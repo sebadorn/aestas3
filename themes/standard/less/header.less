@@ -1,0 +1,104 @@
+.main-header {
+	background-color: #ffffff;
+	padding: 10px 20px;
+	position: relative;
+}
+
+h1 {
+	display: inline-block;
+	font-size: 24px;
+	line-height: 32px;
+	vertical-align: top;
+
+	a {
+		font-weight: 300;
+	}
+}
+
+
+form.search {
+	display: inline-block;
+	height: 28px;
+	margin-left: 20px;
+	position: relative;
+	top: 4px;
+	white-space: nowrap;
+	width: 192px;
+
+	.search-input {
+		border-color: #f0f0f0 !important;
+		height: 26px;
+		left: 0;
+		max-width: 160px;
+		padding: 2px 6px !important;
+		position: absolute;
+		top: 0;
+	}
+
+	.search-submit {
+		background-color: #f0f0f0;
+		border: 1px solid #f0f0f0;
+		cursor: default;
+		display: inline-block;
+		font-family: "OpenIconic";
+		font-size: 16px;
+		height: 26px;
+		position: absolute;
+		right: 0;
+		width: 34px;
+
+		&:hover {
+			background-color: #B7D1E0;
+			border-color: #B7D1E0;
+			cursor: pointer;
+		}
+	}
+}
+
+
+.about-me {
+	display: inline-block;
+	position: absolute;
+	right: 160px;
+
+	img {
+		border-radius: 32px;
+		float: left;
+		margin-right: 8px;
+	}
+
+	a {
+		line-height: 32px;
+	}
+}
+
+
+.icons {
+	display: inline-block;
+	float: right;
+	height: 32px;
+	margin: 0 0 0 20px;
+
+	li {
+		display: inline-block;
+		height: 32px;
+		margin-left: 12px;
+		width: 32px;
+	}
+
+	a {
+		background-image: url( "../img/icons-32.png" );
+		display: inline-block;
+		height: 32px;
+		opacity: 0.4;
+		width: 32px;
+
+		&:hover {
+			opacity: 1.0;
+		}
+	}
+
+	.icon-rss a { background-position: 0 32px; }
+	.icon-github a { background-position: 0 64px; }
+	.icon-twit a { background-position: 0 0; }
+}

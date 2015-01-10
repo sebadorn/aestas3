@@ -1,0 +1,178 @@
+.main-body {
+	display: block;
+	padding: 0 20px;
+}
+
+article {
+	line-height: 24px;
+	margin: 0 auto 80px;
+	max-width: 600px;
+}
+
+.post-draft,
+.post-trash {
+	border-left: 4px solid #77A9CA;
+	border-radius: 4px;
+	left: -24px;
+	padding-left: 20px;
+	position: relative;
+}
+
+.post-trash {
+	border-left-color: #a0a0a0;
+}
+
+.post-header {
+	margin-bottom: 32px;
+
+	h2 {
+		font-size: 32px;
+		line-height: 36px;
+		margin-bottom: 10px;
+
+		@media (max-width: 700px) {
+			font-size: 24px;
+			line-height: 28px;
+		}
+	 }
+
+	div,
+	time {
+		display: inline-block;
+		margin-right: 24px;
+	}
+}
+
+.post-future time {
+	color: #E74949;
+}
+
+.post-categories::before,
+.tag::before {
+	color: #303030;
+	text-shadow: 0 1px 0 #ffffff;
+}
+
+
+.category {
+	margin-right: 8px;
+
+	&:last-child {
+		margin-right: 0;
+	}
+
+	&::after {
+		color: #101010 !important;
+		content: ",";
+	}
+
+	&:last-child::after {
+		content: "";
+	}
+}
+
+
+.tag {
+	margin-right: 18px;
+
+	&:last-child {
+		margin-right: 0;
+	}
+
+	&::before {
+		font-size: 12px;
+	}
+}
+
+
+.content {
+	h3 {
+		font-size: 24px;
+		margin-bottom: 16px;
+		margin-top: 32px;
+
+		@media (max-width: 700px) {
+			font-size: 20px;
+		}
+	}
+
+	a,
+	.tag {
+		border-bottom: 1px solid #8EB5C7;
+
+		&:hover {
+			border-bottom-color: transparent;
+			color: #4083A2;
+		}
+	}
+
+	.illu {
+		border-radius: 4px;
+		left: -150px;
+		line-height: 0;
+		margin-bottom: 24px;
+		position: relative;
+		text-align: center;
+		width: 900px;
+
+		> img {
+			box-shadow: 0 6px 20px 0 rgba( 0, 0, 0, 0.25 );
+		}
+	}
+
+	@media (max-width: 700px) {
+		.illu {
+			left: 0;
+			max-width: 100%;
+			position: static;
+			width: 100% !important;
+
+			> img {
+				height: auto !important;
+				max-width: 100% !important;
+				width: auto !important;
+			}
+		}
+	}
+}
+
+
+.read-more {
+	display: inline-block;
+	font-weight: 600;
+	text-transform: capitalize;
+
+	&::after {
+		content: @stringAfterReadMore;
+	}
+}
+
+.post-footer {
+	margin-top: 24px;
+}
+
+
+
+/* --------------------- */
+/* Post pages navigation */
+/* --------------------- */
+
+.page-navigation {
+	text-align: center;
+
+	.page-offset {
+		background-color: #e8e8e8;
+		border-bottom: 1px solid #d0d0d0;
+		border-radius: 2px;
+		margin: 0 2px;
+		padding: 2px 6px;
+
+		&:hover {
+			background-color: transparent;
+		}
+
+		&.current-offset {
+			background-color: #ffffff;
+		}
+	}
+}
