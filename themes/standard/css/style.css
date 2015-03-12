@@ -86,6 +86,7 @@ article{line-height:24px;margin:0 auto 80px;max-width:600px}
 .tag::before{font-size:12px}
 .content h3{font-size:24px;margin-bottom:16px;margin-top:32px}@media (max-width:700px){.content h3{font-size:20px}}
 .content a,.content .tag{border-bottom:1px solid #8eb5c7}.content a:hover,.content .tag:hover{border-bottom-color:transparent;color:#4083a2}
+.content .abstract{font-style:italic}
 .content .illu{border-radius:4px;left:-150px;line-height:0;margin-bottom:24px;position:relative;text-align:center;width:900px}.content .illu>img{box-shadow:0 6px 20px 0 rgba(0,0,0,0.25)}
 @media (max-width:700px){.content .illu{left:0;max-width:100%;position:static;width:100% !important}.content .illu>img{height:auto !important;max-width:100% !important;width:auto !important}}
 .read-more{display:inline-block;font-weight:600;text-transform:capitalize}.read-more::after{content:" »"}
