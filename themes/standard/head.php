@@ -20,6 +20,7 @@
 			SyntaxHighlighter.autoloader(
 				"bash " + shl3path + "shBrushBash.js",
 				"css " + shl3path + "shBrushCss.js",
+				"cpp " + shl3path + "shBrushCpp.js",
 				"java " + shl3path + "shBrushJava.js",
 				"js javascript " + shl3path + "shBrushJScript.js",
 				"php " + shl3path + "shBrushPhp.js",
