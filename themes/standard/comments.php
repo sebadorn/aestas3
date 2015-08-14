@@ -12,7 +12,7 @@
 		$gravUrl .= '?d=mm';
 		$gravUrl .= '&amp;s=' . GRAVATAR_SIZE;
 
-		$authorName = ( $co->getAuthorName() == '' ) ? COMMENT_AUTHOR_DEFAULT_NAME : $co->getAuthorName();
+		$authorName = ( $co->getAuthorName() == '' ) ? COMMENT_DEFAULT_NAME : $co->getAuthorName();
 
 		$postLink = URL . $post->getLink() . '#comment-' . $co->getId();
 

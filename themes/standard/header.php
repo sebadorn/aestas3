@@ -16,13 +16,13 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 
 	<ul class="icons">
 		<li class="icon-twit">
-			<a href="http://twitter.com/sebadorn" title="Twitter"></a>
+			<a href="https://twitter.com/sebadorn" title="Twitter"></a>
 		</li>
 		<li class="icon-github">
 			<a href="https://github.com/sebadorn" title="GitHub"></a>
 		</li>
 		<li class="icon-rss">
-			<a href="http://feeds2.feedburner.com/sebadorn" title="RSS: Artikel"></a>
+			<a href="https://feeds2.feedburner.com/sebadorn" title="RSS: Artikel"></a>
 		</li>
 	</ul>
 </header>
