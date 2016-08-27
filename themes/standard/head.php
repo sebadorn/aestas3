@@ -5,13 +5,13 @@
 	<link rel="icon" href="<?php echo THEME_PATH ?>img/favicon-192.png" type="image/png" sizes="192x192" />
 	<link rel="icon" href="<?php echo THEME_PATH ?>img/favicon-32.png" type="image/png" sizes="32x32" />
 	<link rel="stylesheet" href="<?php echo THEME_PATH ?>css/style.css" />
-	<link rel="alternate" type="application/rss+xml" title="Neue Einträge (RSS)" href="https://feeds2.feedburner.com/sebadorn" />
+	<link rel="alternate" type="application/rss+xml" title="Neue Einträge (RSS)" href="<?php echo URL ?>feed/" />
 	<link rel="alternate" type="application/rss+xml" title="Neue Kommentare (RSS)" href="<?php echo URL ?>feed/comments.php" />
-	<script async src="<?php echo THEME_PATH ?>js/shl3/scripts/shCore.js"></script>
-	<script async src="<?php echo THEME_PATH ?>js/shl3/scripts/shAutoloader.js"></script>
+	<script src="<?php echo THEME_PATH ?>js/shl3/scripts/shCore.js"></script>
+	<script src="<?php echo THEME_PATH ?>js/shl3/scripts/shAutoloader.js"></script>
 <?php if( IS_SINGLE_POST ): ?>
-	<script async src="<?php echo THEME_PATH ?>js/md5.min.js"></script>
-	<script async src="<?php echo THEME_PATH ?>js/combined.js"></script>
+	<script src="<?php echo THEME_PATH ?>js/md5.min.js"></script>
+	<script src="<?php echo THEME_PATH ?>js/combined.js"></script>
 <?php endif ?>
 	<script>
 		window.addEventListener( "load", function() {

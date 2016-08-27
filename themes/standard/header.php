@@ -22,7 +22,7 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 			<a href="https://github.com/sebadorn" title="GitHub"></a>
 		</li>
 		<li class="icon-rss">
-			<a href="https://feeds2.feedburner.com/sebadorn" title="RSS: Artikel"></a>
+			<a href="<?php echo URL ?>feed/" title="RSS: Artikel"></a>
 		</li>
 	</ul>
 </header>
