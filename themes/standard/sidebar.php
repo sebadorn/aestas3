@@ -56,6 +56,7 @@ $coList->reset();
 
 		$p = $poList->find( $co->getPostId() );
 		$postLink = $p->getLink() . '#comment-' . $co->getId();
+		$authorName = ( $co->getAuthorName() == '' ) ? COMMENT_DEFAULT_NAME : $co->getAuthorName();
 	?>
 	<div>
 		<a href="<?php echo $postLink ?>">
@@ -63,9 +64,9 @@ $coList->reset();
 		</a>
 		<div class="recent-comment-meta">
 		<?php if( $co->getAuthorUrl() != '' ): ?>
-			<a class="author" href="<?php echo $co->getAuthorUrl() ?>"><?php echo $co->getAuthorName() ?></a>
+			<a class="author" href="<?php echo $co->getAuthorUrl() ?>"><?php echo $authorName ?></a>
 		<?php else: ?>
-			<span class="author"><?php echo $co->getAuthorName() ?></span>
+			<span class="author"><?php echo $authorName ?></span>
 		<?php endif ?>
 			<a class="article" href="<?php echo $postLink ?>" title="<?php echo $postLink ?>"><?php echo $p->getTitle() ?></a>
 			<time datetime="<?php echo $co->getDatetime( 'Y-m-d\TH:i:s' )?>"><?php echo $co->getDatetime( 'd.m.y \u\m H:i' ) ?> Uhr</time>
