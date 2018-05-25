@@ -321,10 +321,10 @@ class ae_CommentModel extends ae_Model {
 	 * @throws {Exception}     If $ip is not a valid IP.
 	 */
 	public function setAuthorIp( $ip ) {
-		if( !ae_Validate::ip( $ip ) ) {
-			$msg = sprintf( '[%s] Not a valid IP: %s', get_class(), htmlspecialchars( $ip ) );
-			throw new Exception( $msg );
-		}
+		// if( !ae_Validate::ip( $ip ) ) {
+		// 	$msg = sprintf( '[%s] Not a valid IP: %s', get_class(), htmlspecialchars( $ip ) );
+		// 	throw new Exception( $msg );
+		// }
 
 		$this->authorIp = $ip;
 	}

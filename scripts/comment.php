@@ -52,7 +52,7 @@ try {
 	$co->setAuthorName( $_POST['comment-author-name'] );
 	$co->setAuthorEmail( $_POST['comment-author-email'] );
 	$co->setAuthorUrl( $url );
-	$co->setAuthorIp( $_SERVER['REMOTE_ADDR'] );
+	// $co->setAuthorIp( $_SERVER['REMOTE_ADDR'] );
 	$co->setContent( $content );
 	$co->setStatus( COMMENT_DEFAULT_STATUS );
 
