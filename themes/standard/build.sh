@@ -8,7 +8,7 @@ echo ' ----- ----- -----'
 echo ' Building standard theme.'
 
 echo -n ' Compiling LESS to CSS ...'
-lessc -x less/style.less css/style.css
+lessc --clean-css less/style.less css/style.css
 echo ' Done.'
 
 echo -n ' Combining and minifying JavaScript files ...'

@@ -57,10 +57,10 @@ blockquote, dialog, dl, hr, ol, p, pre, table, ul {
 }
 
 blockquote {
-	border-left: 3px solid #6DD954;
+	border-left: 4px solid #6DD954;
 	border-radius: 2px;
 	color: #303030;
-	padding: 10px;
+	padding: 8px 10px;
 
 	p:last-child {
 		margin-bottom: 0;
@@ -84,6 +84,21 @@ code {
 	font-family: @fontFamilyCode;
 	font-size: @fontSize - 1px;
 	padding: 2px 4px;
+}
+
+// highlight.js
+pre.hljs, pre.plain, blockquote.code {
+	background-color: #ffffff;
+	border-bottom: 1px solid #e0e0e0;
+	font-family: @fontFamilyCode;
+	font-size: @fontSize - 1px;
+	padding: 8px 10px;
+	overflow-x: auto;
+
+	span {
+		font-family: @fontFamilyCode;
+		font-size: @fontSize - 1px;
+	}
 }
 
 dl {
@@ -172,14 +187,8 @@ img[title] {
 	cursor: help;
 }
 
-blockquote.code {
-	font-family: "DejaVu Sans Mono", "Courier New", monospace;
-	font-size: 13px;
-	line-height: 19px;
-}
-
 blockquote.error {
-	border-color: #c00000;
+	border-left-color: #c00000;
 	color: #c00000;
 }
 
@@ -198,11 +207,3 @@ blockquote.error {
 		vertical-align: top;
 	}
 }
-
-
-/* ------------------ */
-/* Syntax highlighter */
-/* ------------------ */
-
-@import (less) "../js/shl3/styles/shCore.css";
-@import "shThemeSeba.less";

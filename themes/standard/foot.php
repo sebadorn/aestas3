@@ -26,6 +26,7 @@ $caList = new ae_CategoryList( $filter, array(), FALSE );
 		<h6>Seiten</h6>
 		<ul class="pages">
 			<li><a href="<?php echo URL ?>ueber">Über</a></li>
+			<li><a href="<?php echo URL ?>datenschutzerklaerung">Datenschutz</a></li>
 			<li><a href="<?php echo URL ?>impressum">Impressum</a></li>
 		</ul>
 	</div>

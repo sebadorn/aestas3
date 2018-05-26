@@ -50,17 +50,19 @@ $coList->reset();
 <?php while( $co = $coList->next() ): ?>
 
 	<?php
-		$gravUrl = GRAVATAR_BASE . md5( $co->getAuthorEmail() );
-		$gravUrl .= '?d=mm';
-		$gravUrl .= '&amp;s=' . GRAVATAR_SIZE;
-
 		$p = $poList->find( $co->getPostId() );
 		$postLink = $p->getLink() . '#comment-' . $co->getId();
 		$authorName = ( $co->getAuthorName() == '' ) ? COMMENT_DEFAULT_NAME : $co->getAuthorName();
 	?>
 	<div>
 		<a href="<?php echo $postLink ?>">
-			<img alt="avatar" class="avatar avatar-<?php echo GRAVATAR_SIZE ?>" src="<?php echo $gravUrl ?>" />
+			<div class="avatar">
+			<?php if( $co->getUserId() == 1 ): ?>
+				<img class="avatar-image" src="<?php echo THEME_PATH ?>img/avatar_seba.jpg" />
+			<?php else: ?>
+				<span class="avatar-head"></span><br /><span class="avatar-body"></span>
+			<?php endif ?>
+			</div>
 		</a>
 		<div class="recent-comment-meta">
 		<?php if( $co->getAuthorUrl() != '' ): ?>

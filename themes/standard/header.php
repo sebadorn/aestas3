@@ -10,7 +10,7 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 	</form>
 
 	<div class="about-me">
-		<img src="https://secure.gravatar.com/avatar/dea14db0237b0a18cdf7bd87b203ad90?d=mm&amp;s=32" alt="Profilbild Seba" />
+		<img src="<?php echo THEME_PATH ?>img/avatar_seba.jpg" alt="Profilbild Seba" />
 		<a href="<?php echo URL ?>ueber">Über mich</a>
 	</div>
 

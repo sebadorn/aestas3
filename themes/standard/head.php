@@ -5,37 +5,29 @@
 	<link rel="icon" href="<?php echo THEME_PATH ?>img/favicon-192.png" type="image/png" sizes="192x192" />
 	<link rel="icon" href="<?php echo THEME_PATH ?>img/favicon-32.png" type="image/png" sizes="32x32" />
 	<link rel="stylesheet" href="<?php echo THEME_PATH ?>css/style.css" />
+	<link rel="stylesheet" href="<?php echo THEME_PATH ?>js/highlight/styles/github.css" />
 	<link rel="alternate" type="application/rss+xml" title="Neue Einträge (RSS)" href="<?php echo URL ?>feed/" />
 	<link rel="alternate" type="application/rss+xml" title="Neue Kommentare (RSS)" href="<?php echo URL ?>feed/comments.php" />
-	<script src="<?php echo THEME_PATH ?>js/shl3/scripts/shCore.js"></script>
-	<script src="<?php echo THEME_PATH ?>js/shl3/scripts/shAutoloader.js"></script>
+	<script src="<?php echo THEME_PATH ?>js/highlight/highlight.pack.js"></script>
 <?php if( IS_SINGLE_POST ): ?>
-	<script src="<?php echo THEME_PATH ?>js/md5.min.js"></script>
 	<script src="<?php echo THEME_PATH ?>js/combined.js"></script>
 <?php endif ?>
 	<script>
-		window.addEventListener( "load", function() {
-			var shl3path = "<?php echo THEME_PATH ?>js/shl3/scripts/";
+		window.addEventListener( 'load', function() {
+			var codeBlocks = document.querySelectorAll( 'pre' );
 
-			SyntaxHighlighter.autoloader(
-				"bash " + shl3path + "shBrushBash.js",
-				"css " + shl3path + "shBrushCss.js",
-				"cpp " + shl3path + "shBrushCpp.js",
-				"java " + shl3path + "shBrushJava.js",
-				"js javascript " + shl3path + "shBrushJScript.js",
-				"php " + shl3path + "shBrushPhp.js",
-				"plain " + shl3path + "shBrushPlain.js",
-				"python " + shl3path + "shBrushPython.js",
-				"sql " + shl3path + "shBrushSql.js",
-				"xml " + shl3path + "shBrushXml.js"
-			);
-			SyntaxHighlighter.all();
+			for( var i = 0; i < codeBlocks.length; i++ ) {
+				var block = codeBlocks[i];
+				var cls = block.className;
+
+				if( cls.indexOf( 'hljs' ) < 0 ) {
+					block.className = cls.replace( 'brush:', '' ).trim();
+					hljs.highlightBlock( block );
+				}
+			}
+
 <?php if( IS_SINGLE_POST ): ?>
-			CommentPreview.init(
-				"<?php echo GRAVATAR_BASE ?>",
-				<?php echo GRAVATAR_SIZE ?>,
-				"<?php echo COMMENT_DEFAULT_NAME ?>"
-			);
+			CommentPreview.init( '<?php echo COMMENT_DEFAULT_NAME ?>' );
 			CommentValidate.init();
 <?php endif ?>
 		} );

@@ -8,10 +8,6 @@
 
 <?php while( $co = $coList->next() ): ?>
 	<?php
-		$gravUrl = GRAVATAR_BASE . md5( $co->getAuthorEmail() );
-		$gravUrl .= '?d=mm';
-		$gravUrl .= '&amp;s=' . GRAVATAR_SIZE;
-
 		$authorName = ( $co->getAuthorName() == '' ) ? COMMENT_DEFAULT_NAME : $co->getAuthorName();
 
 		$postLink = URL . $post->getLink() . '#comment-' . $co->getId();
@@ -21,7 +17,13 @@
 	?>
 	<div class="<?php echo $class ?>" id="comment-<?php echo $co->getId() ?>">
 		<div class="comment-meta">
-			<img alt="avatar" class="avatar avatar-<?php echo GRAVATAR_SIZE ?>" src="<?php echo $gravUrl ?>" />
+			<div class="avatar">
+			<?php if( $co->getUserId() == 1 ): ?>
+				<img class="avatar-image" src="<?php echo THEME_PATH ?>img/avatar_seba.jpg" />
+			<?php else: ?>
+				<span class="avatar-head"></span><br /><span class="avatar-body"></span>
+			<?php endif ?>
+			</div>
 		<?php if( $co->getAuthorUrl() != '' ): ?>
 			<a class="comment-author" href="<?php echo $co->getAuthorUrl() ?>"><?php echo $authorName ?></a>
 		<?php else: ?>

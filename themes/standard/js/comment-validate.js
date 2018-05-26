@@ -10,22 +10,22 @@ var CommentValidate = {
 
 
 	highlightError: function( ele ) {
-		ele.className += " invalid";
+		ele.className += ' invalid';
 	},
 
 
 	init: function() {
-		this.commentForm = document.getElementById( "comment-form" );
-		this.commentContent = this.commentForm.querySelector( "[name=comment-content]" );
-		this.commentEmail = this.commentForm.querySelector( "[name=comment-author-email]" );
+		this.commentForm = document.getElementById( 'comment-form' );
+		this.commentContent = this.commentForm.querySelector( '[name=comment-content]' );
+		this.commentEmail = this.commentForm.querySelector( '[name=comment-author-email]' );
 
-		this.commentForm.addEventListener( "submit", this.validate.bind( this ) );
+		this.commentForm.addEventListener( 'submit', this.validate.bind( this ) );
 	},
 
 
 	resetStatus: function() {
-		this.commentContent.className = this.commentContent.className.replace( " invalid", "" );
-		this.commentEmail.className = this.commentEmail.className.replace( " invalid", "" );
+		this.commentContent.className = this.commentContent.className.replace( ' invalid', '' );
+		this.commentEmail.className = this.commentEmail.className.replace( ' invalid', '' );
 	},
 
 
