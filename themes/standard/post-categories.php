@@ -3,7 +3,7 @@
 $caLinks = array();
 
 foreach( $data as $ca ) {
-	$link = sprintf( '<a class="category" href="%s">%s</a>', URL . $ca->getLink(), $ca->getTitle() );
+	$link = sprintf( '<a class="category" href="%s">%s</a>', $ca->getLink(), $ca->getTitle() );
 	$caLinks[$ca->getTitle()] = $link;
 }
 
