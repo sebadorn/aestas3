@@ -127,14 +127,22 @@
 }
 
 
-/* ------ */
-/* Iconic */
-/* ------ */
+/* ----------- */
+/* Open Iconic */
+/* ----------- */
 
-@font-face {
+@font-face{
 	font-family: "OpenIconic";
-	src: url( "../fonts/iconic/open-iconic.otf" ) format( "opentype" );
+	src: url( "../fonts/open-iconic/open-iconic.eot" );
+	src: url( "../fonts/open-iconic/open-iconic.eot?#iconic-sm" ) format( "embedded-opentype" ),
+		url( "../fonts/open-iconic/open-iconic.woff" ) format( "woff" ),
+		url( "../fonts/open-iconic/open-iconic.ttf" ) format( "truetype" ),
+		url( "../fonts/open-iconic/open-iconic.otf" ) format( "opentype" ),
+		url( "../fonts/open-iconic/open-iconic.svg#iconic-sm" ) format( "svg" );
+	font-weight: 400;
+	font-style: normal;
 }
+
 
 .icon-add-before::before {
 	cursor: default;
@@ -164,7 +172,7 @@
 .icon-before-folder::before { content: "\e06b"; }
 .icon-before-grid3x3::before { content: "\e073"; }
 .icon-before-image::before { content: "\e079"; }
-.icon-before-inbox::before { content: "\e07a"; }
+.icon-before-inbox::before { content: "\e06b"; }
 .icon-before-minus::before { content: "\e09d"; }
 .icon-before-pen::before { content: "\e0a3"; }
 .icon-before-person::before { content: "\e0a5"; }

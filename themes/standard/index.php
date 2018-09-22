@@ -55,7 +55,6 @@ $sb->setBasePath( 'themes/' . THEME );
 <body>
 
 <?php $sb->render( 'header.php' ) ?>
-<?php $sb->render( 'sidebar.php' ) ?>
 
 <section class="main-body">
 	<?php include( 'body.php' ) ?>

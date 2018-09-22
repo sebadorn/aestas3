@@ -2,7 +2,7 @@
 /* Variables */
 /* --------- */
 
-@bgColor: #6B98AB;
+@bgColor: #202020;
 @bgColorBody: #f6f6f6;
 @fontFamilyCode: "Source Code Pro", "DejaVu Sans Mono", "Consolas", "Courier New", monospace;
 @fontFamilyText: "Open Sans", sans-serif;
@@ -10,7 +10,7 @@
 @linkColor: #4083A2;
 @linkHoverColor: #000000;
 @stringAfterReadMore: " »";
-@textColor: #101010;
+@textColor: #000000;
 
 
 /* ----- */
@@ -72,8 +72,10 @@ blockquote {
 }
 
 button, input, textarea {
+	background-color: #FFFFFF;
 	border-style: solid;
 	border-width: 1px;
+	color: @textColor;
 	font-size: @fontSize;
 }
 
@@ -90,6 +92,7 @@ code {
 pre.hljs, pre.plain, blockquote.code {
 	background-color: #ffffff;
 	border-bottom: 1px solid #e0e0e0;
+	color: #000000;
 	font-family: @fontFamilyCode;
 	font-size: @fontSize - 1px;
 	padding: 8px 10px;
@@ -112,8 +115,8 @@ dl {
 	}
 }
 
-h1, h2, h3 {
-	font-weight: normal;
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 600;
 }
 
 hr {
@@ -192,6 +195,13 @@ blockquote.error {
 	color: #c00000;
 }
 
+.about-avatar {
+	border-radius: 50%;
+	float: left;
+	margin: 0 10px 10px 0;
+	width: 72px;
+}
+
 .annotation {
 	font-size: 13px;
 	line-height: 19px;
@@ -205,5 +215,53 @@ blockquote.error {
 		font-size: 140%;
 		margin-left: 10px;
 		vertical-align: top;
+	}
+}
+
+
+/* ------------- */
+/* Small screens */
+/* ------------- */
+
+@media ( max-width: 800px ) {
+	.main-header {
+		display: block;
+	}
+
+	h1 {
+		font-size: 22px;
+		line-height: 22px;
+		margin-bottom: 15px;
+	}
+
+	.about-me {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 15px;
+		-webkit-transform: scale( 0.75 );
+		transform: scale( 0.75 );
+	}
+
+	form.search {
+		justify-content: center;
+	}
+
+	.main-body {
+		padding-top: 30px !important;
+	}
+
+	.main-footer {
+		font-size: 14px;
+		padding: 0 20px 60px;
+
+		h6 {
+			font-size: 26px;
+			line-height: 26px;
+			margin-top: -5px;
+		}
+
+		div {
+			margin: 0 10px;
+		}
 	}
 }

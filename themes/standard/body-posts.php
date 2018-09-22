@@ -76,7 +76,7 @@ $postList->loadNumComments();
 	<div class="content"><?php echo $post->getContentSnippet() ?></div>
 
 <?php if( $post->hasSnippet() ): ?>
-	<a class="read-more" href="<?php echo $post->getLink() ?>">weiterlesen</a>
+	<a class="read-more" href="<?php echo $post->getLink() ?>">Read more</a>
 <?php endif ?>
 
 	<footer class="post-footer">

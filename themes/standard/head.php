@@ -12,24 +12,5 @@
 <?php if( IS_SINGLE_POST ): ?>
 	<script src="<?php echo THEME_PATH ?>js/combined.js"></script>
 <?php endif ?>
-	<script>
-		window.addEventListener( 'load', function() {
-			var codeBlocks = document.querySelectorAll( 'pre' );
-
-			for( var i = 0; i < codeBlocks.length; i++ ) {
-				var block = codeBlocks[i];
-				var cls = block.className;
-
-				if( cls.indexOf( 'hljs' ) < 0 ) {
-					block.className = cls.replace( 'brush:', '' ).trim();
-					hljs.highlightBlock( block );
-				}
-			}
-
-<?php if( IS_SINGLE_POST ): ?>
-			CommentPreview.init( '<?php echo COMMENT_DEFAULT_NAME ?>' );
-			CommentValidate.init();
-<?php endif ?>
-		} );
-	</script>
+	<script src="<?php echo THEME_PATH ?>js/init.js" id="script-init" data-is-single-post="<?php echo ( IS_SINGLE_POST ? '1' : '0' ) ?>" data-default-name="<?php echo COMMENT_DEFAULT_NAME ?>"></script>
 </head>

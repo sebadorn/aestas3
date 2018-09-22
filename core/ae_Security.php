@@ -31,6 +31,21 @@ class ae_Security {
 			}
 		}
 
+		self::initSession();
+
+		if( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
+			ae_Log::warning( '[' . get_class() . '] <code>$_SERVER["HTTP_USER_AGENT"] has no value.</code>' );
+		}
+		if( empty( $_SERVER['REMOTE_ADDR'] ) ) {
+			ae_Log::warning( '[' . get_class() . '] <code>$_SERVER["REMOTE_ADDR"] has no value.</code>' );
+		}
+	}
+
+
+	/**
+	 * Start the session if none is started yet.
+	 */
+	static public function initSession() {
 		if( session_id() == '' ) {
 			$sessParams = session_get_cookie_params();
 
@@ -45,13 +60,6 @@ class ae_Security {
 			session_start();
 
 			$_SESSION['last_action'] = time();
-		}
-
-		if( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
-			ae_Log::warning( '[' . get_class() . '] <code>$_SERVER["HTTP_USER_AGENT"] has no value.</code>' );
-		}
-		if( empty( $_SERVER['REMOTE_ADDR'] ) ) {
-			ae_Log::warning( '[' . get_class() . '] <code>$_SERVER["REMOTE_ADDR"] has no value.</code>' );
 		}
 	}
 

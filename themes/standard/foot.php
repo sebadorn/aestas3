@@ -14,7 +14,7 @@ $caList = new ae_CategoryList( $filter, array(), FALSE );
 <footer class="main-footer">
 
 	<div>
-		<h6>Kategorien</h6>
+		<h6>Categories</h6>
 		<ul class="categories">
 		<?php while( $ca = $caList->next() ): ?>
 			<li><a href="<?php echo $ca->getLink() ?>"><?php echo $ca->getTitle() ?></a></li>
@@ -23,7 +23,7 @@ $caList = new ae_CategoryList( $filter, array(), FALSE );
 	</div>
 
 	<div>
-		<h6>Seiten</h6>
+		<h6>Pages</h6>
 		<ul class="pages">
 			<li><a href="<?php echo URL ?>ueber">Über</a></li>
 			<li><a href="<?php echo URL ?>datenschutzerklaerung">Datenschutz</a></li>
@@ -31,20 +31,20 @@ $caList = new ae_CategoryList( $filter, array(), FALSE );
 		</ul>
 	</div>
 
-	<div>
+	<div class="benchmark">
 		<h6>Benchmark</h6>
 		<ul class="stats">
 			<li class="stat script-time">
-				<span>Sek.</span><code><?php echo $scriptTime ?></code>
+				<span>Sec.</span><code><?php echo $scriptTime ?></code>
 			</li>
 			<li class="stat memory-peak">
-				<span>MB (Spitze)</span><code><?php echo $memoryPeak ?></code>
+				<span>MB (peak)</span><code><?php echo $memoryPeak ?></code>
 			</li>
 			<li class="stat memory-final">
-				<span>MB (Ende)</span><code><?php echo $memoryFinal ?></code>
+				<span>MB (final)</span><code><?php echo $memoryFinal ?></code>
 			</li>
 			<li class="stat db-queries">
-				<span>DB-Anfragen</span><code><?php echo ae_Database::getNumQueries() ?></code>
+				<span>DB queries</span><code><?php echo ae_Database::getNumQueries() ?></code>
 			</li>
 		</ul>
 	</div>

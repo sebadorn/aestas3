@@ -1,55 +1,59 @@
 .main-header {
-	background-color: #ffffff;
-	padding: 10px 20px;
-	position: relative;
+	background-color: #202020;
+	color: #F6F6F6;
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+	text-align: center;
 }
 
 h1 {
-	display: inline-block;
-	font-size: 24px;
-	line-height: 32px;
-	vertical-align: top;
+	flex-grow: 2;
+	font-size: 28px;
+	line-height: 28px;
 
 	a {
-		font-weight: 300;
+		color: #F6F6F6;
+		font-weight: 500;
+		letter-spacing: -1px;
+
+		&:hover {
+			color: #F6F6F6;
+		}
 	}
 }
 
 
 form.search {
-	display: inline-block;
-	height: 28px;
-	margin-left: 20px;
+	display: flex;
+	justify-content: flex-end;
 	position: relative;
 	top: 4px;
-	white-space: nowrap;
-	width: 192px;
+	width: auto;
 
 	.search-input {
-		border-color: #f0f0f0 !important;
+		background-color: #202020;
+		border: 0;
+		border-bottom: 1px solid #707070;
+		color: #FFFFFF;
 		height: 26px;
-		left: 0;
-		max-width: 160px;
-		padding: 2px 6px !important;
-		position: absolute;
-		top: 0;
+		padding: 3px 1px 1px;
+		width: 220px;
 	}
 
 	.search-submit {
-		background-color: #f0f0f0;
-		border: 1px solid #f0f0f0;
+		background-color: transparent;
+		border: 0;
+		color: #F6F6F6;
 		cursor: default;
 		display: inline-block;
 		font-family: "OpenIconic";
 		font-size: 16px;
 		height: 26px;
-		position: absolute;
-		right: 0;
 		width: 34px;
 
 		&:hover {
-			background-color: #B7D1E0;
-			border-color: #B7D1E0;
+			color: #FFFFFF;
 			cursor: pointer;
 		}
 	}
@@ -57,27 +61,40 @@ form.search {
 
 
 .about-me {
-	display: inline-block;
-	position: absolute;
-	right: 160px;
+	align-items: center;
+	display: flex;
 
 	img {
 		border-radius: 50%;
-		float: left;
 		height: 32px;
 		margin-right: 8px;
 		width: 32px;
 	}
 
 	a {
-		line-height: 32px;
+		border-bottom: 1px solid @linkColor;
+		color: #FFFFFF;
+		font-weight: 600;
+		text-transform: uppercase;
+
+		&:hover {
+			border-bottom-color: transparent;
+		}
 	}
+}
+
+
+form.search, .about-me {
+	box-sizing: border-box;
+	flex-basis: 0;
+	flex-grow: 1;
+	flex-shrink: 1;
+	white-space: nowrap;
 }
 
 
 .icons {
 	display: inline-block;
-	float: right;
 	height: 32px;
 	margin: 0 0 0 20px;
 
@@ -90,17 +107,24 @@ form.search {
 
 	a {
 		background-image: url( "../img/icons-32.png" );
+		border: 0;
 		display: inline-block;
+		font-weight: normal;
 		height: 32px;
-		opacity: 0.4;
 		width: 32px;
+	}
 
-		&:hover {
-			opacity: 1.0;
+	.icon-rss a {
+		background: none;
+		color: #F6F6F6;
+		font-family: OpenIconic;
+		font-size: 30px;
+
+		&:before {
+			content: "\e0b7";
 		}
 	}
 
-	.icon-rss a { background-position: 0 32px; }
-	.icon-github a { background-position: 0 64px; }
+	.icon-github a { background-position: 0 32px; }
 	.icon-twit a { background-position: 0 0; }
 }

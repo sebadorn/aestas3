@@ -1,9 +1,10 @@
 .main-footer {
-	background-color: #6B98AB;
+	background-color: #202020;
 	clear: both;
 	font-size: 16px;
 	margin-top: 120px;
 	padding: 0 60px 60px 60px;
+	position: relative;
 	text-align: center;
 	text-transform: uppercase;
 
@@ -26,7 +27,7 @@
 
 	h6 {
 		font-size: 36px;
-		font-weight: 600;
+		font-weight: 700;
 		letter-spacing: -2px;
 		line-height: 36px;
 		margin: -7px 0 18px 0;
@@ -67,6 +68,40 @@
 		code {
 			font-size: 13px;
 			text-shadow: none;
+		}
+	}
+}
+
+.benchmark {
+	bottom: 0;
+	color: #606060 !important;
+	font-size: 80%;
+	left: 20px;
+	margin: 0 !important;
+	position: absolute;
+	text-align: left !important;
+	width: 100%;
+	z-index: 200;
+
+	h6 {
+		display: inline-block;
+		font-size: 100% !important;
+		font-weight: 600;
+		letter-spacing: initial;
+		margin: 0 10px 0 0;
+	}
+
+	.stats {
+		display: inline-flex;
+		flex-wrap: wrap;
+
+		li {
+			margin: 0 10px 0 0;
+		}
+
+		code {
+			font-size: 13px;
+			margin-left: -5px;
 		}
 	}
 }
