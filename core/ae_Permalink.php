@@ -107,8 +107,12 @@ class ae_Permalink {
 			$offset = array_reverse( $offset );
 			$offset = ( $offset[0] == '' ) ? $offset[1] : $offset[0];
 		}
-		else if( isset( $_GET[PERMALINK_GET_OFFSET] ) && ae_Validate::integer( $_GET[PERMALINK_GET_OFFSET] ) ) {
+		else if( isset( $_GET[PERMALINK_GET_OFFSET] ) ) {
 			$offset = $_GET[PERMALINK_GET_OFFSET];
+		}
+
+		if( !ae_Validate::integer( $offset ) ) {
+			$offset = 0;
 		}
 
 		return $offset;

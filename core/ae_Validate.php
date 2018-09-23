@@ -39,7 +39,7 @@ class ae_Validate {
 	 * @return {boolean}           TRUE, if matches an integer, FALSE otherwise.
 	 */
 	static public function integer( $input ) {
-		return ( preg_match( '/^-?[0-9]+$/', $input ) === 1 );
+		return ( preg_match( '/^-?[0-9]+$/', $input ) === 1 && $input <= PHP_INT_MAX );
 	}
 
 
