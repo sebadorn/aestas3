@@ -4,7 +4,7 @@
 
 @bgColor: #202020;
 @bgColorBody: #f6f6f6;
-@fontFamilyCode: "Source Code Pro", "DejaVu Sans Mono", "Consolas", "Courier New", monospace;
+@fontFamilyCode: "Source Code Pro", "DejaVu Sans Mono", Consolas, monospace;
 @fontFamilyText: "Open Sans", sans-serif;
 @fontSize: 14px;
 @linkColor: #4083A2;
@@ -80,8 +80,8 @@ button, input, textarea {
 }
 
 code {
-	background-color: #ffffff;
-	border-bottom: 1px solid #e0e0e0;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #E0E0E0;
 	border-radius: 3px;
 	font-family: @fontFamilyCode;
 	font-size: @fontSize - 1px;
@@ -90,29 +90,27 @@ code {
 
 // highlight.js
 pre.hljs, pre.plain, blockquote.code {
-	background-color: #ffffff;
-	border-bottom: 1px solid #e0e0e0;
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #E0E0E0;
 	color: #000000;
 	font-family: @fontFamilyCode;
 	font-size: @fontSize - 1px;
 	padding: 8px 10px;
 	overflow-x: auto;
+}
 
-	span {
+	pre.hljs span {
 		font-family: @fontFamilyCode;
 		font-size: @fontSize - 1px;
 	}
+
+dd {
+	color: #404040;
+	margin-left: 26px;
 }
 
-dl {
-	dd {
-		color: #404040;
-		margin-left: 26px;
-	}
-
-	dt {
-		font-weight: bold;
-	}
+dt {
+	font-weight: bold;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -131,20 +129,20 @@ ol, ul {
 table {
 	border-spacing: 0;
 	width: 100%;
-
-	td, th {
-		padding: 4px 10px;
-	}
-
-	th {
-		font-weight: bold;
-		text-align: left;
-	}
+}
 
 	tr:nth-child( 2n + 1 ) {
 		background-color: #DDE6E9;
 	}
-}
+
+		td, th {
+			padding: 4px 10px;
+		}
+
+		th {
+			font-weight: bold;
+			text-align: left;
+		}
 
 
 /* ------ */
@@ -158,7 +156,7 @@ table {
 /* Sidebar */
 /* ------- */
 
-@import "sidebar.less";
+// @import "sidebar.less";
 
 
 /* ------------------------ */
@@ -219,9 +217,9 @@ blockquote.error {
 }
 
 
-/* ------------- */
-/* Small screens */
-/* ------------- */
+/* ---------------------------- */
+/* Small screens/mobile devices */
+/* ---------------------------- */
 
 @media ( max-width: 800px ) {
 	.main-header {
@@ -250,6 +248,11 @@ blockquote.error {
 		padding-top: 30px !important;
 	}
 
+	.post-header h2 {
+		font-size: 24px;
+		line-height: 28px;
+	}
+
 	.main-footer {
 		font-size: 14px;
 		padding: 0 20px 60px;
@@ -262,6 +265,19 @@ blockquote.error {
 
 		div {
 			margin: 0 10px;
+		}
+	}
+
+	.illu {
+		left: 0;
+		max-width: 100%;
+		position: static;
+		width: 100% !important;
+
+		img {
+			height: auto !important;
+			max-width: 100% !important;
+			width: auto !important;
 		}
 	}
 }
