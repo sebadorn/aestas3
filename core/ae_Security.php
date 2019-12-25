@@ -31,8 +31,6 @@ class ae_Security {
 			}
 		}
 
-		self::initSession();
-
 		if( empty( $_SERVER['HTTP_USER_AGENT'] ) ) {
 			ae_Log::warning( '[' . get_class() . '] <code>$_SERVER["HTTP_USER_AGENT"] has no value.</code>' );
 		}
@@ -139,6 +137,8 @@ class ae_Security {
 	 * @param {int} $userID User ID.
 	 */
 	static public function login( $userID ) {
+		self::initSession();
+
 		$_SESSION['ae_user'] = $userID;
 
 		// As opposed to the crypt() function for passwords,
@@ -151,6 +151,7 @@ class ae_Security {
 	 * Log the user out by destroying the session.
 	 */
 	static public function logout() {
+		ae_Security::initSession();
 		$_SESSION = array();
 		session_destroy();
 	}

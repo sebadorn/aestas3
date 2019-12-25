@@ -3,6 +3,8 @@
 require_once( '../core/autoload.php' );
 require_once( '../core/config.php' );
 
+ae_Security::initSession();
+
 if( ae_Security::isLoggedIn() ) {
 	header( 'Location: admin.php' );
 	exit;
