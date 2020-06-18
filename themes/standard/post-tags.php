@@ -10,7 +10,7 @@ foreach( $data as $tag ) {
 	$tags[$tag] = $link;
 }
 
-ksort( $tags );
+ksort( $tags, SORT_FLAG_CASE | SORT_NATURAL );
 
 ?>
 <div class="post-tags">
