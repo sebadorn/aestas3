@@ -62,14 +62,16 @@ $postList->loadNumComments();
 	<header class="post-header">
 		<h2><a href="<?php echo $post->getLink() ?>"><?php echo $post->getTitle() ?></a></h2>
 
-		<time class="published icon-add-before icon-before-clock" datetime="<?php echo $post->getDatetime( 'Y-m-d' ) ?>">
-			<span><?php echo $post->getDatetime( 'd.m.Y' ) ?></span>
-		</time>
+		<div class="post-info">
+			<time class="published icon-add-before icon-before-clock" datetime="<?php echo $post->getDatetime( 'Y-m-d' ) ?>">
+				<span><?php echo $post->getDatetime( 'd.m.Y' ) ?></span>
+			</time>
 
-		<?php $sb->render( 'post-categories.php', $post->getCategories() ) ?>
+			<?php $sb->render( 'post-categories.php', $post->getCategories() ) ?>
 
-		<div class="post-num-comments icon-add-before icon-before-comment">
-			<a href="<?php echo $post->getLink() ?>#comments"><?php echo $post->getNumComments() ?></a>
+			<div class="post-num-comments icon-add-before icon-before-comment">
+				<a href="<?php echo $post->getLink() ?>#comments"><?php echo $post->getNumComments() ?></a>
+			</div>
 		</div>
 	</header>
 

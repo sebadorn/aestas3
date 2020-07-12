@@ -4,9 +4,9 @@
 }
 
 article {
-	line-height: 24px;
+	line-height: 27px;
 	margin: 0 auto 80px;
-	max-width: 600px;
+	max-width: @columnWidth;
 }
 
 .post-draft,
@@ -26,21 +26,25 @@ article {
 	margin-bottom: 32px;
 
 	h2 {
-		font-size: 32px;
-		font-style: italic;
-		line-height: 36px;
+		font-size: 30px;
+		line-height: 32px;
 		margin-bottom: 10px;
 	 }
 
-	 .icon-add-before::before {
-	 	font-size: 14px;
-	 }
-
-	div,
-	time {
-		display: inline-block;
-		margin-right: 24px;
+	.post-info {
+		display: block;
+		margin-right: 0;
 	}
+
+		.icon-add-before::before {
+			font-size: 14px;
+		}
+
+		div,
+		time {
+			display: inline-block;
+			margin-right: 24px;
+		}
 }
 
 .post-future time {
@@ -88,7 +92,7 @@ article {
 .content {
 	h3 {
 		font-size: 24px;
-		margin-bottom: 16px;
+		margin-bottom: 20px;
 		margin-top: 38px;
 
 		@media (max-width: 700px) {
@@ -114,7 +118,7 @@ article {
 
 	.illu {
 		border-radius: 4px;
-		left: -150px;
+		left: -130px;
 		line-height: 0;
 		margin-bottom: 24px;
 		position: relative;
