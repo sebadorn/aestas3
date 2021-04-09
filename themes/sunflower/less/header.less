@@ -1,0 +1,130 @@
+.main-header {
+	background-color: #202020;
+	color: #F6F6F6;
+	display: flex;
+	justify-content: space-between;
+	padding: 20px;
+	text-align: center;
+}
+
+h1 {
+	flex-grow: 2;
+	font-size: 28px;
+	line-height: 28px;
+
+	a {
+		color: #F6F6F6;
+		font-weight: 500;
+		letter-spacing: -1px;
+
+		&:hover {
+			color: #F6F6F6;
+		}
+	}
+}
+
+
+form.search {
+	display: flex;
+	justify-content: flex-end;
+	position: relative;
+	top: 4px;
+	width: auto;
+}
+
+	.search-input {
+		background-color: #202020;
+		border: 0;
+		border-bottom: 1px solid #707070;
+		color: #FFFFFF;
+		height: 26px;
+		padding: 3px 1px 1px;
+		width: 220px;
+	}
+
+	.search-submit {
+		background-color: transparent;
+		border: 0;
+		color: #F6F6F6;
+		cursor: default;
+		display: inline-block;
+		font-family: "OpenIconic";
+		font-size: 16px;
+		height: 26px;
+		width: 34px;
+
+		&:hover {
+			color: #FFFFFF;
+			cursor: pointer;
+		}
+	}
+
+
+.about-me {
+	align-items: center;
+	display: flex;
+
+	img {
+		border-radius: 50%;
+		height: 32px;
+		margin-right: 8px;
+		width: 32px;
+	}
+
+	a {
+		border-bottom: 2px solid @linkColor;
+		color: #FFFFFF;
+		font-weight: 600;
+		text-transform: uppercase;
+
+		&:hover {
+			border-bottom-color: transparent;
+		}
+	}
+}
+
+
+form.search, .about-me {
+	box-sizing: border-box;
+	flex-basis: 0;
+	flex-grow: 1;
+	flex-shrink: 1;
+	white-space: nowrap;
+}
+
+
+.icons {
+	display: inline-block;
+	height: 32px;
+	margin: 0 0 0 20px;
+
+	li {
+		display: inline-block;
+		height: 32px;
+		margin-left: 12px;
+		width: 32px;
+	}
+
+	a {
+		background-image: url( "../img/icons-32.png" );
+		border: 0;
+		display: inline-block;
+		font-weight: normal;
+		height: 32px;
+		width: 32px;
+	}
+}
+
+	.icon-rss a {
+		background: none;
+		color: #F6F6F6;
+		font-family: OpenIconic;
+		font-size: 30px;
+
+		&:before {
+			content: "\e0b7";
+		}
+	}
+
+	.icon-github a { background-position: 0 32px; }
+	.icon-twit a { background-position: 0 0; }

@@ -1,0 +1,202 @@
+/* -------- */
+/* Comments */
+/* -------- */
+
+.comments {
+	h4 {
+		font-family: @fontFamilyText;
+		font-size: 24px;
+		margin: 0 auto 30px;
+		max-width: @columnWidth;
+	}
+
+	hr {
+		border-bottom: 1px solid #ffffff;
+		border-left: 0;
+		border-right: 0;
+		border-top: 1px solid #d0d0d0;
+		margin: 0;
+
+		&:last-of-type {
+			margin-bottom: 20px;
+		}
+	}
+}
+
+
+.comment {
+	margin: 0 auto;
+	max-width: 1000px;
+	padding: 30px 0;
+	position: relative;
+
+	&:first-of-type {
+		border-top: 0;
+	}
+
+	&:last-of-type {
+		border-bottom: 0;
+	}
+}
+
+
+.avatar {
+	background-color: #C0C0C0;
+	border-radius: 50%;
+	display: inline-block;
+	height: 48px;
+	margin-right: 10px;
+	overflow: hidden;
+	text-align: center;
+	white-space: nowrap;
+	width: 48px;
+}
+
+	.avatar-image {
+		width: 100%;
+	}
+
+	.avatar-head {
+		background-color: #FFFFFF;
+		border-radius: 50%;
+		display: inline-block;
+		height: 22px;
+		margin-top: 10px;
+		width: 22px;
+	}
+
+	.avatar-body {
+		background-color: #FFFFFF;
+		border-radius: 50%;
+		display: inline-block;
+		height: 36px;
+		margin-top: -6px;
+		width: 36px;
+	}
+
+
+.comment-meta {
+	display: inline-block;
+	margin-bottom: 20px;
+	vertical-align: top;
+	width: 200px;
+}
+
+	.comment-author {
+		display: block;
+		font-size: 16px;
+		font-weight: 600;
+	}
+
+	.comment-registered-user .comment-author {
+		color: #4AB41D !important;
+	}
+
+	.comment-time {
+		color: #909090;
+		font-size: 12px;
+	}
+
+.preview .comment-time {
+	background-color: #F5525F;
+	border-radius: 1px;
+	color: #ffffff;
+	font-weight: bold;
+	padding: 2px 6px;
+	text-transform: uppercase;
+}
+
+
+.comment-content {
+	clear: both;
+	display: inline-block;
+	line-height: 24px;
+	max-width: @columnWidth;
+	width: 100%;
+
+	a {
+		border-bottom: 1px solid #8EB5C7;
+
+		&:hover {
+			border-bottom-color: transparent;
+			color: #4083A2;
+		}
+	}
+}
+
+
+
+/* ------------ */
+/* Comment form */
+/* ------------ */
+
+.comment-form {
+	margin: 0 auto;
+	max-width: @columnWidth;
+
+	input[type="text"],
+	input[type="password"],
+	textarea {
+		background-color: #ffffff;
+		border: 1px solid #e0e0e0;
+		border-radius: 1px;
+		padding: 6px 8px;
+	}
+
+	input,
+	textarea {
+		display: block;
+		margin-bottom: 8px;
+		width: 100%;
+	}
+
+	textarea {
+		height: 200px;
+		margin-bottom: 16px;
+		resize: vertical;
+	}
+
+	button {
+		background-color: #CF5D3D;
+		border: 0;
+		border-bottom: 1px solid #ffffff;
+		border-radius: 2px;
+		color: #ffffff;
+		float: right;
+		min-width: 120px;
+		padding: 6px 10px;
+
+		&:hover {
+			background-color: #505050;
+			cursor: pointer;
+		}
+	}
+
+	.invalid {
+		border-color: #DE4C4C;
+	}
+}
+
+	.do-not-fill {
+		display: none !important;
+		visibility: hidden !important;
+	}
+
+
+.comment-code {
+	background-color: #e6e6e6;
+	border-radius: 4px;
+	clear: both;
+	margin-top: 80px;
+	padding: 20px;
+
+	span {
+		color: #606060;
+		display: block;
+		margin-bottom: 10px;
+	}
+
+	code {
+		opacity: 0.8;
+	}
+}

@@ -1,0 +1,293 @@
+/* --------- */
+/* Variables */
+/* --------- */
+
+@bgColor: #1a1a1a;
+@bgColorBody: #1a1a1a;
+@columnWidth: 660px;
+@fontFamilyCode: "Source Code Pro", "DejaVu Sans Mono", Consolas, monospace;
+@fontFamilyText: "Open Sans", sans-serif;
+@fontSize: 16px;
+@linkColor: #C4B14D;
+@linkDecoColor: #505050;
+@linkHoverColor: #909090;
+@stringAfterReadMore: " »";
+@textColor: #f0f0f0;
+
+
+/* ----- */
+/* Fonts */
+/* ----- */
+
+@import "fonts.less";
+
+
+/* ------ */
+/* Basics */
+/* ------ */
+
+* {
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-family: @fontFamilyText;
+	margin: 0;
+	padding: 0;
+	-moz-tab-size: 4;
+	tab-size: 4;
+}
+
+html {
+	background-color: @bgColor;
+	color: @textColor;
+	font-size: @fontSize;
+}
+
+body {
+	background-color: @bgColorBody;
+	overflow-x: hidden;
+}
+
+a {
+	color: @linkColor;
+
+	&:hover {
+		color: @textColor;
+		text-decoration: #505050 underline 2px;
+	}
+}
+
+blockquote, dialog, dd, dl, hr, ol, p, pre, table, ul {
+	margin-bottom: 20px;
+}
+
+blockquote {
+	border-left: 4px solid #6DD954;
+	border-radius: 2px;
+	color: #303030;
+	padding: 8px 10px;
+
+	p:last-child {
+		margin-bottom: 0;
+	}
+
+	+ br {
+		display: none;
+	}
+}
+
+button, input, textarea {
+	background-color: #FFFFFF;
+	border-style: solid;
+	border-width: 1px;
+	color: @textColor;
+	font-size: @fontSize;
+}
+
+code {
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #E0E0E0;
+	border-radius: 3px;
+	font-family: @fontFamilyCode;
+	font-size: @fontSize - 1px;
+	padding: 2px 4px;
+}
+
+// highlight.js
+pre.hljs, pre.plain, blockquote.code {
+	background-color: #272727;
+	color: #f0f0f0;
+	font-family: @fontFamilyCode;
+	font-size: @fontSize - 1px;
+	line-height: 21px;
+	margin-left: 40px;
+	margin-right: 40px;
+	padding: 24px 40px;
+	overflow-x: auto;
+}
+
+	pre.hljs span {
+		font-family: @fontFamilyCode;
+		font-size: @fontSize - 1px;
+	}
+
+dd {
+	margin-left: 26px;
+}
+
+dt {
+	font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: 700;
+}
+
+hr {
+	border: 0;
+	border-top: 2px dotted rgba( 255, 255, 255, 0.3 );
+}
+
+ol, ul {
+	margin-left: 16px;
+}
+
+table {
+	border-spacing: 0;
+	width: 100%;
+}
+
+	tr {
+		background-color: #373737;
+	}
+
+	tr:nth-child( 2n + 1 ) {
+		background-color: #272727;
+	}
+
+		td, th {
+			padding: 4px 10px;
+		}
+
+		th {
+			font-weight: bold;
+			text-align: left;
+		}
+
+
+/* ------ */
+/* Header */
+/* ------ */
+
+@import "header.less";
+
+
+/* ------- */
+/* Sidebar */
+/* ------- */
+
+// @import "sidebar.less";
+
+
+/* ------------------------ */
+/* Content: posts and pages */
+/* ------------------------ */
+
+@import "content.less";
+
+
+/* -------- */
+/* Comments */
+/* -------- */
+
+@import "comments.less";
+
+
+/* ------ */
+/* Footer */
+/* ------ */
+
+@import "footer.less";
+
+
+/* ---------------------------------------------- */
+/* CSS for old content or only very special cases */
+/* ---------------------------------------------- */
+
+img[title] {
+	cursor: help;
+}
+
+blockquote.error {
+	border-left-color: #c00000;
+	color: #c00000;
+}
+
+.about-avatar {
+	border-radius: 50%;
+	float: left;
+	margin: 0 10px 10px 0;
+	width: 72px;
+}
+
+.annotation {
+	font-size: 13px;
+	line-height: 19px;
+}
+
+.rating {
+	text-align: center;
+
+	strong {
+		color: #C0B813;
+		font-size: 140%;
+		margin-left: 10px;
+		vertical-align: top;
+	}
+}
+
+
+/* ---------------------------- */
+/* Small screens/mobile devices */
+/* ---------------------------- */
+
+@media ( max-width: 800px ) {
+	.main-header {
+		display: block;
+	}
+
+	h1 {
+		font-size: 22px;
+		line-height: 22px;
+		margin-bottom: 15px;
+	}
+
+	.about-me {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 15px;
+		-webkit-transform: scale( 0.75 );
+		transform: scale( 0.75 );
+	}
+
+	form.search {
+		justify-content: center;
+	}
+
+	.main-body {
+		padding-top: 30px !important;
+	}
+
+	.post-header h2 {
+		font-size: 24px;
+		line-height: 28px;
+	}
+
+	.main-footer {
+		font-size: 14px;
+		padding: 0 20px 60px;
+
+		h6 {
+			font-size: 26px;
+			line-height: 26px;
+			margin-top: -5px;
+		}
+
+		div {
+			margin: 0 10px;
+		}
+	}
+
+	.illu {
+		left: 0;
+		max-width: 100%;
+		position: static;
+		width: 100% !important;
+
+		img,
+		video {
+			height: auto !important;
+			max-width: 100% !important;
+			width: auto !important;
+		}
+	}
+}
