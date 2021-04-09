@@ -36,7 +36,7 @@ class ae_Settings {
 			$ignore = array( '.', '..' );
 
 			while( ( $file = readdir( $handle ) ) !== FALSE ) {
-				if( !in_array( $file, $ignore ) ) {
+				if( is_dir( $themeDir . $file ) && !in_array( $file, $ignore ) ) {
 					$themes[] = $file;
 				}
 			}
