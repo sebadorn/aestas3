@@ -18,7 +18,7 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 		</ul>
 	</div>
 
-	<h1><a href="<?php echo URL ?>" title="Home"><?php echo ae_Settings::get( 'blog_title' ) ?> | blog</a></h1>
+	<h1><a href="<?php echo URL ?>" title="Home"><?php echo ae_Settings::get( 'blog_title' ) ?></a></h1>
 
 	<form class="search" action="<?php echo URL ?>" method="get">
 		<input type="text" class="search-input" name="search" placeholder="Search" value="<?php echo $search ?>" />
