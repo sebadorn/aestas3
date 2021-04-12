@@ -1,5 +1,6 @@
 <?php
 
+$content = NULL;
 $title = ae_Settings::get( 'blog_title' );
 
 if( ae_Permalink::isPost() ) {
@@ -9,7 +10,16 @@ if( ae_Permalink::isPost() ) {
 		$content = '404';
 		$title = '404 | ' . $title;
 	}
-	else {
+	else if( $post->getStatus() !== ae_PageModel::STATUS_PUBLISHED ) {
+		ae_Security::initSession();
+
+		if( !ae_Security::isLoggedIn() ) {
+			$content = '404';
+			$title = '404 | ' . $title;
+		}
+	}
+
+	if( $content === NULL ) {
 		$content = 'single-post';
 		$title = htmlspecialchars( $post->getTitle() ) . ' | ' . $title;
 	}
@@ -21,7 +31,16 @@ else if( ae_Permalink::isPage() ) {
 		$content = '404';
 		$title = '404 | ' . $title;
 	}
-	else {
+	else if( $page->getStatus() !== ae_PageModel::STATUS_PUBLISHED ) {
+		ae_Security::initSession();
+
+		if( !ae_Security::isLoggedIn() ) {
+			$content = '404';
+			$title = '404 | ' . $title;
+		}
+	}
+
+	if( $content === NULL ) {
 		$content = 'single-page';
 		$title = htmlspecialchars( $page->getTitle() ) . ' | ' . $title;
 	}
