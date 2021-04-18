@@ -140,6 +140,21 @@ class ae_PageModel extends ae_Model {
 
 
 	/**
+	 *
+	 * @return {boolean}
+	 */
+	public function hasDescription() {
+		// '0' is interpreted as empty. So
+		// also check with is_numeric().
+		if( empty( $this->desc ) ) {
+			return is_numeric( $this->desc );
+		}
+
+		return true;
+	}
+
+
+	/**
 	 * Check, if given status is a valid page/post status.
 	 * @param  {string}  $status Page/post status.
 	 * @return {boolean}         TRUE, if $status is valid, FALSE otherwise.
