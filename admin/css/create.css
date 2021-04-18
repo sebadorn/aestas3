@@ -37,6 +37,10 @@
 		resize: vertical;
 	}
 
+	.form-create .desc {
+		height: 120px;
+	}
+
 	input[type="checkbox"] {
 		margin-right: 6px;
 		position: relative;

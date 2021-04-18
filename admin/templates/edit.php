@@ -287,6 +287,9 @@ else {
 		<div class="input-group">
 			<textarea name="page-content" placeholder="Content"><?php echo htmlspecialchars( $model->getContent() ) ?></textarea>
 		</div>
+		<div class="input-group">
+			<textarea name="page-desc" class="desc" placeholder="Description"><?php echo htmlspecialchars( $model->getDescription() ) ?></textarea>
+		</div>
 	</div>
 
 <?php elseif( $editArea == 'Post' ): ?>
@@ -348,6 +351,9 @@ else {
 		</div>
 		<div class="input-group">
 			<textarea name="post-content" placeholder="Content"><?php echo htmlspecialchars( $model->getContent() ) ?></textarea>
+		</div>
+		<div class="input-group">
+			<textarea name="post-desc" class="desc" placeholder="Description"><?php echo htmlspecialchars( $model->getDescription() ) ?></textarea>
 		</div>
 		<div class="input-group">
 			<input type="text" name="post-tags" placeholder="Tags" value="<?php echo htmlspecialchars( $model->getTagsString() ) ?>" />

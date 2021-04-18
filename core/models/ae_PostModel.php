@@ -256,6 +256,9 @@ class ae_PostModel extends ae_PageModel {
 		if( isset( $data['po_datetime'] ) ) {
 			$this->setDatetime( $data['po_datetime'] );
 		}
+		if( isset( $data['po_desc'] ) ) {
+			$this->setDescription( $data['po_desc'] );
+		}
 		if( isset( $data['po_edit'] ) && $data['po_edit'] != NULL ) {
 			$this->setEditDatetime( $data['po_edit'] );
 		}
@@ -335,6 +338,7 @@ class ae_PostModel extends ae_PageModel {
 			':title' => $this->title,
 			':permalink' => $this->permalink,
 			':content' => $this->content,
+			':desc' => $this->desc,
 			':datetime' => $this->datetime,
 			':tags' => $this->tags,
 			':user' => $this->userId,
@@ -349,6 +353,7 @@ class ae_PostModel extends ae_PageModel {
 					po_title,
 					po_permalink,
 					po_content,
+					po_desc,
 					po_datetime,
 					po_tags,
 					po_user,
@@ -358,6 +363,7 @@ class ae_PostModel extends ae_PageModel {
 					:title,
 					:permalink,
 					:content,
+					:desc,
 					:datetime,
 					:tags,
 					:user,
@@ -374,6 +380,7 @@ class ae_PostModel extends ae_PageModel {
 					po_title,
 					po_permalink,
 					po_content,
+					po_desc,
 					po_datetime,
 					po_tags,
 					po_user,
@@ -384,6 +391,7 @@ class ae_PostModel extends ae_PageModel {
 					:title,
 					:permalink,
 					:content,
+					:desc,
 					:datetime,
 					:tags,
 					:user,
@@ -400,6 +408,7 @@ class ae_PostModel extends ae_PageModel {
 					po_title = :title,
 					po_permalink = :permalink,
 					po_content = :content,
+					po_desc = :desc,
 					po_datetime = :datetime,
 					po_edit = :editDatetime,
 					po_tags = :tags,

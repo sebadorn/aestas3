@@ -17,6 +17,7 @@ class ae_PageModel extends ae_Model {
 	protected $commentsStatus = self::COMMENTS_OPEN;
 	protected $content = '';
 	protected $datetime = '0000-00-00 00:00:00';
+	protected $desc = '';
 	protected $editDatetime = NULL;
 	protected $permalink = '';
 	protected $status = self::STATUS_DRAFT;
@@ -60,6 +61,15 @@ class ae_PageModel extends ae_Model {
 		$dt = strtotime( $this->datetime );
 
 		return date( $format, $dt );
+	}
+
+
+	/**
+	 * Get page description.
+	 * @return {string} Page description.
+	 */
+	public function getDescription() {
+		return $this->desc;
 	}
 
 
@@ -165,6 +175,9 @@ class ae_PageModel extends ae_Model {
 		if( isset( $data['pa_datetime'] ) ) {
 			$this->setDatetime( $data['pa_datetime'] );
 		}
+		if( isset( $data['pa_desc'] ) ) {
+			$this->setDescription( $data['pa_desc'] );
+		}
 		if( isset( $data['pa_edit'] ) && $data['pa_edit'] != NULL ) {
 			$this->setEditDatetime( $data['pa_edit'] );
 		}
@@ -231,6 +244,7 @@ class ae_PageModel extends ae_Model {
 			':title' => $this->title,
 			':permalink' => $this->permalink,
 			':content' => $this->content,
+			':desc' => $this->desc,
 			':datetime' => $this->datetime,
 			':user' => $this->userId,
 			':comments' => $this->commentsStatus,
@@ -244,6 +258,7 @@ class ae_PageModel extends ae_Model {
 					pa_title,
 					pa_permalink,
 					pa_content,
+					pa_desc,
 					pa_datetime,
 					pa_user,
 					pa_comments,
@@ -252,6 +267,7 @@ class ae_PageModel extends ae_Model {
 					:title,
 					:permalink,
 					:content,
+					:desc,
 					:datetime,
 					:user,
 					:comments,
@@ -267,6 +283,7 @@ class ae_PageModel extends ae_Model {
 					pa_title,
 					pa_permalink,
 					pa_content,
+					pa_desc,
 					pa_datetime,
 					pa_user,
 					pa_comments,
@@ -276,6 +293,7 @@ class ae_PageModel extends ae_Model {
 					:title,
 					:permalink,
 					:content,
+					:desc,
 					:datetime,
 					:user,
 					:comments,
@@ -291,6 +309,7 @@ class ae_PageModel extends ae_Model {
 					pa_title = :title,
 					pa_permalink = :permalink,
 					pa_content = :content,
+					pa_desc = :desc,
 					pa_datetime = :datetime,
 					pa_edit = :editDatetime,
 					pa_user = :user,
@@ -339,7 +358,7 @@ class ae_PageModel extends ae_Model {
 
 	/**
 	 * Set page content.
-	 * @param {string} $content Post content.
+	 * @param {string} $content Page content.
 	 */
 	public function setContent( $content ) {
 		$this->content = (string) $content;
@@ -358,6 +377,15 @@ class ae_PageModel extends ae_Model {
 		}
 
 		$this->datetime = $datetime;
+	}
+
+
+	/**
+	 * Set page description.
+	 * @param {string} $desc Page description.
+	 */
+	public function setDescription( $desc ) {
+		$this->desc = (string) $desc;
 	}
 
 

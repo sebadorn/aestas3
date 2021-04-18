@@ -82,6 +82,9 @@ else if( isset( $_GET['user'] ) ) {
 		<div class="input-group">
 			<textarea name="page-content" placeholder="Content"></textarea>
 		</div>
+		<div class="input-group">
+			<textarea name="page-desc" class="desc" placeholder="Description"></textarea>
+		</div>
 	</div>
 
 <?php elseif( $createArea == 'Post' ): ?>
@@ -131,6 +134,9 @@ else if( isset( $_GET['user'] ) ) {
 		</div>
 		<div class="input-group">
 			<textarea name="post-content" placeholder="Content"></textarea>
+		</div>
+		<div class="input-group">
+			<textarea name="page-desc" class="desc" placeholder="Description"></textarea>
 		</div>
 		<div class="input-group">
 			<input type="text" name="post-tags" placeholder="Tags" />

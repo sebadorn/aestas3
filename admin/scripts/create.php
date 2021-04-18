@@ -131,6 +131,10 @@ function createPage() {
 		$page->setPermalink( $permalink );
 	}
 
+	if( isset( $_POST['page-desc'] ) ) {
+		$page->setDescription( $POST['page-desc'] );
+	}
+
 	$page->setContent( $_POST['page-content'] );
 	$page->setDatetime( isset( $_POST['page-schedule'] ) ? $datetime : date( 'Y-m-d H:i:s' ) );
 	$page->setCommentsStatus( $_POST['page-comments-status'] );
@@ -177,6 +181,10 @@ function createPost() {
 
 	if( $permalink != '' ) {
 		$post->setPermalink( $permalink );
+	}
+
+	if( isset( $_POST['post-desc'] ) ) {
+		$post->setDescription( $POST['post-desc'] );
 	}
 
 	$post->setContent( $_POST['post-content'] );
