@@ -8,7 +8,7 @@
 @fontFamilyCode: "Source Code Pro", "DejaVu Sans Mono", Consolas, monospace;
 @fontFamilyText: "Open Sans", sans-serif;
 @fontSize: 16px;
-@linkColor: #C4B14D;
+@linkColor: #f0f0f0;
 @linkDecoColor: #505050;
 @linkHoverColor: #909090;
 @stringAfterReadMore: " »";
@@ -40,6 +40,7 @@ html {
 	background-color: @bgColor;
 	color: @textColor;
 	font-size: @fontSize;
+	scrollbar-color: #505050 @bgColorBody;
 }
 
 body {
@@ -49,14 +50,15 @@ body {
 
 a {
 	color: @linkColor;
+	text-decoration: #505050 underline 2px;
 
 	&:hover {
-		color: @textColor;
-		text-decoration: #505050 underline 2px;
+		color: @linkHoverColor;
+		text-decoration: none;
 	}
 }
 
-blockquote, dialog, dd, dl, hr, ol, p, pre, table, ul {
+blockquote, dd, dl, hr, ol, p, pre, table, ul {
 	margin-bottom: 20px;
 }
 
@@ -100,9 +102,7 @@ pre.hljs, pre.plain, blockquote.code {
 	font-family: @fontFamilyCode;
 	font-size: @fontSize - 1px;
 	line-height: 21px;
-	margin-left: 40px;
-	margin-right: 40px;
-	padding: 24px 40px;
+	padding: 20px 24px;
 	overflow-x: auto;
 }
 
@@ -194,10 +194,6 @@ table {
 /* CSS for old content or only very special cases */
 /* ---------------------------------------------- */
 
-img[title] {
-	cursor: help;
-}
-
 blockquote.error {
 	border-left-color: #c00000;
 	color: #c00000;
@@ -255,7 +251,14 @@ blockquote.error {
 	}
 
 	.main-body {
+		padding-left: 0;
+		padding-right: 0;
 		padding-top: 30px !important;
+	}
+
+	article {
+		padding-left: 20px;
+		padding-right: 20px;
 	}
 
 	.post-header h2 {

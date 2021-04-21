@@ -6,6 +6,7 @@
 article {
 	background-color: #303030;
 	border-radius: 4px;
+	box-sizing: content-box;
 	line-height: 27px;
 	margin: 0 auto 120px;
 	max-width: @columnWidth;
@@ -111,6 +112,10 @@ article {
 			font-size: 20px;
 		}
 	}
+
+	p:last-child {
+		margin-bottom: 0;
+	}
 }
 
 	.abstract {
@@ -208,6 +213,6 @@ article {
 		}
 
 		&.current-offset {
-			color: #FFFFFF;
+			background-color: @bgColor;
 		}
 	}

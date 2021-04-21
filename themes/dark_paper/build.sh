@@ -4,7 +4,7 @@ BASEDIR=$(dirname "$0")
 cd "$BASEDIR"
 
 echo ' ----- ----- -----'
-echo ' Building standard theme.'
+echo ' Building dark_paper theme.'
 
 echo -n ' Compiling LESS to CSS ...'
 lessc --clean-css less/style.less css/style.css
