@@ -7,7 +7,7 @@
 	<title><?php echo $title ?></title>
 <?php if( isset( $post ) && $post !== FALSE && $post->hasDescription() ): ?>
 	<meta name="description" content="<?php addslashes( $post->getDescription() ) ?>" />
-<?php else if( isset( $page ) && $page !== FALSE && $page->hasDescription() ): ?>
+<?php elseif( isset( $page ) && $page !== FALSE && $page->hasDescription() ): ?>
 	<meta name="description" content="<?php addslashes( $page->getDescription() ) ?>" />
 <?php endif ?>
 	<link rel="icon" href="<?php echo THEME_PATH ?>img/favicon-192.png" type="image/png" sizes="192x192" />

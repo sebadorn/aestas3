@@ -11,7 +11,7 @@ window.addEventListener( 'load', function() {
 
 		if( cls.indexOf( 'hljs' ) < 0 ) {
 			block.className = cls.replace( 'brush:', '' ).trim();
-			hljs.highlightBlock( block );
+			hljs.highlightElement( block );
 		}
 	}
 } );
