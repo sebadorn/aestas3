@@ -13,7 +13,8 @@ if( !ae_Security::isLoggedIn() ) {
 
 if(
 	!isset( $_POST['blog-title'] ) ||
-	!isset( $_POST['blog-description'] )
+	!isset( $_POST['blog-description'] ) ||
+	!isset( $_POST['theme'] )
 ) {
 	header( 'Location: ../admin.php?area=settings&error=missing_data' );
 	exit;
@@ -24,7 +25,8 @@ $stmt = '
 	INSERT INTO `' . AE_TABLE_SETTINGS . '` ( s_key, s_value )
 	VALUES
 		( :blogTitleKey, :blogTitleValue ),
-		( :blogDescriptionKey, :blogDescriptionValue )
+		( :blogDescriptionKey, :blogDescriptionValue ),
+		( :blogThemeKey, :blogThemeValue )
 	ON DUPLICATE KEY UPDATE
 		s_key = VALUES( s_key ),
 		s_value = VALUES( s_value )
@@ -33,7 +35,9 @@ $params = array(
 	':blogTitleKey' => 'blog_title',
 	':blogTitleValue' => $_POST['blog-title'],
 	':blogDescriptionKey' => 'blog_description',
-	':blogDescriptionValue' => $_POST['blog-description']
+	':blogDescriptionValue' => $_POST['blog-description'],
+	':blogThemeKey' => 'theme',
+	':blogThemeValue' => $_POST['theme']
 );
 
 if( ae_Database::query( $stmt, $params ) === FALSE ) {

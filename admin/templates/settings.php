@@ -35,7 +35,10 @@ else {
 
 <form class="settings" method="post" action="scripts/settings.php">
 
-	<?php $themes = ae_Settings::getListOfThemes( '../themes/' ) ?>
+	<?php
+		$themes = ae_Settings::getListOfThemes( '../themes/' );
+		$theme_now = ae_Settings::get( 'theme' );
+	?>
 
 	<div class="setting">
 		<label for="set-blog-title">Blog title</label>
@@ -52,7 +55,7 @@ else {
 		<select name="theme">
 		<?php foreach( $themes as $t ): ?>
 			<?php $t = htmlspecialchars( $t ) ?>
-			<option value="<?php echo $t ?>"><?php echo $t ?></option>
+			<option value="<?php echo $t ?>"<?php if( $theme_now == $t ) { echo ' selected'; } ?>><?php echo $t ?></option>
 		<?php endforeach ?>
 		</select>
 	</div>
