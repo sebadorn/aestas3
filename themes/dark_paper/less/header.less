@@ -10,13 +10,7 @@ h1 {
 
 
 form.search {
-	box-sizing: border-box;
 	display: flex;
-	flex-basis: 0;
-	flex-grow: 1;
-	flex-shrink: 1;
-	position: relative;
-	top: 4px;
 	white-space: nowrap;
 }
 
@@ -56,30 +50,30 @@ form.search {
 		img {
 			border-radius: 50%;
 			height: 32px;
-			margin-right: 6px;
+			margin-right: 5px;
 			vertical-align: middle;
 			width: 32px;
-		}
-	}
-
-	a {
-		text-decoration: none;
-
-		&:hover {
-			//
 		}
 	}
 }
 
 .links {
 	list-style: none;
-	margin-left: 0;
+	margin: 0;
 
-	li {
+	a {
 		background-color: #272727;
 		border-radius: 3px;
+		box-sizing: content-box;
+		display: block;
 		margin-bottom: 5px;
 		padding: 10px 14px;
+		text-decoration: none;
+
+		&:hover {
+			background-color: #303030;
+			color: @linkColor;
+		}
 	}
 
 		.name {
@@ -87,18 +81,20 @@ form.search {
 		}
 
 		.icon-bg {
-			a {
+			.symbol {
 				background-image: url( "../img/icons-32.png" );
 				background-repeat: no-repeat;
 				display: inline-block;
 				height: 32px;
-			}
-
-			.name {
-				margin-left: 42px;
+				margin-right: 6px;
+				vertical-align: middle;
+				width: 32px;
 			}
 		}
 }
+
+	.icon-github { background-position: 0 -32px; }
+	.icon-twit { background-position: 0 0; }
 
 	.icon {
 		background: none;
@@ -106,8 +102,9 @@ form.search {
 		font-family: OpenIconic;
 	}
 
-	.icon-rss a {
-		&::before {
+	.icon-rss {
+		a::before {
+			color: @textColor;
 			content: "\e0b7";
 			font-family: OpenIconic;
 			font-size: 28px;
@@ -115,6 +112,3 @@ form.search {
 			vertical-align: middle;
 		}
 	}
-
-	.icon-github a { background-position: 0 -32px; }
-	.icon-twit a { background-position: 0 0; }
