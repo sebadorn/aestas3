@@ -46,14 +46,14 @@ article {
 		margin-right: 0;
 	}
 
-		.icon-add-before::before {
-			font-size: 14px;
-		}
-
 		div,
 		time {
 			display: inline-block;
 			margin-right: 24px;
+		}
+
+		.icon {
+			margin-right: 3px;
 		}
 }
 
@@ -93,11 +93,11 @@ article {
 		margin-right: 0;
 	}
 
-	&::before {
+	.icon {
 		font-size: 12px;
-		margin-right: 5px;
+		margin-right: 4px;
 		position: relative;
-		top: 2px;
+		top: 1px;
 	}
 }
 
@@ -135,6 +135,7 @@ article {
 	.illu {
 		border-radius: 4px;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: center;
 		line-height: 0;
 		margin-bottom: 24px;
@@ -196,7 +197,9 @@ article {
 
 .page-navigation {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
+	padding: 0 20px;
 	text-align: center;
 }
 

@@ -45,7 +45,6 @@ html {
 
 body {
 	background-color: @bgColorBody;
-	overflow-x: hidden;
 }
 
 a {
@@ -84,6 +83,7 @@ button, input, textarea {
 	border-width: 1px;
 	color: @textColor;
 	font-size: @fontSize;
+	outline: none;
 }
 
 code {
@@ -92,10 +92,11 @@ code {
 	font-family: @fontFamilyCode;
 	font-size: @fontSize - 1px;
 	padding: 2px 4px;
+	word-break: break-word;
 }
 
 // highlight.js
-pre.hljs, pre.plain, blockquote.code {
+pre.brush, pre.hljs, pre.plain, blockquote.code {
 	background-color: #272727;
 	color: #f0f0f0;
 	font-family: @fontFamilyCode;
@@ -226,26 +227,32 @@ blockquote.error {
 /* ---------------------------- */
 
 @media ( max-width: 800px ) {
-	.main-header {
-		display: block;
-	}
-
 	h1 {
-		font-size: 22px;
-		line-height: 22px;
-		margin-bottom: 15px;
+		font-size: 20px;
+		margin-bottom: 10px;
 	}
 
-	.about-me {
-		display: flex;
-		justify-content: center;
-		margin-bottom: 15px;
-		-webkit-transform: scale( 0.75 );
-		transform: scale( 0.75 );
+	.aside-meta {
+		float: none;
+		padding: 0 10px;
+
+		.links {
+			display: flex;
+			flex-wrap: wrap;
+
+			li {
+				flex-basis: 50%;
+			}
+		}
 	}
 
 	form.search {
-		justify-content: center;
+		margin: 12px 10px 0 10px;
+
+		.search-input {
+			flex-grow: 1;
+			width: auto;
+		}
 	}
 
 	.main-body {
@@ -264,18 +271,33 @@ blockquote.error {
 		line-height: 28px;
 	}
 
+	.post-footer {
+		margin-left: -20px;
+		margin-right: -20px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+
 	.main-footer {
 		font-size: 14px;
-		padding: 0 20px 60px;
+		margin-top: 60px;
+		padding: 0 20px 40px;
 
 		h6 {
 			font-size: 26px;
 			line-height: 26px;
-			margin-top: -5px;
 		}
 
 		div {
 			margin: 0 10px;
+		}
+
+		.stats {
+			display: initial;
+
+			.stat {
+				margin-right: 0;
+			}
 		}
 	}
 

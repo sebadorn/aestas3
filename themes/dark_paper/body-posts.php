@@ -62,7 +62,8 @@ $postList->loadCategories();
 		<h2><a href="<?php echo $post->getLink() ?>"><?php echo $post->getTitle() ?></a></h2>
 
 		<div class="post-info">
-			<time class="published icon-add-before icon-before-clock" datetime="<?php echo $post->getDatetime( 'Y-m-d' ) ?>">
+			<time class="published" datetime="<?php echo $post->getDatetime( 'Y-m-d' ) ?>">
+				<span class="icon far fa-clock"></span>
 				<span><?php echo $post->getDatetime( 'd.m.Y' ) ?></span>
 			</time>
 

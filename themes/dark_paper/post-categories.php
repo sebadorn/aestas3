@@ -10,7 +10,8 @@ foreach( $data as $ca ) {
 ksort( $caLinks );
 
 ?>
-<div class="post-categories icon-add-before icon-before-inbox">
+<div class="post-categories">
+	<span class="icon fa fa-inbox"></span>
 	<?php
 		foreach( $caLinks as $link ) {
 			echo $link;

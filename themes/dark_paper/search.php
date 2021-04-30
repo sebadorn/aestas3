@@ -31,20 +31,19 @@ $search->search( $_GET[PERMALINK_GET_SEARCH] );
 	<header class="post-header">
 		<h2><a href="<?php echo $post->getLink() ?>"><?php echo $post->getTitle() ?></a></h2>
 
-		<time class="published icon-add-before icon-before-clock" datetime="<?php echo $post->getDatetime( 'Y-m-d' ) ?>">
+		<time class="published" datetime="<?php echo $post->getDatetime( 'Y-m-d' ) ?>">
+			<span class="icon far fa-clock"></span>
 			<span><?php echo $post->getDatetime( 'd.m.Y' ) ?></span>
 		</time>
 
 		<?php $sb->render( 'post-categories.php', $post->getCategories() ) ?>
-
-		<div class="post-num-comments icon-add-before icon-before-comment">
-			<a href="<?php echo $post->getLink() ?>#comments"><?php echo $post->getNumComments() ?></a>
-		</div>
 	</header>
 
 	<footer class="post-footer">
 		<?php $sb->render( 'post-tags.php', $post->getTags() ) ?>
 	</footer>
 </article>
+
+<hr>
 
 <?php endwhile ?>
