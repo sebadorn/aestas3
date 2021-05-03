@@ -226,14 +226,15 @@ blockquote.error {
 /* Small screens/mobile devices */
 /* ---------------------------- */
 
-@media ( max-width: 800px ) {
+@media( max-width: 1650px ) {
 	h1 {
-		font-size: 20px;
-		margin-bottom: 10px;
+		margin-bottom: 20px;
 	}
 
 	.aside-meta {
 		float: none;
+		margin: 0 auto;
+		max-width: 720px;
 		padding: 0 10px;
 
 		.links {
@@ -253,6 +254,33 @@ blockquote.error {
 			flex-grow: 1;
 			width: auto;
 		}
+	}
+
+	.main-body {
+		padding-top: 40px !important;
+	}
+}
+
+@media( max-width: 1024px ) {
+	.illu {
+		left: 0;
+		max-width: 100%;
+		position: static;
+		width: 100% !important;
+
+		img,
+		video {
+			height: auto !important;
+			max-width: 100% !important;
+			width: auto !important;
+		}
+	}
+}
+
+@media( max-width: 800px ) {
+	h1 {
+		font-size: 20px;
+		margin-bottom: 10px;
 	}
 
 	.main-body {
@@ -298,20 +326,6 @@ blockquote.error {
 			.stat {
 				margin-right: 0;
 			}
-		}
-	}
-
-	.illu {
-		left: 0;
-		max-width: 100%;
-		position: static;
-		width: 100% !important;
-
-		img,
-		video {
-			height: auto !important;
-			max-width: 100% !important;
-			width: auto !important;
 		}
 	}
 }
