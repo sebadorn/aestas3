@@ -35,8 +35,12 @@ define( 'PERMALINK_GET_USER', 'author' );
 
 
 // Disable Magic Quotes (removed as of PHP 5.4)
-if( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
-	set_magic_quotes_runtime( FALSE );
+$phpVersion = explode( '.', phpversion() );
+
+if( $phpVersion[0] < 7 ) {
+	if( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
+		set_magic_quotes_runtime( FALSE );
+	}
 }
 
 // Disable register_globals (removed as of PHP 5.4)
