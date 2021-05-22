@@ -4,8 +4,7 @@ class ae_Security {
 
 
 	static protected $cfg = array(
-		'allowed_tags' => array( 'a', 'blockquote', 'code', 'del', 'em', 'strong' ),
-		'hash_iterations' => '04'
+		'allowed_tags' => array( 'a', 'blockquote', 'code', 'del', 'em', 'strong' )
 	);
 	static protected $validAreas = array(
 		'create', 'credits', 'dashboard', 'edit', 'manage', 'media', 'settings'
@@ -87,9 +86,7 @@ class ae_Security {
 	 * @return {string}        Generated hash.
 	 */
 	static public function hash( $input ) {
-		$phpass = new PasswordHash( self::$cfg['hash_iterations'], FALSE );
-
-		return $phpass->HashPassword( $input );
+		return password_hash( $input, PASSWORD_BCRYPT );
 	}
 
 
@@ -184,9 +181,7 @@ class ae_Security {
 	 * @return {boolean}       TRUE, if input matches hash, FALSE otherwise.
 	 */
 	static public function verify( $input, $hash ) {
-		$phpass = new PasswordHash( self::$cfg['hash_iterations'], FALSE );
-
-		return $phpass->CheckPassword( $input, $hash );
+		return password_verify( $input, $hash );
 	}
 
 

@@ -35,7 +35,7 @@ define( 'PERMALINK_GET_USER', 'author' );
 
 
 // Disable Magic Quotes (removed as of PHP 5.4)
-if( get_magic_quotes_runtime() ) {
+if( function_exists( 'get_magic_quotes_runtime' ) && get_magic_quotes_runtime() ) {
 	set_magic_quotes_runtime( FALSE );
 }
 

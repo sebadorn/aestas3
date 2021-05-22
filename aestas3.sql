@@ -165,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `ae_settings` (
 
 CREATE TABLE IF NOT EXISTS `ae_users` (
   `u_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `u_pwd` varchar(80) NOT NULL,
+  `u_pwd` varchar(255) NOT NULL,
   `u_name_intern` varchar(255) NOT NULL,
   `u_name_extern` varchar(255) DEFAULT NULL,
   `u_permalink` varchar(255) NOT NULL,

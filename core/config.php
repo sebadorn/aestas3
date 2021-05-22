@@ -24,8 +24,7 @@ $dbSettings = array(
 // Security
 
 $securitySettings = array(
-	'allowed_tags' => array( 'a', 'blockquote', 'code', 'del', 'em', 'strong' ),
-	'hash_iterations' => '09' // between 04-31
+	'allowed_tags' => array( 'a', 'blockquote', 'code', 'del', 'em', 'strong' )
 );
 
 

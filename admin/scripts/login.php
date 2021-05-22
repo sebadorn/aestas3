@@ -33,7 +33,6 @@ else if( $u['hits'] == '1' && $u['u_id'] >= 0 && ae_Security::verify( $_POST['us
 	exit;
 }
 
-
 if( ae_Log::hasMessages() ) {
 	ae_Log::printAll();
 }
