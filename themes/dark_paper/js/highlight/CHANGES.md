@@ -1,11 +1,151 @@
-## Version 10.7.2
+## Version 11.0.0
 
-This is a patch release.  The only change is that deprecation messages
-are throttled and shown only once.
+**This is a major release.**  As such it contains breaking changes which may require action from users.  Please read [VERSION_11_UPGRADE.md](https://github.com/highlightjs/highlight.js/blob/main/VERSION_11_UPGRADE.md) for a detailed summary of all breaking changes.
 
+### Potentially breaking changes
+
+Unless otherwise attributed items below are thanks to [Josh Goebel][] (ref: [#2558](https://github.com/highlightjs/highlight.js/issues/2558)).
+
+*The below list should only be considered to be a high-level summary.*
+
+Deprecations / Removals / API Changes:
+
+- `initHighlighting()` and `initHighlightingOnLoad()` deprecated. **Use `highlightAll()`.**
+- `highlightBlock(el)` deprecated. **Use `highlightElement(el)`**
+- `before:highlightBlock` & `after:highlightBlock` callbacks deprecated. **Use  equivalent `highlightElement` callbacks.**
+- `highlight(languageName, code, ignoreIllegals, continuation)` signature deprecated. **Use `highlight(code, {language, ignoreIllegals})`.**
+- Deprecated `highlight()` signature no longer supports `continuation` argument.
+- `tabReplace` option removed. Consider a plugin.
+- `useBR` option removed. Consider a plugin or CSS.
+- `requireLanguage()` removed. **Use `getLanguage()`.**
+- `endSameAsBegin` mode key removed. **Use `hljs.END_SAME_AS_BEGIN`.**
+- `lexemes` mode key removed. **Use `keywords.$pattern`.**
+- The return values/keys of some APIs have changed slightly.
+
+Security:
+
+- HTML auto-passthru has been removed. Consider a plugin.
+- Unescaped HTML is now stripped (for security). A warning is logged to the console. (#3057) [Josh Goebel][]
+
+Themes:
+
+- The default padding of all themes increases (0.5em => 1em).
+- `schoolbook` has been updated to remove the lined background.
+- `github` updated to better match modern GitHub (#1616) [Jan Pilzer][]
+- `github-gist` has been removed in favor of `github` [Jan Pilzer][]
+- Base16 named themes have been updated to their "canonical" versions
+- `nnfx` updated for v11 xml styles and improved css support
+
+Language Grammars:
+
+- Default CDN build drops support for several languages.
+- Some language grammar files have been removed.
+- Some redundant language aliases have been removed.
+
+### Other changes
+
+Parser:
+
+- enh(vala) improve language detection for Vala (#3195) [Konrad Rudolph][]
+- enh(r) add support for operators, fix number highlighting bug (#3194, #3195) [Konrad Rudolph][]
+- enh(parser) add `beginScope` and `endScope` to allow separate scoping begin and end (#3159) [Josh Goebel][]
+- enh(parsed) `endScope` now supports multi-class matchers as well (#3159) [Josh Goebel][]
+- enh(parser) `highlightElement` now always tags blocks with a consistent `language-[name]` class [Josh Goebel][]
+  - subLanguage `span` tags now also always have the `language-` prefix added
+- enh(parser) support multi-class matchers (#3081) [Josh Goebel][]
+- enh(parser) Detect comments based on english like text, rather than keyword list [Josh Goebel][]
+- adds `title.class.inherited` sub-scope support [Josh Goebel][]
+- adds `title.class` sub-scope support (#3078) [Josh Goebel][]
+- adds `title.function` sub-scope support (#3078) [Josh Goebel][]
+- adds `beforeMatch` compiler extension (#3078) [Josh Goebel][]
+- adds `cssSelector ` configuration option (#3180) [James Edington][]
+
+Grammars:
+
+- enh(all) `.meta-keyword` => `.meta .keyword` (nested scopes) (#3167) [Josh Goebel][]
+- enh(all) `.meta-string` => `.meta .string` (nested scopes) (#3167) [Josh Goebel][]
+- enh(swift) add `actor` keyword (#3171) [Bradley Mackey][]
+- enh(crystal) highlight variables (#3154) [Josh Goebel][]
+- fix(ruby) Heredoc without interpolation (#3154) [Josh Goebel][]
+- enh(swift) add `@resultBuilder` attribute (#3151) [Bradley Mackey][]
+- enh(processing) added `pde` alias (#3142) [Dylan McBean][]
+- enh(thrift) Use proper scope for types [Josh Goebel][]
+- enh(java) Simplified class-like matcher (#3078) [Josh Goebel][]
+- enh(cpp) Simplified class-like matcher (#3078) [Josh Goebel][]
+- enh(rust) Simplified class-like matcher (#3078) [Josh Goebel][]
+- enh(actionscript) Simplified class-like matcher (#3078) [Josh Goebel][]
+- enh(arcade) `function.title` => `title.function` (#3078) [Josh Goebel][]
+- enh(autoit) `function.title` => `title.function` (#3078) [Josh Goebel][]
+- enh(c) `function.title` => `title.function` (#3078) [Josh Goebel][]
+- enh(rust) support function invoke and `impl` (#3078) [Josh Goebel][]
+- chore(properties) disable auto-detection #3102 [Josh Goebel][]
+- fix(properties) fix incorrect handling of non-alphanumeric keys #3102 [Egor Rogov][]
+- enh(java) support functions with nested template types (#2641) [Josh Goebel][]
+- enh(java) highlight types and literals separate from keywords (#3074) [Josh Goebel][]
+- enh(shell) add alias ShellSession [Ryan Mulligan][]
+- enh(shell) consider one space after prompt as part of prompt [Ryan Mulligan][]
+- fix(nginx) fix bug with $ and @ variables [Josh Goebel][]
+- enh(nginx) improving highlighting of some sections [Josh Goebel][]
+- fix(vim) variable names may not be zero length [Josh Goebel][]
+- enh(sqf) Updated keywords to Arma 3 v2.02 (#3084) [R3voA3][]
+- enh(sqf) Refactored function regex to match CBA component func naming scheme (#3181) [JonBons][]
+- enh(nim) highlight types properly (not as built-ins) [Josh Goebel][]
 - (chore) throttle deprecation messages (#3092) [Mihkel Eidast][]
+- enh(c) Update keyword list for C11/C18 (#3010) [Josh Goebel][]
+- enh(parser) highlight object properties (#3072) [Josh Goebel][]
+- enh(javascript/typescript) highlight object properties (#3072) [Josh Goebel][]
+- enh(haskell) add support for BinaryLiterals (#3150) [Martijn Bastiaan][]
+- enh(haskell) add support for NumericUnderscores (#3150) [Martijn Bastiaan][]
+- enh(haskell) add support for HexFloatLiterals (#3150) [Martijn Bastiaan][]
+- fix(c,cpp) allow declaring multiple functions and (for C++) parenthetical initializers (#3155) [Erik Demaine][]
+- enh(rust) highlight raw byte string literals correctly (#3173) [Nico Abram][]
+- fix(cpp) fix detection of common functions that are function templates (#3178) [Kris van Rens][]
+- enh(cpp) add various keywords and commonly used types for hinting (#3178) [Kris van Rens][]
+- enh(cpp) cleanup reserved keywords and type lists (#3178) [Kris van Rens][]
 
-[Mihkel Eidast]: https://github.com/mihkeleidast
+New Languages:
+
+- Added 3rd party Glimmer grammar to SUPPORTED_LANGUAGES(#3123) [NullVoxPopuli][]
+- Added Wren support [Josh Goebel][]
+- Added NestedText support [Josh Goebel][]
+- Added WebAssembly language grammar [Josh Goebel][]
+- Added 3rd party Splunk search processing language grammar to SUPPORTED_LANGUAGES (#3090) [Wei Su][]
+- Added 3rd party ZenScript grammar to SUPPORTED_LANGUAGES(#3106) [Jared Luboff][]
+- Added 3rd party Papyrus grammar to SUPPORTED_LANGUAGES(#3125) [Mike Watling][]
+
+Theme Improvements:
+
+- Added all official Base16 themes (over 150 new themes) [Josh Goebel][]
+- chore(themes) remove `builtin-name` CSS class (#3119) [Josh Goebel][]
+- chore(theme) Update GitHub theme css to match GitHub's current styling (#1616) [Jan Pilzer][]
+- chore(theme) Update Srcery theme css to match its Emacs implementation [Chen Bin][]
+
+New Themes:
+
+- DeviBeans Dark by [Farzad Sadeghi][]
+- GitHub Dark and GitHub Dark Dimmed [Jan Pilzer][]
+
+Dev Improvements:
+
+- (chore) greatly improve match scope visualization in dev tool (#3126) [NullVoxPopuli][]
+- (fix) CSS used for devtool needed an adjustment to fix too wide of content (#3133) [NullVoxPopuli][]
+
+[Farzad Sadeghi]: https://github.com/terminaldweller
+[Martijn Bastiaan]: https://github.com/martijnbastiaan
+[Bradley Mackey]: https://github.com/bradleymackey
+[Dylan McBean]: https://github.com/DylanMcBean
+[Josh Goebel]: https://github.com/joshgoebel
+[Ryan Mulligan]: https://github.com/ryantm
+[R3voA3]: https://github.com/R3voA3
+[JonBons]: https://github.com/JonBons
+[Wei Su]: https://github.com/swsoyee
+[Jared Luboff]: https://github.com/jaredlll08
+[NullVoxPopuli]: https://github.com/NullVoxPopuli
+[Mike Watling]: https://github.com/Pickysaurus
+[Nico Abram]: https://github.com/nico-abram
+[James Edington]: http://www.ishygddt.xyz/
+[Jan Pilzer]: https://github.com/Hirse
+[Kris van Rens]: https://github.com/krisvanrens
 
 
 ## Version 10.7.1
@@ -16,6 +156,7 @@ are throttled and shown only once.
 
 Parser:
 
+- keywords now have a maximum # of times they provide relevance (#3129) [Josh Goebel][]
 - enh(api) add `unregisterLanguage` method (#3009) [Antoine du Hamel][]
 - enh: Make alias registration case insensitive (#3026) [David Ostrovsky][]
 - fix(parser) `highlightAll()` now works if the library is lazy loaded [Josh Goebel][]
@@ -28,6 +169,11 @@ New Languages:
 
 Language grammar improvements:
 
+- enh(js/ts) class references (CamelCase) are highlighted (#3169) [Josh Goebel][]
+- enh(js/ts) constants (ALL_CAPS) are highlighted (#3169) [Josh Goebel][]
+- enh(js/ts) highlights function invokation (#3169) [Josh Goebel][]
+- enh(js/ts) functions assigned to variables are now highlighted `title.function` (#3169) [Josh Goebel][]
+- enh(parser) smarter detection of comments (#2827) [Josh Goebel][]
 - fix(python) allow keywords immediately following numbers (#2985) [Josh Goebel][]
 - fix(xml) char immediately following tag close mis-highlighted (#3044) [Josh Goebel][]
 - fix(ruby) fix `defined?()` mis-highlighted as `def` (#3025) [Josh Goebel][]
@@ -60,6 +206,7 @@ Deprecations:
   - Plugin callbacks renamed `before/after:highlightBlock` => `before/after:highlightElement`
   - Plugin callback now takes `el` vs `block` attribute
   - The old API and callbacks will be supported until v12.
+
 
 [Stef Levesque]: https://github.com/stef-levesque
 [Josh Goebel]: https://github.com/joshgoebel
@@ -117,6 +264,7 @@ Deprecations:
 [Josh Goebel]: https://github.com/joshgoebel
 [Vaibhav Chanana]: https://github.com/il3ven
 [davidhcefx]: https://github.com/davidhcefx
+[Jan Pilzer]: https://github.com/Hirse
 
 
 ## Version 10.5.0
@@ -753,6 +901,7 @@ Language Improvements:
 [Mike Schall]: https://github.com/schallm
 [Kirill Saksin]: https://github.com/saksmt
 [Samia Ali]:https://github.com/samiaab1990
+[Erik Demaine]:https://github.com/edemaine
 
 
 ## Version 9.16.2

@@ -2,7 +2,8 @@
 
 
 window.addEventListener( 'load', function() {
-	var script = document.getElementById( 'script-init' );
+	hljs.registerAliases( ['plain'], { languageName: 'plaintext' } );
+
 	var codeBlocks = document.querySelectorAll( 'pre' );
 
 	for( var i = 0; i < codeBlocks.length; i++ ) {
@@ -10,7 +11,7 @@ window.addEventListener( 'load', function() {
 		var cls = block.className;
 
 		if( cls.indexOf( 'hljs' ) < 0 ) {
-			block.className = cls.replace( 'brush:', '' ).trim();
+			block.className = cls.replace( /brush:[ ]?/, 'language-' ).trim();
 			hljs.highlightElement( block );
 		}
 	}

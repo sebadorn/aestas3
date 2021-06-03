@@ -15,6 +15,6 @@
 	<link rel="stylesheet" href="<?php echo THEME_PATH ?>css/style.css?v=6" />
 	<link rel="stylesheet" href="<?php echo THEME_PATH ?>js/highlight/styles/stackoverflow-dark.css" />
 	<link rel="alternate" type="application/rss+xml" title="Neue Einträge (RSS)" href="<?php echo URL ?>feed/" />
-	<script src="<?php echo THEME_PATH ?>js/highlight/highlight.pack.js"></script>
-	<script src="<?php echo THEME_PATH ?>js/init.js" id="script-init"></script>
+	<script src="<?php echo THEME_PATH ?>js/highlight/highlight.min.js"></script>
+	<script src="<?php echo THEME_PATH ?>js/init.js"></script>
 </head>
