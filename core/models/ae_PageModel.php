@@ -24,6 +24,9 @@ class ae_PageModel extends ae_Model {
 	protected $title = '';
 	protected $userId = 0;
 
+	protected $socialId = NULL;
+	protected $socialData = array();
+
 
 	/**
 	 * Constructor.
@@ -31,6 +34,88 @@ class ae_PageModel extends ae_Model {
 	 */
 	public function __construct( $data = array() ) {
 		$this->loadFromData( $data );
+	}
+
+
+	/**
+	 *
+	 */
+	protected function createSocial() {
+		if( empty( $this->socialData ) ) {
+			return;
+		}
+
+		$params = array(
+			':tw_title' => $this->socialData['tw_title'],
+			':tw_desc' => $this->socialData['tw_desc'],
+			':tw_image' => $this->socialData['tw_image']
+		);
+
+		$stmt = '
+			INSERT INTO `' . AE_TABLE_SOCIAL . '` (
+				soc_tw_title,
+				soc_tw_desc,
+				soc_tw_image
+			) VALUES (
+				:tw_title,
+				:tw_desc,
+				:tw_image
+			)
+		';
+
+		if( ae_Database::query( $stmt, $params ) === FALSE ) {
+			return;
+		}
+
+		$this->socialId = $this->getLastInsertedSocialId();
+
+		$params = array(
+			':id' => $this->getId(),
+			':social' => $this->socialId
+		);
+
+		$class = get_class( $this );
+		$table = constant( $class . '::TABLE' );
+		$prefix = 'pa';
+
+		if( $table == AE_TABLE_POSTS ) {
+			$prefix = 'po';
+		}
+
+		$stmt = '
+			UPDATE `' . $table . '`
+			SET ' . $prefix . '_social = :social
+			WHERE ' . $prefix . '_id = :id
+		';
+
+		ae_Database::query( $stmt, $params );
+	}
+
+
+	/**
+	 * Delete the loaded post and its social.
+	 * @return {boolean} FALSE, if deletion failed,
+	 *                   TRUE otherwise (including the case that the model doesn't exist).
+	 */
+	public function delete() {
+		if( !parent::delete() ) {
+			return FALSE;
+		}
+
+		$successSocial = TRUE;
+
+		if( $this->getSocialId() !== NULL ) {
+			$stmt = '
+				DELETE FROM `' . AE_TABLE_SOCIAL . '`
+				WHERE soc_id = :id
+			';
+			$params = array(
+				':id' => $this->getSocialId()
+			);
+			$successSocial = ae_Database::query( $stmt, $params ) !== FALSE;
+		}
+
+		return $successSocial;
 	}
 
 
@@ -86,6 +171,25 @@ class ae_PageModel extends ae_Model {
 
 
 	/**
+	 * Get the last inserted social ID.
+	 * @return {int|boolean} The ID on success, FALSE on failure.
+	 */
+	public function getLastInsertedSocialId() {
+		$stmt = '
+			SELECT DISTINCT LAST_INSERT_ID() as id
+			FROM `' . AE_TABLE_SOCIAL . '`
+		';
+		$result = ae_Database::query( $stmt );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		return (int) $result[0]['id'];
+	}
+
+
+	/**
 	 * Get complete permalink for the page (not including the domain and directory).
 	 * @param  {string} $urlBase URL base of the link. (Optional, defaults to constant "URL".)
 	 * @return {string}          Complete permalink.
@@ -109,6 +213,24 @@ class ae_PageModel extends ae_Model {
 	 */
 	public function getPermalink() {
 		return $this->permalink;
+	}
+
+
+	/**
+	 * Get social data.
+	 * @return {array}
+	 */
+	public function getSocialData() {
+		return $this->socialData;
+	}
+
+
+	/**
+	 * Get the social data Id.
+	 * @return {?int}
+	 */
+	public function getSocialId() {
+		return $this->socialId;
 	}
 
 
@@ -208,6 +330,9 @@ class ae_PageModel extends ae_Model {
 		if( isset( $data['pa_user'] ) ) {
 			$this->setUserId( $data['pa_user'] );
 		}
+		if( isset( $data['pa_social'] ) ) {
+			$this->setSocialId( $data['pa_social'] );
+		}
 	}
 
 
@@ -237,6 +362,69 @@ class ae_PageModel extends ae_Model {
 
 
 	/**
+	 * Load social data.
+	 * @return {boolean} TRUE, if loading succeeded, FALSE otherwise.
+	 */
+	public function loadSocial() {
+		if( $this->socialId === NULL ) {
+			return FALSE;
+		}
+
+		if( !ae_Validate::id( $this->socialId ) ) {
+			throw new Exception( '[' . get_class() . '] Cannot load social data. No valid id.' );
+		}
+
+		$stmt = '
+			SELECT * FROM `' . AE_TABLE_SOCIAL . '`
+			WHERE soc_id = :id
+		';
+		$params = array(
+			':id' => $this->socialId
+		);
+
+		$result = ae_Database::query( $stmt, $params );
+
+		if( $result === FALSE ) {
+			return FALSE;
+		}
+
+		$this->socialData = $result[0];
+
+		return TRUE;
+	}
+
+
+	/**
+	 *
+	 * @param {string} $type - "twitter"
+	 */
+	public function renderSocial( $type ) {
+		if( $type == 'twitter' ) {
+			$title = isset( $this->socialData['soc_tw_title'] ) ? $this->socialData['soc_tw_title'] : NULL;
+
+			// Required attributes.
+			if( !$title ) {
+				return;
+			}
+
+			$desc = isset( $this->socialData['soc_tw_desc'] ) ? $this->socialData['soc_tw_desc'] : NULL;
+			$image = isset( $this->socialData['soc_tw_image'] ) ? $this->socialData['soc_tw_image'] : NULL;
+
+			echo '<meta name="twitter:card" content="summary" />' . PHP_EOL;
+			echo '<meta name="twitter:title" content="' . addslashes( $title ) . '" />' . PHP_EOL;
+
+			if( $desc ) {
+				echo '<meta name="twitter:description" content="' . addslashes( $desc ) . '" />' . PHP_EOL;
+			}
+
+			if( $image ) {
+				echo '<meta name="twitter:image" content="' . addslashes( $image ) . '" />' . PHP_EOL;
+			}
+		}
+	}
+
+
+	/**
 	 * Save the page to DB. If an ID is set, it will update
 	 * the page, otherwise it will create a new one.
 	 * @param  {boolean}   $forceInsert If set to TRUE and an ID has been set, the model will be saved
@@ -262,6 +450,7 @@ class ae_PageModel extends ae_Model {
 			':desc' => $this->desc,
 			':datetime' => $this->datetime,
 			':user' => $this->userId,
+			':social' => $this->socialId,
 			':comments' => $this->commentsStatus,
 			':status' => $this->status
 		);
@@ -276,6 +465,7 @@ class ae_PageModel extends ae_Model {
 					pa_desc,
 					pa_datetime,
 					pa_user,
+					pa_social,
 					pa_comments,
 					pa_status
 				) VALUES (
@@ -285,6 +475,7 @@ class ae_PageModel extends ae_Model {
 					:desc,
 					:datetime,
 					:user,
+					:social,
 					:comments,
 					:status
 				)
@@ -301,6 +492,7 @@ class ae_PageModel extends ae_Model {
 					pa_desc,
 					pa_datetime,
 					pa_user,
+					pa_social,
 					pa_comments,
 					pa_status
 				) VALUES (
@@ -311,6 +503,7 @@ class ae_PageModel extends ae_Model {
 					:desc,
 					:datetime,
 					:user,
+					:social,
 					:comments,
 					:status
 				)
@@ -328,6 +521,7 @@ class ae_PageModel extends ae_Model {
 					pa_datetime = :datetime,
 					pa_edit = :editDatetime,
 					pa_user = :user,
+					pa_social = :social,
 					pa_comments = :comments,
 					pa_status = :status
 				WHERE
@@ -348,6 +542,10 @@ class ae_PageModel extends ae_Model {
 		// If a new page was created, get the new ID
 		if( $this->id === FALSE ) {
 			$this->setId( $this->getLastInsertedId() );
+			$this->createSocial();
+		}
+		else {
+			$this->updateSocial();
 		}
 
 		return TRUE;
@@ -432,6 +630,44 @@ class ae_PageModel extends ae_Model {
 
 
 	/**
+	 *
+	 * @param {?array} $socialData
+	 */
+	public function setSocialData( $socialData ) {
+		if( $socialData === NULL ) {
+			$socialData = array();
+		}
+
+		if( !is_array( $socialData ) ) {
+			$msg = sprintf( '[%s] Expected social data to be an array or NULL.', get_class() );
+			throw new Exception( $msg );
+		}
+
+		$this->socialData = $socialData;
+	}
+
+
+	/**
+	 * Set the page social Id.
+	 * @param  {?int} $socialId
+	 * @throws {Exception}
+	 */
+	public function setSocialId( $socialId ) {
+		if( $socialId === NULL ) {
+			$this->socialId = NULL;
+			return;
+		}
+
+		if( !ae_Validate::id( $socialId ) ) {
+			$msg = sprintf( '[%s] Not a valid social ID: %s', get_class(), $socialId );
+			throw new Exception( $msg );
+		}
+
+		$this->socialId = (int) $socialId;
+	}
+
+
+	/**
 	 * Set page status.
 	 * @param  {string}    $status Page status.
 	 * @throws {Exception}         If $status is not a valid page status.
@@ -468,6 +704,35 @@ class ae_PageModel extends ae_Model {
 		}
 
 		$this->userId = (int) $userId;
+	}
+
+
+	/**
+	 *
+	 */
+	protected function updateSocial() {
+		if( !$this->socialId ) {
+			$this->createSocial();
+		}
+		else {
+			$params = array(
+				':soc_id' => $this->socialId,
+				':tw_title' => $this->socialData['tw_title'],
+				':tw_desc' => $this->socialData['tw_desc'],
+				':tw_image' => $this->socialData['tw_image']
+			);
+
+			$stmt = '
+				UPDATE `' . AE_TABLE_SOCIAL . '` SET
+					soc_tw_title = :tw_title,
+					soc_tw_desc = :tw_desc,
+					soc_tw_image = :tw_image
+				WHERE
+					soc_id = :soc_id
+			';
+
+			ae_Database::query( $stmt, $params );
+		}
 	}
 
 

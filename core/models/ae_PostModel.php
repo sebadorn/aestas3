@@ -33,7 +33,7 @@ class ae_PostModel extends ae_PageModel {
 
 
 	/**
-	 * Delete the loaded post and its relations with categories.
+	 * Delete the loaded post and its relations with categories and social.
 	 * @return {boolean} FALSE, if deletion failed,
 	 *                   TRUE otherwise (including the case that the model doesn't exist).
 	 */
@@ -42,6 +42,9 @@ class ae_PostModel extends ae_PageModel {
 			return FALSE;
 		}
 
+		$successCategories = TRUE;
+		$successSocial = TRUE;
+
 		$stmt = '
 			DELETE FROM `' . AE_TABLE_POSTS2CATEGORIES . '`
 			WHERE pc_post = :id
@@ -49,8 +52,20 @@ class ae_PostModel extends ae_PageModel {
 		$params = array(
 			':id' => $this->getId()
 		);
+		$successCategories = ae_Database::query( $stmt, $params ) !== FALSE;
 
-		return ( ae_Database::query( $stmt, $params ) !== FALSE );
+		if( $this->getSocialId() !== NULL ) {
+			$stmt = '
+				DELETE FROM `' . AE_TABLE_SOCIAL . '`
+				WHERE soc_id = :id
+			';
+			$params = array(
+				':id' => $this->getSocialId()
+			);
+			$successSocial = ae_Database::query( $stmt, $params ) !== FALSE;
+		}
+
+		return $successCategories && $successSocial;
 	}
 
 
@@ -277,6 +292,9 @@ class ae_PostModel extends ae_PageModel {
 		if( isset( $data['po_user'] ) ) {
 			$this->setUserId( $data['po_user'] );
 		}
+		if( isset( $data['po_social'] ) ) {
+			$this->setSocialId( $data['po_social'] );
+		}
 	}
 
 
@@ -342,6 +360,7 @@ class ae_PostModel extends ae_PageModel {
 			':datetime' => $this->datetime,
 			':tags' => $this->tags,
 			':user' => $this->userId,
+			':social' => $this->socialId,
 			':comments' => $this->commentsStatus,
 			':status' => $this->status
 		);
@@ -357,6 +376,7 @@ class ae_PostModel extends ae_PageModel {
 					po_datetime,
 					po_tags,
 					po_user,
+					po_social,
 					po_comments,
 					po_status
 				) VALUES (
@@ -367,6 +387,7 @@ class ae_PostModel extends ae_PageModel {
 					:datetime,
 					:tags,
 					:user,
+					:social,
 					:comments,
 					:status
 				)
@@ -384,6 +405,7 @@ class ae_PostModel extends ae_PageModel {
 					po_datetime,
 					po_tags,
 					po_user,
+					po_social,
 					po_comments,
 					po_status
 				) VALUES (
@@ -395,6 +417,7 @@ class ae_PostModel extends ae_PageModel {
 					:datetime,
 					:tags,
 					:user,
+					:social,
 					:comments,
 					:status
 				)
@@ -413,6 +436,7 @@ class ae_PostModel extends ae_PageModel {
 					po_edit = :editDatetime,
 					po_tags = :tags,
 					po_user = :user,
+					po_social = :social,
 					po_comments = :comments,
 					po_status = :status
 				WHERE
@@ -433,6 +457,10 @@ class ae_PostModel extends ae_PageModel {
 		// If a new post was created, get the new ID
 		if( $this->id === FALSE ) {
 			$this->setId( $this->getLastInsertedId() );
+			$this->createSocial();
+		}
+		else {
+			$this->updateSocial();
 		}
 
 		return TRUE;

@@ -1,11 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.5.2
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Oct 13, 2014 at 08:07 PM
--- Server version: 5.5.25a
--- PHP Version: 5.4.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -23,10 +15,10 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ae_categories`
+-- Table structure for table `ae3_categories`
 --
 
-CREATE TABLE IF NOT EXISTS `ae_categories` (
+CREATE TABLE IF NOT EXISTS `ae3_categories` (
   `ca_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ca_title` varchar(255) NOT NULL,
   `ca_permalink` varchar(255) NOT NULL,
@@ -39,10 +31,10 @@ CREATE TABLE IF NOT EXISTS `ae_categories` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ae_commentfilters`
+-- Table structure for table `ae3_commentfilters`
 --
 
-CREATE TABLE IF NOT EXISTS `ae_commentfilters` (
+CREATE TABLE IF NOT EXISTS `ae3_commentfilters` (
   `cf_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `cf_name` varchar(80) NOT NULL,
   `cf_target` enum('ip','name','email','url','content') NOT NULL,
@@ -55,10 +47,10 @@ CREATE TABLE IF NOT EXISTS `ae_commentfilters` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ae_comments`
+-- Table structure for table `ae3_comments`
 --
 
-CREATE TABLE IF NOT EXISTS `ae_comments` (
+CREATE TABLE IF NOT EXISTS `ae3_comments` (
   `co_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `co_ip` tinytext NOT NULL,
   `co_post` int(11) NOT NULL,
@@ -76,10 +68,10 @@ CREATE TABLE IF NOT EXISTS `ae_comments` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ae_media`
+-- Table structure for table `ae3_media`
 --
 
-CREATE TABLE IF NOT EXISTS `ae_media` (
+CREATE TABLE IF NOT EXISTS `ae3_media` (
   `m_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `m_name` varchar(255) NOT NULL,
   `m_datetime` datetime NOT NULL,
@@ -93,11 +85,11 @@ CREATE TABLE IF NOT EXISTS `ae_media` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ae_pages`
+-- Table structure for table `ae3_pages`
 --
 
-CREATE TABLE IF NOT EXISTS `ae_pages` (
-  `pa_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `ae3_pages` (
+  `pa_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `pa_title` text NOT NULL,
   `pa_permalink` varchar(255) NOT NULL,
   `pa_content` longtext,
@@ -105,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `ae_pages` (
   `pa_datetime` datetime NOT NULL,
   `pa_edit` datetime DEFAULT NULL,
   `pa_user` smallint(6) NOT NULL,
+  `pa_social` int(10) unsigned DEFAULT NULL,
   `pa_comments` enum('open','closed','disabled') NOT NULL DEFAULT 'open',
   `pa_status` enum('published','draft','trash') NOT NULL DEFAULT 'draft',
   PRIMARY KEY (`pa_id`),
@@ -114,10 +107,10 @@ CREATE TABLE IF NOT EXISTS `ae_pages` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ae_posts`
+-- Table structure for table `ae3_posts`
 --
 
-CREATE TABLE IF NOT EXISTS `ae_posts` (
+CREATE TABLE IF NOT EXISTS `ae3_posts` (
   `po_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `po_title` text NOT NULL,
   `po_permalink` varchar(255) NOT NULL,
@@ -127,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `ae_posts` (
   `po_edit` datetime DEFAULT NULL,
   `po_tags` text,
   `po_user` smallint(6) NOT NULL,
+  `po_social` int(10) unsigned DEFAULT NULL,
   `po_comments` enum('open','closed','disabled') NOT NULL DEFAULT 'open',
   `po_status` enum('published','draft','trash') NOT NULL DEFAULT 'draft',
   PRIMARY KEY (`po_id`),
@@ -136,10 +130,10 @@ CREATE TABLE IF NOT EXISTS `ae_posts` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ae_posts2categories`
+-- Table structure for table `ae3_posts2categories`
 --
 
-CREATE TABLE IF NOT EXISTS `ae_posts2categories` (
+CREATE TABLE IF NOT EXISTS `ae3_posts2categories` (
   `pc_post` int(11) NOT NULL,
   `pc_category` int(11) NOT NULL,
   UNIQUE KEY `pc_post` (`pc_post`,`pc_category`)
@@ -148,10 +142,10 @@ CREATE TABLE IF NOT EXISTS `ae_posts2categories` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ae_settings`
+-- Table structure for table `ae3_settings`
 --
 
-CREATE TABLE IF NOT EXISTS `ae_settings` (
+CREATE TABLE IF NOT EXISTS `ae3_settings` (
   `s_key` varchar(255) NOT NULL,
   `s_value` varchar(255) NOT NULL,
   PRIMARY KEY (`s_key`)
@@ -160,10 +154,10 @@ CREATE TABLE IF NOT EXISTS `ae_settings` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `ae_users`
+-- Table structure for table `ae3_users`
 --
 
-CREATE TABLE IF NOT EXISTS `ae_users` (
+CREATE TABLE IF NOT EXISTS `ae3_users` (
   `u_id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `u_pwd` varchar(255) NOT NULL,
   `u_name_intern` varchar(255) NOT NULL,
@@ -173,6 +167,16 @@ CREATE TABLE IF NOT EXISTS `ae_users` (
   PRIMARY KEY (`u_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ae3_social`
+--
+
+CREATE TABLE IF NOT EXISTS `ae3_social` (
+  `soc_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `soc_tw_title` varchar(255) DEFAULT NULL,
+  `soc_tw_desc` varchar(255) DEFAULT NULL,
+  `soc_tw_image` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`soc_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

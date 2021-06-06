@@ -26,7 +26,7 @@ class ae_Forms {
 			$templateInput .= '<input type="checkbox" name="%s[]" value="%s" id="ca-%s" />' . PHP_EOL;
 		}
 		else if( $inputType == self::INPUT_RADIO ) {
-			$templateInput .= '<input type="radio" name="%s" value="%s" id="ca-%s" />' . PHP_EOL;;
+			$templateInput .= '<input type="radio" name="%s" value="%s" id="ca-%s" />' . PHP_EOL;
 		}
 
 		$out = '<ol class="choose-categories">' . PHP_EOL;

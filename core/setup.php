@@ -11,6 +11,7 @@ define( 'AE_TABLE_PAGES', $dbSettings['table_prefix'] . 'pages' );
 define( 'AE_TABLE_POSTS', $dbSettings['table_prefix'] . 'posts' );
 define( 'AE_TABLE_POSTS2CATEGORIES', $dbSettings['table_prefix'] . 'posts2categories' );
 define( 'AE_TABLE_SETTINGS', $dbSettings['table_prefix'] . 'settings' );
+define( 'AE_TABLE_SOCIAL', $dbSettings['table_prefix'] . 'social' );
 define( 'AE_TABLE_USERS', $dbSettings['table_prefix'] . 'users' );
 define( 'AE_VERSION', '3' );
 define( 'COMMENT_DEFAULT_NAME', $commentSettings['default_name'] );
