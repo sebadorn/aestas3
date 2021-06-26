@@ -6,9 +6,9 @@
 <?php endif ?>
 	<title><?php echo $title ?></title>
 <?php if( isset( $post ) && $post !== FALSE && $post->hasDescription() ): ?>
-	<meta name="description" content="<?php addslashes( $post->getDescription() ) ?>" />
+	<meta name="description" content="<?php echo addslashes( $post->getDescription() ) ?>" />
 <?php elseif( isset( $page ) && $page !== FALSE && $page->hasDescription() ): ?>
-	<meta name="description" content="<?php addslashes( $page->getDescription() ) ?>" />
+	<meta name="description" content="<?php echo addslashes( $page->getDescription() ) ?>" />
 <?php endif ?>
 	<link rel="icon" href="<?php echo THEME_PATH ?>img/favicon-192.png" type="image/png" sizes="192x192" />
 	<link rel="icon" href="<?php echo THEME_PATH ?>img/favicon-32.png" type="image/png" sizes="32x32" />

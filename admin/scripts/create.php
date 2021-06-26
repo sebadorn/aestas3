@@ -132,7 +132,7 @@ function createPage() {
 	}
 
 	if( isset( $_POST['page-desc'] ) ) {
-		$page->setDescription( $POST['page-desc'] );
+		$page->setDescription( $_POST['page-desc'] );
 	}
 
 	$page->setContent( $_POST['page-content'] );
@@ -184,7 +184,7 @@ function createPost() {
 	}
 
 	if( isset( $_POST['post-desc'] ) ) {
-		$post->setDescription( $POST['post-desc'] );
+		$post->setDescription( $_POST['post-desc'] );
 	}
 
 	$post->setContent( $_POST['post-content'] );
