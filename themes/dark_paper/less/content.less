@@ -90,7 +90,7 @@ article {
 
 
 .tag {
-	color: #91c86c;
+	color: @linkColorArticle;
 	display: inline-block;
 	margin-right: 16px;
 	opacity: 0.5;
@@ -137,7 +137,7 @@ article {
 	}
 
 	a {
-		color: #91c86c;
+		color: @linkColorArticle;
 		text-decoration: none;
 
 		&:hover {
@@ -204,12 +204,21 @@ article {
 
 
 .read-more {
+	color: @linkColorArticle;
 	display: inline-block;
+	font-family: @fontFamilySerif;
+	font-size: 18px;
+	font-style: italic;
 	font-weight: 600;
 	margin-top: 40px;
+	text-decoration: none;
 
 	&::after {
 		content: @stringAfterReadMore;
+	}
+
+	&:hover {
+		color: @textColor;
 	}
 }
 
