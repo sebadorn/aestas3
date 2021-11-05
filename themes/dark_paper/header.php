@@ -5,6 +5,12 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 
 <aside class="aside-meta">
 	<ul class="links">
+		<li class="link icon-home">
+			<a href="<?php echo URL ?>">
+				<span class="icon fa fa-home"></span>
+				<span class="name">Home</span>
+			</a>
+		</li>
 		<li class="link about-page-link">
 			<a href="<?php echo URL ?>ueber">
 				<img src="<?php echo THEME_PATH ?>img/avatar_seba.jpg" alt="Profile picture" />
@@ -33,6 +39,6 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 
 	<form class="search" action="<?php echo URL ?>" method="get">
 		<button type="submit" class="search-submit fa fa-search"></button>
-		<input type="text" class="search-input" name="search" placeholder="Search" value="<?php echo $search ?>" />
+		<input type="text" class="search-input" name="search" placeholder="Search…" value="<?php echo $search ?>" />
 	</form>
 </aside>

@@ -7,11 +7,12 @@
 @columnWidth: 660px;
 @fontFamilyCode: "Source Code Pro", "DejaVu Sans Mono", Consolas, monospace;
 @fontFamilyText: "Open Sans", sans-serif;
+@fontFamilySerif: Georgia, serif;
 @fontSize: 16px;
 @linkColor: #f0f0f0;
 @linkDecoColor: #505050;
 @linkHoverColor: #909090;
-@stringAfterReadMore: " »";
+@stringAfterReadMore: " …";
 @textColor: #f0f0f0;
 
 
@@ -98,6 +99,7 @@ code {
 // highlight.js
 pre.brush, pre.hljs, pre.plain, blockquote.code {
 	background-color: #272727;
+	border-radius: 6px;
 	color: #f0f0f0;
 	font-family: @fontFamilyCode;
 	font-size: @fontSize - 1px;
@@ -120,6 +122,8 @@ dt {
 }
 
 h1, h2, h3, h4, h5, h6 {
+	font-family: @fontFamilySerif;
+	font-style: italic;
 	font-weight: 700;
 }
 
@@ -133,7 +137,9 @@ ol, ul {
 }
 
 table {
+	border-radius: 6px;
 	border-spacing: 0;
+	overflow: hidden;
 	width: 100%;
 }
 
@@ -227,16 +233,18 @@ blockquote.error {
 /* Small screens/mobile devices */
 /* ---------------------------- */
 
-@media( max-width: 1650px ) {
+@media( max-width: 1500px ) {
 	h1 {
 		margin-bottom: 20px;
 	}
 
 	.aside-meta {
-		float: none;
+		border-bottom-left-radius: 6px;
+		border-bottom-right-radius: 6px;
 		margin: 0 auto;
 		max-width: 720px;
-		padding: 0 10px;
+		padding: 10px 10px 20px;
+		position: static;
 
 		.links {
 			display: flex;
@@ -296,15 +304,8 @@ blockquote.error {
 	}
 
 	.post-header h2 {
-		font-size: 24px;
-		line-height: 28px;
-	}
-
-	.post-footer {
-		margin-left: -20px;
-		margin-right: -20px;
-		padding-left: 20px;
-		padding-right: 20px;
+		font-size: 26px;
+		line-height: 30px;
 	}
 
 	.main-footer {

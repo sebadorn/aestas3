@@ -73,9 +73,9 @@ $sb->setBasePath( 'themes/' . THEME );
 
 <?php $sb->render( 'header.php' ) ?>
 
-<section class="main-body">
+<main class="main-body">
 	<?php include( 'body.php' ) ?>
-</section>
+</main>
 
 <?php $sb->render( 'foot.php' ) ?>
 
