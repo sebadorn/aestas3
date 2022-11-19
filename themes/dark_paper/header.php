@@ -23,6 +23,12 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 				<span class="name">GitHub</span>
 			</a>
 		</li>
+		<li class="link icon-mastodon">
+			<a rel="me" href="https://mastodon.gamedev.place/@sebadorn" title="Mastodon">
+				<img src="<?php echo THEME_PATH ?>img/mastodon-white.svg" alt="Mastodon icon" />
+				<span class="name">Mastodon</span>
+			</a>
+		</li>
 		<li class="link icon-twitter">
 			<a href="https://twitter.com/sebadorn" title="Twitter">
 				<span class="icon fab fa-twitter"></span>
