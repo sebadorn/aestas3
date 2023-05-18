@@ -12,7 +12,7 @@
 <?php endif ?>
 	<link rel="icon" href="<?php echo THEME_PATH ?>img/favicon-192.png" type="image/png" sizes="192x192" />
 	<link rel="icon" href="<?php echo THEME_PATH ?>img/favicon-32.png" type="image/png" sizes="32x32" />
-	<link rel="stylesheet" href="<?php echo THEME_PATH ?>css/style.css?v=7" />
+	<link rel="stylesheet" href="<?php echo THEME_PATH ?>css/style.css?v=8" />
 	<link rel="stylesheet" href="<?php echo THEME_PATH ?>js/highlight/styles/stackoverflow-dark.min.css" />
 	<link rel="alternate" type="application/rss+xml" title="New posts (RSS)" href="<?php echo URL ?>feed/" />
 <?php
@@ -34,4 +34,5 @@ if( $p !== NULL ) {
 ?>
 	<script src="<?php echo THEME_PATH ?>js/highlight/highlight.min.js"></script>
 	<script src="<?php echo THEME_PATH ?>js/init.js"></script>
+	<script src="<?php echo THEME_PATH ?>js/matomo.js"></script>
 </head>
