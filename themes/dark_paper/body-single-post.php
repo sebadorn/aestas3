@@ -18,5 +18,6 @@ $class .= ( $post->getDatetime( 'YmdHis' ) > date( 'YmdHis' ) ) ? ' post-future'
 
 	<footer class="post-footer">
 		<?php $sb->render( 'post-tags.php', $post->getTags() ) ?>
+		<?php echo $post->getVGWortTracker() ?>
 	</footer>
 </article>

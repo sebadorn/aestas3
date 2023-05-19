@@ -358,6 +358,9 @@ else {
 		<div class="input-group">
 			<input type="text" name="post-tags" placeholder="Tags" value="<?php echo htmlspecialchars( $model->getTagsString() ) ?>" />
 		</div>
+		<div class="input-group">
+			<input type="text" name="post-vgwort" placeholder="VG WORT Tracker" value="<?php echo htmlspecialchars( $model->getVGWortTracker() ) ?>" />
+		</div>
 	</div>
 
 <?php elseif( $editArea == 'User' ): ?>

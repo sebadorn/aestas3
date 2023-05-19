@@ -187,6 +187,10 @@ function createPost() {
 		$post->setDescription( $_POST['post-desc'] );
 	}
 
+	if( isset( $_POST['post-vgwort'] ) ) {
+		$post->setVGWortTracker( $_POST['post-vgwort'] );
+	}
+
 	$post->setContent( $_POST['post-content'] );
 	$post->setDatetime( isset( $_POST['post-schedule'] ) ? $datetime : date( 'Y-m-d H:i:s' ) );
 	$post->setCommentsStatus( $_POST['post-comments-status'] );

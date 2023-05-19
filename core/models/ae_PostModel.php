@@ -12,6 +12,7 @@ class ae_PostModel extends ae_PageModel {
 	protected $categoryIds = array();
 	protected $numComments = FALSE;
 	protected $tags = '';
+	protected $vgwortTracker = '';
 
 
 	/**
@@ -140,6 +141,19 @@ class ae_PostModel extends ae_PageModel {
 	 */
 	public function getTagsString() {
 		return $this->tags;
+	}
+
+
+	/**
+	 * Get the VG Wort tracker HTML.
+	 * @return {string}
+	 */
+	public function getVGWortTracker() {
+		if( is_string( $this->vgwortTracker ) ) {
+			return $this->vgwortTracker;
+		}
+
+		return '';
 	}
 
 
@@ -295,6 +309,9 @@ class ae_PostModel extends ae_PageModel {
 		if( isset( $data['po_social'] ) ) {
 			$this->setSocialId( $data['po_social'] );
 		}
+		if( isset( $data['po_vgwort'] ) ) {
+			$this->setVGWortTracker( $data['po_vgwort'] );
+		}
 	}
 
 
@@ -361,6 +378,7 @@ class ae_PostModel extends ae_PageModel {
 			':tags' => $this->tags,
 			':user' => $this->userId,
 			':social' => $this->socialId,
+			':vgwort' => $this->vgwort,
 			':comments' => $this->commentsStatus,
 			':status' => $this->status
 		);
@@ -377,6 +395,7 @@ class ae_PostModel extends ae_PageModel {
 					po_tags,
 					po_user,
 					po_social,
+					po_vgwort,
 					po_comments,
 					po_status
 				) VALUES (
@@ -388,6 +407,7 @@ class ae_PostModel extends ae_PageModel {
 					:tags,
 					:user,
 					:social,
+					:vgwort,
 					:comments,
 					:status
 				)
@@ -406,6 +426,7 @@ class ae_PostModel extends ae_PageModel {
 					po_tags,
 					po_user,
 					po_social,
+					po_vgwort,
 					po_comments,
 					po_status
 				) VALUES (
@@ -418,6 +439,7 @@ class ae_PostModel extends ae_PageModel {
 					:tags,
 					:user,
 					:social,
+					:vgwort,
 					:comments,
 					:status
 				)
@@ -437,6 +459,7 @@ class ae_PostModel extends ae_PageModel {
 					po_tags = :tags,
 					po_user = :user,
 					po_social = :social,
+					po_vgwort = :vgwort,
 					po_comments = :comments,
 					po_status = :status
 				WHERE
@@ -525,6 +548,16 @@ class ae_PostModel extends ae_PageModel {
 
 		$tagsCleaned = implode( self::TAG_DELIMITER, $tagsCleaned );
 		$this->tags = $tagsCleaned;
+	}
+
+
+	/**
+	 * Set the HTML to include for the VG Wort tracker.
+	 * Usually an invisible pixel.
+	 * @param {string} $value
+	 */
+	public function setVGWortTracker( $value ) {
+		$this->vgwortTracker = $value;
 	}
 
 

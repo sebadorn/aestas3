@@ -141,6 +141,9 @@ else if( isset( $_GET['user'] ) ) {
 		<div class="input-group">
 			<input type="text" name="post-tags" placeholder="Tags" />
 		</div>
+		<div class="input-group">
+			<input type="text" name="post-vgwort" placeholder="VG WORT Tracker" />
+		</div>
 	</div>
 
 <?php elseif( $createArea == 'User' ): ?>

@@ -121,6 +121,7 @@ CREATE TABLE IF NOT EXISTS `ae3_posts` (
   `po_tags` text,
   `po_user` smallint(6) NOT NULL,
   `po_social` int(10) unsigned DEFAULT NULL,
+  `po_vgwort` varchar(128) DEFAULT NULL,
   `po_comments` enum('open','closed','disabled') NOT NULL DEFAULT 'open',
   `po_status` enum('published','draft','trash') NOT NULL DEFAULT 'draft',
   PRIMARY KEY (`po_id`),
