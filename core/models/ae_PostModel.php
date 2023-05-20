@@ -312,6 +312,10 @@ class ae_PostModel extends ae_PageModel {
 		if( isset( $data['po_vgwort'] ) ) {
 			$this->setVGWortTracker( $data['po_vgwort'] );
 		}
+
+		if( is_null( $this->editDatetime ) && isset( $data['po_datetime'] ) ) {
+			$this->setEditDatetime( $data['po_datetime'] );
+		}
 	}
 
 

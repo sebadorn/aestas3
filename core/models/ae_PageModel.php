@@ -333,6 +333,10 @@ class ae_PageModel extends ae_Model {
 		if( isset( $data['pa_social'] ) ) {
 			$this->setSocialId( $data['pa_social'] );
 		}
+
+		if( is_null( $this->editDatetime ) && isset( $data['pa_datetime'] ) ) {
+			$this->setEditDatetime( $data['pa_datetime'] );
+		}
 	}
 
 
