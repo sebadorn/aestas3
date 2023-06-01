@@ -4,18 +4,27 @@ require_once( 'core/autoload.php' );
 require_once( 'core/config.php' );
 
 $filterPages = array(
+	'WHERE' => 'pa_status = :status AND pa_datetime <= :date',
 	'LIMIT' => '0, 9999', // +1 root URL
-	'ORDER BY' => 'pa_datetime DESC',
-	'WHERE' => 'pa_status = "' . ae_PageModel::STATUS_PUBLISHED . '"'
+	'ORDER BY' => 'pa_datetime DESC'
 );
-$pageList = new ae_PageList( $filterPages );
+$paramsPages = array(
+	':status' => ae_PageModel::STATUS_PUBLISHED,
+	':date' => date( 'Y-m-d H:i:s' )
+);
+$pageList = new ae_PageList( $filterPages, $paramsPages );
+
 
 $filterPosts = array(
+	'WHERE' => 'po_status = :status AND po_datetime <= :date',
 	'LIMIT' => '0, 40000',
-	'ORDER BY' => 'po_datetime DESC',
-	'WHERE' => 'po_status = "' . ae_PostModel::STATUS_PUBLISHED . '"'
+	'ORDER BY' => 'po_datetime DESC'
 );
-$postList = new ae_PostList( $filterPosts );
+$paramsPosts = array(
+	':status' => ae_PostModel::STATUS_PUBLISHED,
+	':date' => date( 'Y-m-d H:i:s' )
+);
+$postList = new ae_PostList( $filterPosts, $paramsPosts );
 
 function buildURLItem( $loc, $lastmod ) {
 	$item = '<url>';
