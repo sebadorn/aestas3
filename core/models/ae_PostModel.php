@@ -382,7 +382,7 @@ class ae_PostModel extends ae_PageModel {
 			':tags' => $this->tags,
 			':user' => $this->userId,
 			':social' => $this->socialId,
-			':vgwort' => $this->vgwort,
+			':vgwort' => $this->vgwortTracker,
 			':comments' => $this->commentsStatus,
 			':status' => $this->status
 		);
