@@ -246,35 +246,53 @@ blockquote.error {
 		border-bottom-left-radius: 6px;
 		border-bottom-right-radius: 6px;
 		margin: 0 auto;
-		max-width: 720px;
 		padding: 10px 10px 20px;
 		position: static;
 
 		.links {
 			display: flex;
 			flex-wrap: wrap;
+			justify-content: center;
 
-			li {
-				flex-basis: 50%;
+			a {
+				margin-bottom: 0;
+			}
+
+			.icon-github,
+			.icon-home,
+			.icon-mastodon,
+			.icon-rss,
+			.icon-twitter {
+				.icon,
+				img {
+					margin-right: 0;
+				}
+
+				.name {
+					display: none;
+				}
 			}
 		}
 	}
 
 	form.search {
-		margin: 12px 10px 0 10px;
+		margin: 8px auto 0 auto;
+		max-width: 530px;
 
 		.search-input {
+			border-bottom: 1px solid #303030;
 			flex-grow: 1;
+			height: auto;
 			width: auto;
 		}
 	}
 
 	.main-body {
-		padding-top: 40px !important;
+		padding-top: 20px !important;
 	}
 }
 
-@media( max-width: 1024px ) {
+@media( max-width: 1090px ) {
 	.illu {
 		left: 0;
 		max-width: 100%;
@@ -299,7 +317,7 @@ blockquote.error {
 	.main-body {
 		padding-left: 0;
 		padding-right: 0;
-		padding-top: 30px !important;
+		padding-top: 0 !important;
 	}
 
 	article {
@@ -331,6 +349,40 @@ blockquote.error {
 
 			.stat {
 				margin-right: 0;
+			}
+		}
+	}
+}
+
+@media( max-width: 600px ) {
+	.aside-meta {
+		.links {
+			font-size: 14px;
+
+			.about-page-link {
+				a {
+					padding: 3px 8px;
+				}
+
+				img {
+					height: 22px;
+					width: 22px;
+					margin-left: 0;
+					margin-right: 4px;
+				}
+			}
+
+			a {
+				padding: 8px;
+			}
+
+			.icon {
+				font-size: 22px;
+			}
+
+			.icon-mastodon img {
+				height: 22px;
+				width: 22px;
 			}
 		}
 	}

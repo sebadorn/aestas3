@@ -36,9 +36,9 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 			</a>
 		</li>
 		<li class="link icon-rss">
-			<a href="<?php echo URL ?>feed/" title="RSS: Articles">
+			<a href="<?php echo URL ?>feed/" title="RSS: Artikel">
 				<span class="icon fa fa-rss"></span>
-				<span class="name">RSS feed</span>
+				<span class="name">RSS-Feed</span>
 			</a>
 		</li>
 	</ul>

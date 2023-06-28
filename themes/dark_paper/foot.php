@@ -14,7 +14,7 @@ $caList = new ae_CategoryList( $filter, array(), FALSE );
 <footer class="main-footer">
 
 	<div>
-		<h6>Categories</h6>
+		<h6>Kategorien</h6>
 		<ul class="categories">
 		<?php while( $ca = $caList->next() ): ?>
 			<li><a href="<?php echo $ca->getLink() ?>"><?php echo $ca->getTitle() ?></a></li>
@@ -23,7 +23,7 @@ $caList = new ae_CategoryList( $filter, array(), FALSE );
 	</div>
 
 	<div>
-		<h6>Pages</h6>
+		<h6>Seiten</h6>
 		<ul class="pages">
 			<li><a href="<?php echo URL ?>ueber">Über</a></li>
 			<li><a href="<?php echo URL ?>datenschutzerklaerung">Datenschutz</a></li>
