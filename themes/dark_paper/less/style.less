@@ -2,8 +2,9 @@
 /* Variables */
 /* --------- */
 
-@bgColor: #1a1a1a;
-@bgColorBody: #202020;
+@bgColor: #1a1a21;
+@bgColorBody: #202027;
+@blockBgColor: #27272e;
 @columnWidth: 660px;
 @fontFamilyCode: "Source Code Pro", "DejaVu Sans Mono", Consolas, monospace;
 @fontFamilyText: "Open Sans", sans-serif;
@@ -11,8 +12,8 @@
 @fontSize: 16px;
 @linkColor: #f0f0f0;
 @linkColorArticle: #91c86c;
-@linkDecoColor: #505050;
-@linkHoverColor: #909090;
+@linkDecoColor: #505057;
+@linkHoverColor: #909097;
 @stringAfterReadMore: " …";
 @textColor: #f0f0f0;
 
@@ -41,7 +42,7 @@ html {
 	background-color: @bgColor;
 	color: @textColor;
 	font-size: @fontSize;
-	scrollbar-color: #505050 @bgColorBody;
+	scrollbar-color: #505057 @bgColorBody;
 }
 
 body {
@@ -51,7 +52,7 @@ body {
 
 a {
 	color: @linkColor;
-	text-decoration: #505050 underline 2px;
+	text-decoration: #505057 underline 2px;
 
 	&:hover {
 		color: @linkHoverColor;
@@ -64,10 +65,10 @@ blockquote, dd, dl, hr, ol, p, pre, table, ul {
 }
 
 blockquote {
-	background-color: #272727;
-	border-left: 4px solid #505050;
+	background-color: @blockBgColor;
+	border-left: 4px solid #505057;
 	border-radius: 6px;
-	color: #a0a0a0;
+	color: #b0b0b7;
 	padding: 8px 16px;
 
 	ol:last-child,
@@ -92,7 +93,7 @@ button, input, textarea {
 }
 
 code {
-	background-color: #272727;
+	background-color: @bgColor;
 	border-radius: 3px;
 	font-family: @fontFamilyCode;
 	font-size: @fontSize - 1px;
@@ -102,7 +103,7 @@ code {
 
 // highlight.js
 pre.brush, pre.hljs, pre.plain, blockquote.code {
-	background-color: #272727;
+	background-color: @blockBgColor;
 	border-radius: 6px;
 	color: #f0f0f0;
 	font-family: @fontFamilyCode;
@@ -148,11 +149,11 @@ table {
 }
 
 	tr {
-		background-color: #373737;
+		background-color: #37373e;
 	}
 
 	tr:nth-child( 2n + 1 ) {
-		background-color: #272727;
+		background-color: @blockBgColor;
 	}
 
 		td, th {
@@ -280,7 +281,7 @@ blockquote.error {
 		max-width: 530px;
 
 		.search-input {
-			border-bottom: 1px solid #303030;
+			border-bottom: 1px solid #303037;
 			flex-grow: 1;
 			height: auto;
 			width: auto;
