@@ -29,12 +29,6 @@ $search = isset( $_GET[PERMALINK_GET_SEARCH] ) ? $_GET[PERMALINK_GET_SEARCH] : '
 				<span class="name">Mastodon</span>
 			</a>
 		</li>
-		<li class="link icon-twitter">
-			<a href="https://twitter.com/sebadorn" title="Twitter">
-				<span class="icon fab fa-twitter"></span>
-				<span class="name">Twitter</span>
-			</a>
-		</li>
 		<li class="link icon-rss">
 			<a href="<?php echo URL ?>feed/" title="RSS: Artikel">
 				<span class="icon fa fa-rss"></span>
